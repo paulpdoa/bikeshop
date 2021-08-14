@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+  body::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+
+.navBtns {
+    @apply transform transition duration-300 hover:-translate-y-1;
+}
+
+.banner { 
+    background:linear-gradient(rgba(22, 22, 22, 0.616), rgba(100, 96, 96, 0.24)),url('../assets/banner.jpg');
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat:no-repeat;
+    height:100vh;
+}
+.shopFooter {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(61,61,74,1) 0%, rgba(0,0,0,1) 100%);
+}
+
+/* customize page */
+.customizeBanner {
+    background: url('../assets/blackbg.jpg');
+    background-size:cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat:no-repeat;
+}
