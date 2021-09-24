@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom';
 
 const Cart = () => {
     return (
-        <div className="h-screen py-12 px-24">
+        <div className="flex justify-center">
         <Helmet>
             <title>Bicycle System | Cart</title>
         </Helmet>
+        <div className="max-w-7xl h-screen py-12 px-24">
             <motion.div 
             initial={{ x:'-100vw' }}
             animate={{ x:0 }}
@@ -46,7 +47,7 @@ const Cart = () => {
                     </td>
                     <td className="select-none">$2,119.00</td>
                     <td>
-                        <input className="w-1/2 text-center outline-none border border-gray-400 rounded-sm ml-14" readonly type="number" name="quantity" value="1" />
+                        <input className="w-1/2 text-center outline-none border border-gray-400 rounded-sm ml-14" readOnly type="number" name="quantity" value="1" />
                         <div className="mt-2 flex justify-around text-gray-700 text-sm">
                             <Link to="#">Update</Link>
                             <Link to="#">Remove</Link>
@@ -82,6 +83,7 @@ const Cart = () => {
                     </div>
                 </div>
             </motion.div>
+            </div>
         </div>
     )
 }

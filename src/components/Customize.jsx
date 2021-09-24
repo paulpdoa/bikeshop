@@ -7,10 +7,11 @@ const Customize = () => {
     const [show,setShow] = useState(false);
 
     return (
-        <div className="customizeBanner relative">
+        <div className="customizeBanner flex justify-center relative z-10">
         <Helmet>
             <title>Bicycle System | Customize</title>
         </Helmet>
+        <div className="max-w-7xl w-full h-full">
             <div className="grid grid-cols-3 px-10 py-10">
                 <motion.div 
                 initial={{ opacity:0 }}
@@ -102,44 +103,47 @@ const Customize = () => {
             initial={{ x:'-100vw' }}
             animate={{ x:0 }}
             transition={{ delay:0.2,type:'spring',stiffness:50 }}
-            className="flex justify-around py-16 w-full relative bg-gray-200 h-full"> { /* parts choices */ }
-                <div>
-                    <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
-                    <div className="text-center">
-                        <p className="font-semibold text-gray-700">Race Face Aeffect R 30</p>
-                        <p>$699.00</p>
-                        <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+            className="flex justify-center bg-gray-200 bg-opacity-20 shadow-xl"> { /* parts choices */ }
+                <div className="max-w-7xl flex justify-around py-16 w-full relative h-full z-50">
+                    <div>
+                        <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
+                        <div className="text-center">
+                            <p className="font-semibold text-gray-200">Race Face Aeffect R 30</p>
+                            <p className="text-gray-200">$699.00</p>
+                            <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
-                    <div className="text-center">
-                        <p className="font-semibold text-gray-700">Race Face Aeffect R 30</p>
-                        <p>$699.00</p>
-                        <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                    <div>
+                        <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
+                        <div className="text-center">
+                            <p className="font-semibold text-gray-200">Race Face Aeffect R 30</p>
+                            <p className="text-gray-200">$699.00</p>
+                            <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
-                    <div className="text-center">
-                        <p className="font-semibold text-gray-700">Race Face Aeffect R 30</p>
-                        <p>$699.00</p>
-                        <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                    <div>
+                        <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
+                        <div className="text-center">
+                            <p className="font-semibold text-gray-200">Race Face Aeffect R 30</p>
+                            <p className="text-gray-200">$699.00</p>
+                            <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
-                    <div className="text-center">
-                        <p className="font-semibold text-gray-700">Race Face Aeffect R 30</p>
-                        <p>$699.00</p>
-                        <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                    <div>
+                        <img className="w-52" src="/image/bikewheel.png" alt="bikewheel" />
+                        <div className="text-center">
+                            <p className="font-semibold text-gray-200">Race Face Aeffect R 30</p>
+                            <p className="text-gray-200">$699.00</p>
+                            <button className="p-1 bg-yellow-600 w-1/2 rounded-sm text-gray-800 font-semibold">Select</button>
+                        </div>
                     </div>
-                </div>
                     { /* for buttons next and previous */ }
                         <svg className="w-12 bg-gray-100 shadow-md h-full left-0 absolute top-0 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         <svg className="w-12 bg-gray-100 shadow-md h-full py-10 right-0 absolute top-0 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg> 
                     { /* for buttons next and previous */ }
+                </div>
             </motion.div>
+            </div>
         </div>
     )
 }

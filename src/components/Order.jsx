@@ -5,10 +5,11 @@ import {Link} from 'react-router-dom';
 const Order = () => {
 
     return (
-        <div>
+        <div className="flex justify-center">
         <Helmet>
             <title>Bicycle System | Order</title>
         </Helmet>
+        <div className="max-w-7xl"> 
             <div className="grid grid-cols-6 justify-items-center h-screen">
                 <motion.div 
                 initial={{ x:'-100vw' }}
@@ -139,6 +140,7 @@ const Order = () => {
                         </div>
                     </div>
                 </motion.div>
+            </div>
             </div>
         </div>
     )

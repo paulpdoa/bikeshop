@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom';
 
 const ItemDetails = () => {
     return (
-        <div className="h-screen grid grid-cols-2">
+        <div className="flex justify-center">
         <Helmet>
             <title>Bicycle System | Item Detail</title>
         </Helmet>
+        <div className="h-screen grid grid-cols-2 w-full max-w-7xl"> 
             <motion.div
             initial={{ x:'-100vw' }}
             animate={{ x:0 }}
             transition={{ duration:0.5,type:'spring',stiffness:50 }} 
-            className="flex justify-center items-center"> { /* item image here */ }
-                <div>
-                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto" src="/image/hub.jpg" alt="hub" />
+            className="flex justify-center"> { /* item image here */ }
+                <div className="">
+                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src="/image/hub.jpg" alt="hub" />
                     <div className="text-center mt-2"> {/*colors here */}
                         <span className="text-gray-700 font-normal select-none">Blue / Campagnolo</span>
                         <div className="ml-auto mr-auto flex justify-around w-16">
@@ -83,6 +84,7 @@ const ItemDetails = () => {
                         
                     </div>
                 </motion.div>
+                </div>
             </div>
         
     )
