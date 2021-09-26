@@ -1,9 +1,10 @@
 import { Link, useHistory,withRouter } from 'react-router-dom';
-import {useState} from 'react';
+import { useState } from 'react';
 import Axios from 'axios';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 
-const Login = ({setUser,setAuthStatus}) => {
+const Login = ({setUser,setAuthStatus,authStatus}) => {
+
     const [username, setUsername] = useState('');
     const [password,setPassword] = useState('');
     const [showPass,setShowPass] = useState(false);
@@ -11,6 +12,7 @@ const Login = ({setUser,setAuthStatus}) => {
     const [passStatus,setPassStatus] = useState('');
     const history = useHistory();
 
+    
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -29,11 +31,12 @@ const Login = ({setUser,setAuthStatus}) => {
                },1000)
                setStatus(res.data.mssg);
            } else {
-                setUser(res.data.user);
-                setAuthStatus(true);
-                history.push(res.data.redirect);
-                console.log(res);
-           }
+                if(authStatus) {
+                    setUser({user: res.data.user,id: res.data.userID});
+                    setAuthStatus(authStatus)
+                    history.push(res.data.redirect);
+                }
+            }
         })
     }
    

@@ -7,7 +7,6 @@ const ChangePassword = () => {
     const [status,setStatus] = useState('');
     const [password,setPassword] = useState('');
     const [confirmPass,setConfirmPass] = useState('');
-    const [match,setMatch] = useState('');
     const { id } = useParams();
 
     const history = useHistory();

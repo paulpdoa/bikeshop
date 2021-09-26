@@ -1,13 +1,12 @@
 import React,{ useState } from 'react'
 import { Helmet } from 'react-helmet';
 import Axios from 'axios';
-import { Link,useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const Forgot = () => {
 
     const [account,setAccount] = useState('');
-    const [status,setStatus] = useState('');
-    const [link,setLink] = useState('');
+    const [status,setStatus] = useState(''); 
     
     const history = useHistory();
 
@@ -46,7 +45,7 @@ const Forgot = () => {
                     />
                     <input className="mt-2 p-2 shadow-sm rounded-md w-full cursor-pointer font-bold transition duration-100 hover:bg-gray-200" type="submit" />
                 </form>
-                <Link to={`/${link}`} className="text-red-500 text-sm mt-2">{status}</Link>
+                <p className="text-red-500 text-sm mt-2">{status}</p>
             </div> 
         </div>
     )

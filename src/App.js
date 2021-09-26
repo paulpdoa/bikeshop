@@ -1,5 +1,6 @@
-import {Switch,Route, Redirect,useHistory} from 'react-router-dom';
+import { Switch,Route, Redirect, useHistory } from 'react-router-dom';
 import { useState,useEffect } from 'react';
+import Axios from 'axios';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 
@@ -15,13 +16,34 @@ import Cart from './components/Cart';
 import Customize from './components/Customize';
 import Forgot from './components/auth/Forgot';
 import ChangePassword from './components/auth/ChangePassword';
+import UserProfile from './components/profile/UserProfile';
 
 const App = () => {
 
-  const [user,setUser] = useState();
+  const [user,setUser] = useState([]);
+  const history = useHistory();
 
   // set the logged in status of the user
-  const [authStatus, setAuthStatus] = useState(false);
+  const [authStatus, setAuthStatus] = useState(true);
+
+  // create a route in the backend to authenticate the users, then pass a json
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    Axios.get('/api/auth', { signal: abortController.signal })
+    .then((res) => {
+      if(res.data.isAuth) {
+        setAuthStatus(res.data.isAuth);
+      }
+      if(!res.data.isAuth) {
+        setAuthStatus(res.data.isAuth);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    return () => abortController.abort();
+  });
   
   // saves the state of the logged in user even on refresh
   useEffect(() => {
@@ -35,10 +57,10 @@ const App = () => {
     <>
         <Switch>
           <Route exact path='/login'>
-            <Login setUser={setUser} setAuthStatus={setAuthStatus} />
+            <Login setUser={setUser} setAuthStatus={setAuthStatus} authStatus={authStatus}/>
           </Route>
           <Route exact path='/register'>
-            <Register />
+            <Register authStatus={authStatus} />
           </Route>
           <Route exact path='/forgot'>
             <Forgot />
@@ -54,11 +76,7 @@ const App = () => {
             <> { /* routes of every page */}
               <Navbar user={user} setAuthStatus={setAuthStatus} />
               <Switch>
-                {/* <Route exact path='/'>
-                  <Shop />
-                  <Footer />
-                </Route> */}
-                <ProtectedRoute path='/' component={Shop} isAuth={ authStatus } />
+                <ProtectedRoute exact path='/' component={Shop} isAuth={authStatus}  />
                 <Route exact path='/order'>
                   <Order />
                   <Footer />
@@ -74,6 +92,9 @@ const App = () => {
                 <Route exact path='/customize'>
                   <Customize />
                   <Footer />
+                </Route>
+                <Route exact path='/profile/:userName'>
+                  <UserProfile />
                 </Route>
                 <Redirect to='/notfound' />
               </Switch>

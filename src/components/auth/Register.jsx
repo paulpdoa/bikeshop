@@ -16,6 +16,8 @@ const Register = () => {
     const [status,setStatus] = useState('');
 
     const [errorEmail,setErrorEmail] = useState('');
+    const [userNameErr,setUsernameErr] = useState('');
+
     const history = useHistory();
 
     // email validation
@@ -52,9 +54,19 @@ const Register = () => {
         } else {
             Axios.post('/api/register',{firstName:firstname,lastName:lastname,userName:username,email,password})
             .then((res) => {
-                alert(res.data.success);
-                history.push(res.data.redirect);
-            })
+                if(res.data.userNameErr || res.data.emailErr) {
+                    setUsernameErr(res.data.userNameErr);
+                    setErrorEmail(res.data.emailErr);
+                    setTimeout(() => {
+                        setUsernameErr('');
+                        setErrorEmail('');
+                    },2000)
+                    
+                } else {
+                    alert(res.data.success);
+                    history.push(res.data.redirect);
+                }
+            });
         }
     }
 
@@ -85,13 +97,14 @@ const Register = () => {
                         </div>
                     </div>
                     <div className="md:flex justify-center">
-                        <div className="p-5 flex justify-center">
+                        <div className="p-5 relative flex justify-center">
                             <input className="p-1 border border-gray-400
                             rounded outline-none" type="text" placeholder="Username"
                             onChange={(e) => setUsername(e.target.value)}
                             value={username}
                             required
                              />
+                             <p className="text-xs text-red-500 absolute bottom-0 left-5 w-full">{userNameErr}</p>
                         </div>
                         <div className="p-5 relative flex justify-center">
                             <input className="p-1 border border-gray-400

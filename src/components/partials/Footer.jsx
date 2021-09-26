@@ -1,6 +1,7 @@
 
 
 const Footer = () => {
+
     return (
         <footer className="absolute bg-gray-200 flex justify-center w-full">
             <div className="max-w-7xl flex justify-around p-5 shadow-xl w-full">

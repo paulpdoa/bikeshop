@@ -1,5 +1,5 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import Axios from 'axios';
 
 const Navbar = ({user,setAuthStatus}) => {
@@ -19,9 +19,9 @@ const Navbar = ({user,setAuthStatus}) => {
         Axios.get('/api/logout')
         .then((res) => {
             alert("Thank you for using our website");
-            setAuthStatus(false);
             window.localStorage.removeItem("user");
             history.push(res.data.redirect);
+            setAuthStatus(false);
         })
         .catch(err => {
             console.log(err);
@@ -40,7 +40,8 @@ const Navbar = ({user,setAuthStatus}) => {
                     <li className="navBtns"><Link  to="/">Home</Link></li>
                     <li className="navBtns ml-5"><Link to="/about">About</Link></li>
                     {user ? 
-                    <li onClick={onLogout} className="navBtns ml-5 cursor-pointer">{user}</li> 
+                    (<><li className="navBtns ml-5 cursor-pointer"><Link to={`/profile/${user.user}`}>{user.user}</Link></li>
+                    <li onClick={onLogout} className="navBtns ml-5 cursor-pointer">Logout</li></>) 
                         :
                     <li className="navBtns ml-5"><Link to="/login">Login</Link></li> }                    
                     <li className="navBtns ml-5 border-2 border-white p-1 rounded cursor-pointer">
