@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import {motion} from 'framer-motion';
 import {Helmet} from 'react-helmet';
+import Footer from './partials/Footer';
 
 const Shop = () => {
 
@@ -121,6 +122,7 @@ const Shop = () => {
                     </div>
                 </div>
             </div>
+            <Footer />
         </div>
     )
 }

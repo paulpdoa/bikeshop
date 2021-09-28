@@ -17,11 +17,23 @@ import Customize from './components/Customize';
 import Forgot from './components/auth/Forgot';
 import ChangePassword from './components/auth/ChangePassword';
 import UserProfile from './components/profile/UserProfile';
+import UserOrders from './components/profile/UserOrders';
+import UserSideNav from './components/profile/UserSideNav';
+import UserHistory from './components/profile/UserHistory';
+import UserDelete from './components/profile/UserDelete';
+import About from './components/About';
+import Contact from './components/Contact';
 
 const App = () => {
 
-  const [user,setUser] = useState([]);
+  const [user,setUser] = useState('');
   const history = useHistory();
+
+  // profile page navigation function
+  const [profileActive,setProfileActive] = useState('Details');
+  const navigateProfile = (page) => {
+    setProfileActive(page);
+  }
 
   // set the logged in status of the user
   const [authStatus, setAuthStatus] = useState(true);
@@ -29,7 +41,6 @@ const App = () => {
   // create a route in the backend to authenticate the users, then pass a json
   useEffect(() => {
     const abortController = new AbortController();
-
     Axios.get('/api/auth', { signal: abortController.signal })
     .then((res) => {
       if(res.data.isAuth) {
@@ -76,6 +87,7 @@ const App = () => {
             <> { /* routes of every page */}
               <Navbar user={user} setAuthStatus={setAuthStatus} />
               <Switch>
+              
                 <ProtectedRoute exact path='/' component={Shop} isAuth={authStatus}  />
                 <Route exact path='/order'>
                   <Order />
@@ -94,8 +106,29 @@ const App = () => {
                   <Footer />
                 </Route>
                 <Route exact path='/profile/:userName'>
-                  <UserProfile />
+                  <div className="flex justify-center relative m-8">
+                    <div className="flex max-w-7xl w-full">
+                        <UserSideNav navigateProfile={navigateProfile} />
+                        <>
+                          { profileActive === 'Details' && <ProtectedRoute exact path='/profile/:userName' component={UserProfile} isAuth={authStatus} /> }
+                          { profileActive === 'Orders' && <ProtectedRoute exact path='/profile/:userName' component={UserOrders} isAuth={authStatus} /> }
+                          { profileActive === 'History' && <ProtectedRoute exact path='/profile/:userName' component={UserHistory} isAuth={authStatus} /> }
+                          { profileActive === 'DeleteAccount' && <ProtectedRoute exact path='/profile/:userName' component={UserDelete} isAuth={authStatus} /> }
+                        </>
+                      </div>
+                  </div>
                 </Route>
+    
+                <Route exact path='/about'>
+                  <About />
+                  <Footer />
+                </Route>
+
+                <Route exact path='/contact-us'>
+                  <Contact />
+                  <Footer />  
+                </Route>
+
                 <Redirect to='/notfound' />
               </Switch>
             </>

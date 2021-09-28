@@ -21,11 +21,8 @@ const Navbar = ({user,setAuthStatus}) => {
             alert("Thank you for using our website");
             window.localStorage.removeItem("user");
             history.push(res.data.redirect);
-            setAuthStatus(false);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            setAuthStatus(res.data.isAuth);
+        });
     }
 
     return (
@@ -40,7 +37,7 @@ const Navbar = ({user,setAuthStatus}) => {
                     <li className="navBtns"><Link  to="/">Home</Link></li>
                     <li className="navBtns ml-5"><Link to="/about">About</Link></li>
                     {user ? 
-                    (<><li className="navBtns ml-5 cursor-pointer"><Link to={`/profile/${user.user}`}>{user.user}</Link></li>
+                    (<><li className="navBtns ml-5 cursor-pointer"><Link to={`/profile/${user}`}>{user}</Link></li>
                     <li onClick={onLogout} className="navBtns ml-5 cursor-pointer">Logout</li></>) 
                         :
                     <li className="navBtns ml-5"><Link to="/login">Login</Link></li> }                    

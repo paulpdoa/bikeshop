@@ -14,6 +14,15 @@
     background-color: darkgrey;
     outline: 1px solid slategrey;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
 
 .navBtns {
     @apply transform transition duration-300 hover:-translate-y-1;
@@ -39,4 +48,12 @@
     background-attachment: fixed;
     background-position: center;
     background-repeat:no-repeat;
+}
+.profSideBtn {
+  @apply flex mt-2 text-lg cursor-pointer hover:bg-gray-300 p-2 transition duration-100 gap-5;
+}
+
+/* about page */
+.abt-titles {
+  @apply font-bold text-3xl;
 }

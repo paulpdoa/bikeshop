@@ -29840,6 +29840,17 @@ body::-webkit-scrollbar-thumb {
   outline: 1px solid slategrey;
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
 .navBtns {
   --tw-translate-x: 0;
   --tw-translate-y: 0;
@@ -29886,6 +29897,38 @@ body::-webkit-scrollbar-thumb {
   background-attachment: fixed;
   background-position: center;
   background-repeat:no-repeat;
+}
+
+.profSideBtn {
+  margin-top: 0.5rem;
+  display: flex;
+  cursor: pointer;
+  gap: 1.25rem;
+}
+
+.profSideBtn:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(209, 213, 219, var(--tw-bg-opacity));
+}
+
+.profSideBtn {
+  padding: 0.5rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-duration: 100ms;
+}
+
+/* about page */
+
+.abt-titles {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
 }
 
 @media (min-width: 640px) {
