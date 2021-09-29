@@ -7,14 +7,15 @@ const ChangePassword = () => {
     const [status,setStatus] = useState('');
     const [password,setPassword] = useState('');
     const [confirmPass,setConfirmPass] = useState('');
-    const { id } = useParams();
+    const { token } = useParams();
+    console.log(token);
 
     const history = useHistory();
     
     const onSubmit = (e) => {
         e.preventDefault();
 
-        Axios.put('/api/users', {id,password})
+        Axios.put('/api/users', {token,password})
         .then((res) => {
             if(password !== confirmPass) {
                 setTimeout(() => {

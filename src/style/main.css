@@ -29931,6 +29931,12 @@ body::-webkit-scrollbar-thumb {
   font-weight: 700;
 }
 
+.sidenav-li {
+  margin-top: 1.25rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
 @media (min-width: 640px) {
   .sm\:container {
     width: 100%;

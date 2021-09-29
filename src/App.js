@@ -1,33 +1,37 @@
-import { Switch,Route, Redirect, useHistory } from 'react-router-dom';
+import { Switch,Route, Redirect } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
 
 import ProtectedRoute from './routes/ProtectedRoute';
 
-import Login from './components/auth/Login';
-import Register from './components/auth/Register';
-import ErrorPage from './components/ErrorPage';
-import Order from './components/Order';
-import Navbar from './components/partials/Navbar';
-import Footer from './components/partials/Footer';
-import Shop from './components/Shop';
-import ItemDetails from './components/ItemDetails';
-import Cart from './components/Cart';
-import Customize from './components/Customize';
-import Forgot from './components/auth/Forgot';
-import ChangePassword from './components/auth/ChangePassword';
-import UserProfile from './components/profile/UserProfile';
-import UserOrders from './components/profile/UserOrders';
-import UserSideNav from './components/profile/UserSideNav';
-import UserHistory from './components/profile/UserHistory';
-import UserDelete from './components/profile/UserDelete';
-import About from './components/About';
-import Contact from './components/Contact';
+import Login from './components/shop/auth/Login';
+import Register from './components/shop/auth/Register';
+import Forgot from './components/shop/auth/Forgot';
+import ChangePassword from './components/shop/auth/ChangePassword';
+import ErrorPage from './components/shop/ErrorPage';
+import Order from './components/shop/Order';
+import Navbar from './components/shop/partials/Navbar';
+import Footer from './components/shop/partials/Footer';
+import Shop from './components/shop/Shop';
+import ItemDetails from './components/shop/ItemDetails';
+import Cart from './components/shop/Cart';
+import Customize from './components/shop/Customize';
+import UserProfile from './components/shop/profile/UserProfile';
+import UserOrders from './components/shop/profile/UserOrders';
+import UserSideNav from './components/shop/profile/UserSideNav';
+import UserHistory from './components/shop/profile/UserHistory';
+import UserDelete from './components/shop/profile/UserDelete';
+import About from './components/shop/About';
+import Contact from './components/shop/Contact';
+// admin
+import Dashboard from './components/admin/Dashboard';
+import LoginAdmin from './components/admin/auth/LoginAdmin';
+import SidebarAdmin from './components/admin/partials/SidebarAdmin';
+import NavbarAdmin from './components/admin/partials/NavbarAdmin';
 
 const App = () => {
 
   const [user,setUser] = useState('');
-  const history = useHistory();
 
   // profile page navigation function
   const [profileActive,setProfileActive] = useState('Details');
@@ -65,8 +69,7 @@ const App = () => {
     window.localStorage.setItem("user", JSON.stringify(user));
   })
   return (
-    <>
-        <Switch>
+      <Switch>
           <Route exact path='/login'>
             <Login setUser={setUser} setAuthStatus={setAuthStatus} authStatus={authStatus}/>
           </Route>
@@ -77,63 +80,62 @@ const App = () => {
             <Forgot />
             <Footer />
           </Route>
-          <Route exact path='/changepassword/:id'>
+          <Route exact path='/changepassword/:token/:id'>
             <ChangePassword />
           </Route>
+
           <Route exact path="/notfound">
             <ErrorPage />
           </Route>
-          
-            <> { /* routes of every page */}
-              <Navbar user={user} setAuthStatus={setAuthStatus} />
-              <Switch>
-              
-                <ProtectedRoute exact path='/' component={Shop} isAuth={authStatus}  />
-                <Route exact path='/order'>
-                  <Order />
-                  <Footer />
-                </Route>
-                <Route exact path='/item/details'>
-                  <ItemDetails />
-                  <Footer />
-                </Route>
-                <Route exact path='/cart'> 
-                  <Cart />
-                  <Footer />
-                </Route>
-                <Route exact path='/customize'>
-                  <Customize />
-                  <Footer />
-                </Route>
-                <Route exact path='/profile/:userName'>
-                  <div className="flex justify-center relative m-8">
-                    <div className="flex max-w-7xl w-full">
-                        <UserSideNav navigateProfile={navigateProfile} />
-                        <>
-                          { profileActive === 'Details' && <ProtectedRoute exact path='/profile/:userName' component={UserProfile} isAuth={authStatus} /> }
-                          { profileActive === 'Orders' && <ProtectedRoute exact path='/profile/:userName' component={UserOrders} isAuth={authStatus} /> }
-                          { profileActive === 'History' && <ProtectedRoute exact path='/profile/:userName' component={UserHistory} isAuth={authStatus} /> }
-                          { profileActive === 'DeleteAccount' && <ProtectedRoute exact path='/profile/:userName' component={UserDelete} isAuth={authStatus} /> }
-                        </>
-                      </div>
-                  </div>
-                </Route>
-    
-                <Route exact path='/about'>
-                  <About />
-                  <Footer />
-                </Route>
+      
+          <> { /* shop routes */}
+            <Navbar user={user} setAuthStatus={setAuthStatus} />
+            <Switch>
+              <ProtectedRoute exact path='/' component={Shop} isAuth={authStatus}  />
+              <Route exact path='/order'>
+                <Order />
+                <Footer />
+              </Route>
+              <Route exact path='/item/details'>
+                <ItemDetails />
+                <Footer />
+              </Route>
+              <Route exact path='/cart'> 
+                <Cart />
+                <Footer />
+              </Route>
+              <Route exact path='/customize'>
+                <Customize />
+                <Footer />
+              </Route>
+              <Route exact path='/profile/:userName'>
+                <div className="flex justify-center relative m-8">
+                  <div className="flex max-w-7xl w-full">
+                      <UserSideNav navigateProfile={navigateProfile} />
+                      <>
+                        { profileActive === 'Details' && <ProtectedRoute exact path='/profile/:userName' component={UserProfile} isAuth={authStatus} /> }
+                        { profileActive === 'Orders' && <ProtectedRoute exact path='/profile/:userName' component={UserOrders} isAuth={authStatus} /> }
+                        { profileActive === 'History' && <ProtectedRoute exact path='/profile/:userName' component={UserHistory} isAuth={authStatus} /> }
+                        { profileActive === 'DeleteAccount' && <ProtectedRoute exact path='/profile/:userName' component={UserDelete} isAuth={authStatus} /> }
+                      </>
+                    </div>
+                </div>
+              </Route>
+  
+              <Route exact path='/about'>
+                <About />
+                <Footer />
+              </Route>
 
-                <Route exact path='/contact-us'>
-                  <Contact />
-                  <Footer />  
-                </Route>
+              <Route exact path='/contact-us'>
+                <Contact />
+                <Footer />  
+              </Route>
 
-                <Redirect to='/notfound' />
-              </Switch>
-            </>
-          </Switch>
-    </>
+              <Redirect to='/notfound' />
+            </Switch>
+          </>
+      </Switch>
   );
 }
 

@@ -16,11 +16,7 @@ const Forgot = () => {
         Axios.post('/api/forgot',{userName:account})
         .then((res) => {
             if(res.data.user) {
-              
-                setStatus(`${account} has been found, please wait...`)  
-                setTimeout(() => {
-                    history.push(`${res.data.redirect}/${res.data.user.id}`);
-                },2000) 
+                setStatus(res.data.mssg);  
             } else {
                 setStatus(res.data.mssg);
             }

@@ -57,3 +57,7 @@
 .abt-titles {
   @apply font-bold text-3xl;
 }
+
+.sidenav-li {
+  @apply mt-5 text-xl;
+}
