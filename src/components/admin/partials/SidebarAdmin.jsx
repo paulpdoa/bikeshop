@@ -8,7 +8,7 @@ const SidebarAdmin = () => {
     return (
         <nav className="bg-gray-900 h-screen text-gray-100 col-span-1 flex flex-col items-center">
             <div className="logo">
-                <Link to='/admin/dashboard'>
+                <Link to='/dashboard'>
                     <img className="w-32 filter invert" src="/image/tulin.png" alt="logo" />
                 </Link>
             </div>

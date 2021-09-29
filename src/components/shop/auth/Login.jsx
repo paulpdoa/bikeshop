@@ -67,7 +67,7 @@ const Login = ({ setUser,setAuthStatus }) => {
                     <hr className="mt-3 border border-gray-200"></hr>
                     <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/register">Create new account</Link>
                 </div>
-                <Link className="text-md text-blue-600" to='/login/dashboard'>Login as Admin</Link>
+                <Link className="text-md text-blue-600" to='/admin/login'>Login as Admin</Link>
             </form>
             
         </div>

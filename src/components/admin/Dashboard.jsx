@@ -1,7 +1,4 @@
 import { Helmet } from 'react-helmet';
-import NavbarAdmin from './partials/NavbarAdmin';
-import { Route, Switch } from 'react-router-dom';
-import SidebarAdmin from './partials/SidebarAdmin';
 
 const Dashboard = () => {
     return (

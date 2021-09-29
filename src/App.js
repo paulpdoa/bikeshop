@@ -28,6 +28,7 @@ import Dashboard from './components/admin/Dashboard';
 import LoginAdmin from './components/admin/auth/LoginAdmin';
 import SidebarAdmin from './components/admin/partials/SidebarAdmin';
 import NavbarAdmin from './components/admin/partials/NavbarAdmin';
+import Sales from './components/admin/Sales';
 
 const App = () => {
 
@@ -83,6 +84,19 @@ const App = () => {
           <Route exact path='/changepassword/:token/:id'>
             <ChangePassword />
           </Route>
+          <Route exact path='/admin/login'>
+            <LoginAdmin />
+          </Route>
+
+          <>
+            <div className="grid grid-cols-8"> 
+            <SidebarAdmin />
+              <div className="col-span-7">
+                <NavbarAdmin />
+                <Route exact path='/dashboard' component={Dashboard} />
+              </div>
+            </div>
+          </> 
 
           <Route exact path="/notfound">
             <ErrorPage />
