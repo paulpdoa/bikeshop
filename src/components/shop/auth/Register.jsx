@@ -4,13 +4,14 @@ import {useHistory} from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import validator from 'validator';
 
-const Register = () => {
+const Register = ({userRole}) => {
 
     const [firstname,setFirstname] = useState('');
     const [lastname,setLastname] = useState('');
     const [username,setUsername] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+
     const [confirmPass,setConfirmPass] = useState('');
     const [matchPass,setMatchPass] = useState('');
     const [status,setStatus] = useState('');
@@ -52,7 +53,7 @@ const Register = () => {
                    setStatus('');
                },1000)
         } else {
-            Axios.post('/api/register',{firstName:firstname,lastName:lastname,userName:username,email,password})
+            Axios.post('/api/register',{firstName:firstname,lastName:lastname,userName:username,email,password,role:userRole})
             .then((res) => {
                 if(res.data.userNameErr || res.data.emailErr) {
                     setUsernameErr(res.data.userNameErr);
@@ -61,7 +62,7 @@ const Register = () => {
                         setUsernameErr('');
                         setErrorEmail('');
                     },2000)
-                    
+                    console.log(res);
                 } else {
                     alert(res.data.success);
                     history.push(res.data.redirect);

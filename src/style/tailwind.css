@@ -2,20 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-  body::-webkit-scrollbar {
-    width: 1em;
-  }
-   
-  body::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-  }
-   
-  body::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
-  }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
+body::-webkit-scrollbar {
+  width: 1em;
+}
+  
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+  
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
@@ -50,14 +50,16 @@
     background-repeat:no-repeat;
 }
 .profSideBtn {
-  @apply flex mt-2 text-lg cursor-pointer hover:bg-gray-300 p-2 transition duration-100 gap-5;
+  @apply flex mt-2 text-lg cursor-pointer bg-gray-300 p-2 transition duration-100 gap-5 rounded-lg;
 }
-
+.inactive {
+  @apply flex mt-2 text-lg cursor-pointer bg-transparent p-2 transition duration-100 gap-5 rounded-lg;
+}
 /* about page */
 .abt-titles {
   @apply font-bold text-3xl;
 }
 
 .sidenav-li {
-  @apply mt-5 text-xl;
+  @apply mt-5 text-xl flex items-center gap-5;
 }

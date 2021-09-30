@@ -7,8 +7,6 @@ const Forgot = () => {
 
     const [account,setAccount] = useState('');
     const [status,setStatus] = useState(''); 
-    
-    const history = useHistory();
 
     const onSubmit = (e) => {
         e.preventDefault();

@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-
+import { RiKeyFill } from 'react-icons/ri';
 const LoginAdmin = () => {
 
     const [username, setUsername] = useState('');
@@ -21,7 +21,7 @@ const LoginAdmin = () => {
             <img className="w-1/2 overflow-visible" src="/image/tulin.png" alt="tulinlogo" />
         </div>
         <form onSubmit={handleSubmit} className="col-span-1 md:w-1/2 flex flex-col justify-center items-center">
-            <h1 className="text-2xl font-bold">Welcome Admin!</h1>
+            <h1 className="text-2xl font-bold flex items-center gap-1 w-full">Admin <RiKeyFill /></h1>
             <div className="md:w-full py-1">
                 <input onChange={(e) => setUsername(e.target.value)} value={username} className="md:w-full outline-none p-2 border rounded border-gray-300" type="text" placeholder="Enter username" required />
                 <p className="text-xs text-red-500 text-left ml-2">{status}</p>
@@ -39,9 +39,9 @@ const LoginAdmin = () => {
             </div>
             <div className="md:w-full m-1">
                 <button className="bg-black text-center text-white w-full p-1 rounded hover:bg-white transition ease-in duration-100 hover:text-black hover:shadow-lg hover:ease-out">Login</button> 
-                <Link to="/forgot" className="mt-1 flex justify-center text-xs text-blue-600">Forgot password?</Link>
+                <Link to="/admin/forgot" className="mt-1 flex justify-center text-xs text-blue-600">Forgot password?</Link>
                 <hr className="mt-3 border border-gray-200"></hr>
-                <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/register">Create new account</Link>
+                <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/admin/register">Create new account</Link>
             </div>
         </form>
     </div>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Axios from 'axios';
 import { Helmet } from 'react-helmet';
 
-const Login = ({ setUser,setAuthStatus }) => {
+const Login = ({ setUser,setAuthStatus, setUserRole }) => {
 
     const [username, setUsername] = useState('');
     const [password,setPassword] = useState('');
@@ -31,6 +31,8 @@ const Login = ({ setUser,setAuthStatus }) => {
                setStatus(res.data.mssg);
            } else {
                 setUser(res.data.user);
+                window.localStorage.setItem("user",res.data.user)
+                setUserRole('user');
                 setAuthStatus(true)
                 history.push(res.data.redirect);
             }

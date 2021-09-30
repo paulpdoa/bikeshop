@@ -1,11 +1,11 @@
 import { Route, Redirect } from "react-router-dom";
 
-const ProtectedRoute = ({ isAuth, component:Component, ...rest }) => {
+const ProtectedRoute = ({ isAuth,userRole,component:Component, ...rest }) => {
     return (
         <Route 
         {...rest}
             render={(props) => {
-                if(isAuth) {
+                if(isAuth && userRole === 'user') {
                     return <Component />
                 } else {
                     return (
