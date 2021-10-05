@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import LogoutModal from '../modals/LogoutModal';
 
-const Contact = () => {
+const Contact = ({ logoutMssg }) => {
 
     const [email,setEmail] = useState('');
     const [message,setMessage] = useState('');
@@ -23,6 +24,7 @@ const Contact = () => {
                     <button className="bg-gray-600 p-2 text-gray-100 font-semibold rounded-xl w-32">Submit</button>
                 </form>
             </div>
+            { logoutMssg && <LogoutModal /> }
         </div>
     )
 }

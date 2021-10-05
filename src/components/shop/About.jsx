@@ -1,7 +1,8 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
+import LogoutModal from '../modals/LogoutModal';
 
-const About = () => {
+const About = ({ logoutMssg }) => {
     return (
         <div className="flex justify-center">
         <Helmet><title>Bicycle System | About</title></Helmet>
@@ -70,7 +71,8 @@ const About = () => {
                         </div>
                     </div>
                 </div>
-            </div>           
+            </div>          
+            { logoutMssg && <LogoutModal /> } 
         </div>
     )
 }

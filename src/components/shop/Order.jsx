@@ -1,8 +1,9 @@
 import {Helmet} from 'react-helmet';
 import {motion} from 'framer-motion';
 import {Link} from 'react-router-dom';
+import LogoutModal from '../modals/LogoutModal';
 
-const Order = () => {
+const Order = ({ logoutMssg }) => {
 
     return (
         <div className="flex justify-center">
@@ -142,6 +143,7 @@ const Order = () => {
                 </motion.div>
             </div>
             </div>
+            { logoutMssg && <LogoutModal /> }
         </div>
     )
 }

@@ -3,8 +3,9 @@ import Axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import validator from 'validator';
+import RegisterModal from '../../modals/RegisterModal';
 
-const Register = ({userRole}) => {
+const Register = ({registerMssg,setRegisterMssg}) => {
 
     const [firstname,setFirstname] = useState('');
     const [lastname,setLastname] = useState('');
@@ -53,7 +54,7 @@ const Register = ({userRole}) => {
                    setStatus('');
                },1000)
         } else {
-            Axios.post('/api/register',{firstName:firstname,lastName:lastname,userName:username,email,password,role:userRole})
+            Axios.post('/api/register',{firstName:firstname,lastName:lastname,userName:username,email,password})
             .then((res) => {
                 if(res.data.userNameErr || res.data.emailErr) {
                     setUsernameErr(res.data.userNameErr);
@@ -64,8 +65,11 @@ const Register = ({userRole}) => {
                     },2000)
                     console.log(res);
                 } else {
-                    alert(res.data.success);
-                    history.push(res.data.redirect);
+                    setRegisterMssg(true);
+                    setTimeout(() => {
+                        history.push(res.data.redirect);
+                        setRegisterMssg(false);
+                    },2000)
                 }
             });
         }
@@ -142,6 +146,8 @@ const Register = ({userRole}) => {
                     <hr className="mt-5 border border-gray"></hr>
                 </form>
             </div>
+            {/* modal */}
+            {registerMssg && <RegisterModal />}
         </div>
     )
 }

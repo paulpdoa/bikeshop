@@ -1,12 +1,21 @@
 import { Route, Redirect } from "react-router-dom";
+import Footer from "../components/shop/partials/Footer";
+import Navbar  from "../components/shop/partials/Navbar";
 
-const ProtectedRoute = ({ isAuth,userRole,component:Component, ...rest }) => {
+const ProtectedRoute = ({logoutMssg,setlogoutMssg,user,setAuthStatus,setLogoutMssg, component:Component, ...rest }) => {
     return (
         <Route 
         {...rest}
             render={(props) => {
-                if(isAuth && userRole === 'user') {
-                    return <Component />
+                if(window.localStorage.getItem('isUserAuth') === 'true' && window.localStorage.getItem("role") === 'user') {
+                    return (
+                        <>
+                            <Navbar user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} />
+                            <Component logoutMssg={logoutMssg} setlogoutMssg={setlogoutMssg} 
+                            />
+                            <Footer />    
+                        </>
+                    )
                 } else {
                     return (
                         <Redirect to={{ pathname: "/login", state: { from: props.location } }} />

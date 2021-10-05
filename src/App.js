@@ -30,17 +30,24 @@ import Sales from './components/admin/Sales';
 import DashboardRoute from './components/admin/routes/DashboardRoute';
 import AddProduct from './components/admin/AddProduct';
 import RegisterAdmin from './components/admin/auth/RegisterAdmin';
+import LogoutModal from './components/modals/LogoutModal';
+import ProfileRoute from './routes/ProfileRoute';
 
 const App = () => {
 
+  // creating dates
   let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let today = new Date();
   let date = (months[today.getMonth()]) + ' ' + today.getDate() + ', ' + today.getFullYear();
 
   const [user,setUser] = useState('');
-  // enters database for user roles
-  const [userRole,setUserRole] = useState('user');
-  const [adminRole,setAdminRole] = useState('admin');
+  const [admin,setAdmin] = useState('');
+  const [role,setRole] = useState('');
+
+  // modals
+  const [logoutMssg, setLogoutMssg] = useState(false);
+  const [registerMssg,setRegisterMssg] = useState(false);
+
 
   // profile page navigation function
   const [profileActive,setProfileActive] = useState('Details');
@@ -49,7 +56,8 @@ const App = () => {
   }
 
   // set the logged in status of the user
-  const [authStatus, setAuthStatus] = useState(true);
+  const [authStatus, setAuthStatus] = useState(false);
+  
 
   // create a route in the backend to authenticate the users, then pass a json
   useEffect(() => {
@@ -58,6 +66,7 @@ const App = () => {
     .then((res) => {
       if(res.data.isAuth) {
         setAuthStatus(res.data.isAuth);
+        setRole(res.data.role);
       }
       if(!res.data.isAuth) {
         setAuthStatus(res.data.isAuth);
@@ -67,21 +76,45 @@ const App = () => {
       console.log(err);
     })
     return () => abortController.abort();
-  });
+  },[]);
+
+    // create a route in the backend to authenticate the admin, then pass a json
+    useEffect(() => {
+    const abortController = new AbortController();
+    Axios.get('/api/admin/auth', { signal: abortController.signal })
+    .then((res) => {
+      if(res.data.isAuth && res.data.role === 'admin') {
+        setAuthStatus(res.data.isAuth);
+        setRole(res.data.role);
+      }
+      if(!res.data.isAuth) {
+        setAuthStatus(res.data.isAuth);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    return () => abortController.abort();
+  },[]);
   
   // saves the state of the logged in user even on refresh
   useEffect(() => {
     const data = window.localStorage.getItem("user");
     setUser(data);
   },[]);
+  
+  useEffect(() => {
+   const data = window.localStorage.getItem("admin");
+   setAdmin(data);
+  },[])
 
   return (
       <Switch>
           <Route exact path='/login'>
-            <Login setUser={setUser} setUserRole={setUserRole} setAuthStatus={setAuthStatus} authStatus={authStatus}/>
+            <Login setUser={setUser} setAuthStatus={setAuthStatus} authStatus={authStatus} setRole={setRole} />
           </Route>
           <Route exact path='/register'>
-            <Register userRole={userRole} authStatus={authStatus} />
+            <Register authStatus={authStatus} setRegisterMssg={setRegisterMssg} registerMssg={registerMssg} />
           </Route>
           <Route exact path='/forgot'>
             <Forgot />
@@ -91,65 +124,54 @@ const App = () => {
             <ChangePassword />
           </Route>
           <Route exact path='/admin/login'>
-            <LoginAdmin />
+            <LoginAdmin setRole={setRole} setAuthStatus={setAuthStatus} setAdmin={setAdmin} />
           </Route>
           <Route exact path='/admin/register'>
-            <RegisterAdmin />
+            <RegisterAdmin registerMssg={registerMssg} setRegisterMssg={setRegisterMssg} />
           </Route>
 
           {/* dashboard routes */}
-          <DashboardRoute exact path='/dashboard' component={Dashboard} date={date} adminRole={adminRole} />
-          <DashboardRoute exact path='/sales' component={Sales} date={date} adminRole={adminRole} />
-          <DashboardRoute exact path='/addproduct' date={date} component={AddProduct} adminRole={adminRole} />
+          <DashboardRoute exact path='/dashboard' component={Dashboard} date={date} role={role} isAuth={authStatus} admin={admin} 
+          logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute exact path='/dashboard/sales' component={Sales} date={date} role={role} admin={admin} 
+          logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute exact path='/addproduct' date={date} component={AddProduct} role={role} admin={admin} 
+          logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} />
+          {/* dashboard routes */}
 
           <Route exact path="/notfound">
             <ErrorPage />
           </Route>
       
           <> { /* shop routes */}
-            <Navbar user={user} setAuthStatus={setAuthStatus} />
+            {/* <Navbar user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} /> */}
             <Switch>
-              <ProtectedRoute exact path='/' component={Shop} isAuth={authStatus} userRole={userRole}  />
-              <Route exact path='/order'>
-                <Order />
-                <Footer />
-              </Route>
-              <Route exact path='/item/details'>
-                <ItemDetails />
-                <Footer />
-              </Route>
-              <Route exact path='/cart'> 
-                <Cart />
-                <Footer />
-              </Route>
-              <Route exact path='/customize'>
-                <Customize />
-                <Footer />
-              </Route>
-              <Route exact path='/profile/:userName'>
-                <div className="flex justify-center relative m-8">
-                  <div className="flex max-w-7xl w-full">
-                      <UserSideNav profileActive={profileActive} navigateProfile={navigateProfile} />
-                      <>
-                        { profileActive === 'Details' && <ProtectedRoute exact path='/profile/:userName' component={UserProfile} isAuth={authStatus} /> }
-                        { profileActive === 'Orders' && <ProtectedRoute exact path='/profile/:userName' component={UserOrders} isAuth={authStatus} /> }
-                        { profileActive === 'History' && <ProtectedRoute exact path='/profile/:userName' component={UserHistory} isAuth={authStatus} /> }
-                        { profileActive === 'DeleteAccount' && <ProtectedRoute exact path='/profile/:userName' component={UserDelete} isAuth={authStatus} /> }
-                      </>
-                    </div>
-                </div>
-              </Route>
-  
-              <Route exact path='/about'>
-                <About />
-                <Footer />
-              </Route>
-
-              <Route exact path='/contact-us'>
-                <Contact />
-                <Footer />  
-              </Route>
-
+              <ProtectedRoute exact path='/' component={Shop} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              />
+              <ProtectedRoute exact path='/order' component={Order} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}   
+              />
+              <ProtectedRoute exact path='/item/details' component={ItemDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              />
+              <ProtectedRoute exact path='/cart' component={Cart} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              />
+              <ProtectedRoute exact path='/customize' component={Customize} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              />
+              <ProfileRoute exact path='/profile/:userName' profileActive={profileActive} navigateProfile={navigateProfile} 
+                user={user} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} setAuthStatus={setAuthStatus}
+              />
+              <ProtectedRoute exact path='/about' component={About} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              />
+              <ProtectedRoute exact path='/contact-us' component={Contact} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} 
+              />
               <Redirect to='/notfound' />
             </Switch>
           </>

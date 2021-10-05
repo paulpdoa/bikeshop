@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion'
+import LogoutModal from '../modals/LogoutModal';
 
-const Dashboard = ({ date }) => {
-    // let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    // let today = new Date();
-    // let date = (months[today.getMonth()]) + ' ' + today.getDate() + ', ' + today.getFullYear();
+const Dashboard = ({ date, logoutMssg }) => {
 
     return (
         <div className="flex justify-center">
@@ -127,8 +126,10 @@ const Dashboard = ({ date }) => {
                         </div>
                     </div>
                 </div>
-
             </div>
+
+            {/* modal when logging out */}
+            { logoutMssg && <LogoutModal /> }
         </div>
     )
 }

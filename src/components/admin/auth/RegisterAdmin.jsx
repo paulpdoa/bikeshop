@@ -1,7 +1,10 @@
 import {useState} from 'react';
 import {Helmet} from 'react-helmet';
+import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import RegisterModal from '../../modals/RegisterModal';
 
-const RegisterAdmin = () => {
+const RegisterAdmin = ({ registerMssg,setRegisterMssg }) => {
 
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
@@ -11,8 +14,35 @@ const RegisterAdmin = () => {
     const [userNameErr,setUsernameErr] = useState('');
     const [status,setStatus] = useState('');
 
+    const history = useHistory();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(password.length < 8) {
+            setStatus('Please enter greater than 8 characters');
+            setTimeout(() => {
+                setStatus('');
+            },1000)
+        } else if(password !== confirmPass) {
+            setMatchPass("Password doesn't match");
+            setTimeout(() => {
+                setMatchPass('');
+            },1000)
+        } else {
+            Axios.post('/api/admin/register', { userName: username, password })
+            .then((res) => {
+                if(res.data.userNameErr) {
+                    setUsernameErr(res.data.userNameErr);
+                } else {
+                    setRegisterMssg(true);
+                    setTimeout(() => {
+                        history.push(res.data.redirect);
+                        setRegisterMssg(false);
+                    },2000)
+                    
+                }
+            })
+        } 
     }
 
     return (
@@ -59,6 +89,8 @@ const RegisterAdmin = () => {
                     <hr className="mt-5 border border-gray"></hr>
                 </form>
             </div>
+            {/* modal */}
+            { registerMssg && <RegisterModal />}
         </div>
     )
 }

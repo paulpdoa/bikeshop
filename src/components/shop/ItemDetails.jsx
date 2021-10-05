@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
+import LogoutModal from '../modals/LogoutModal';
 
-const ItemDetails = () => {
+const ItemDetails = ({ logoutMssg }) => {
     return (
         <div className="flex justify-center">
         <Helmet>
@@ -85,6 +86,7 @@ const ItemDetails = () => {
                     </div>
                 </motion.div>
                 </div>
+               { logoutMssg && <LogoutModal /> }
             </div>
         
     )

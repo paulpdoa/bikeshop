@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import Axios from 'axios';
 
-const Navbar = ({user,setAuthStatus}) => {
+const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
     const [hide,setHide] = useState(false);
     const history = useHistory();
 
@@ -18,10 +18,15 @@ const Navbar = ({user,setAuthStatus}) => {
     const onLogout = () => {
         Axios.get('/api/logout')
         .then((res) => {
-            alert("Thank you for using our website");
-            window.localStorage.removeItem("user");
-            history.push(res.data.redirect);
-            setAuthStatus(res.data.isAuth);
+            setLogoutMssg(true);
+            setTimeout(() => {
+                window.localStorage.removeItem("user");
+                window.localStorage.removeItem("isUserAuth");
+                window.localStorage.removeItem("role");
+                history.push(res.data.redirect);
+                setAuthStatus(res.data.isAuth);
+                setLogoutMssg(false);
+            },2000)
         });
     }
 

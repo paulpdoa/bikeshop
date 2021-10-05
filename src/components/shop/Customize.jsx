@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {Helmet} from 'react-helmet';
+import LogoutModal from '../modals/LogoutModal';
 
-const Customize = () => {
+const Customize = ({ logoutMssg }) => {
 
     const [show,setShow] = useState(false);
 
@@ -144,6 +145,7 @@ const Customize = () => {
                 </div>
             </motion.div>
             </div>
+            { logoutMssg && <LogoutModal /> }
         </div>
     )
 }

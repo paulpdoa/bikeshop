@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import {motion} from 'framer-motion';
 import {Helmet} from 'react-helmet';
 import Footer from './partials/Footer';
+import LogoutModal from '../modals/LogoutModal';
 
-const Shop = () => {
+const Shop = ({ logoutMssg }) => {
 
     return (
         <div className="bg-gray-100 relative"> {/* banner */}
@@ -121,6 +122,7 @@ const Shop = () => {
                         </div>
                     </div>
                 </div>
+              {logoutMssg && <LogoutModal />}
             </div>
             <Footer />
         </div>

@@ -2,7 +2,10 @@ import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { RiKeyFill } from 'react-icons/ri';
-const LoginAdmin = () => {
+import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
+const LoginAdmin = ({ setRole,setAuthStatus,setAdmin }) => {
 
     const [username, setUsername] = useState('');
     const [password,setPassword] = useState('');
@@ -10,8 +13,26 @@ const LoginAdmin = () => {
     const [status,setStatus] = useState('');
     const [passStatus,setPassStatus] = useState('');
 
+    const history = useHistory();
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        Axios.post('/api/admin/login', { userName: username, password })
+        .then((res) => {
+            if(res.data.mssg) {
+                setStatus(res.data.mssg);
+            } else if(res.data.pass) {
+                setPassStatus(res.data.pass);
+            } else {
+                setRole(res.data.role);
+                setAdmin(res.data.admin);
+                window.localStorage.setItem("admin",res.data.admin);
+                window.localStorage.setItem("role", 'admin');
+                window.localStorage.setItem("isAdminAuth", true);
+                setAuthStatus(true);
+                history.push(res.data.redirect);
+            }
+        })
     }
 
     return (
@@ -43,6 +64,7 @@ const LoginAdmin = () => {
                 <hr className="mt-3 border border-gray-200"></hr>
                 <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/admin/register">Create new account</Link>
             </div>
+            <Link className="text-sm text-blue-600" to='/login'>Login as customer</Link>
         </form>
     </div>
     )
