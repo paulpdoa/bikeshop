@@ -2,36 +2,41 @@ import { Switch,Route, Redirect } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
 
+// Customer Component Routes
+import DashboardRoute from './components/admin/routes/DashboardRoute';
+import ProfileRoute from './routes/ProfileRoute';
+import OrderRoute from './routes/OrderRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
-
+// Client Webpage
 import Login from './components/shop/auth/Login';
 import Register from './components/shop/auth/Register';
 import Forgot from './components/shop/auth/Forgot';
 import ChangePassword from './components/shop/auth/ChangePassword';
 import ErrorPage from './components/shop/ErrorPage';
-import Order from './components/shop/Order';
-import Navbar from './components/shop/partials/Navbar';
 import Footer from './components/shop/partials/Footer';
 import Shop from './components/shop/Shop';
-import ItemDetails from './components/shop/ItemDetails';
+import BikeDetails from './components/shop/BikeDetails';
 import Cart from './components/shop/Cart';
 import Customize from './components/shop/Customize';
-import UserProfile from './components/shop/profile/UserProfile';
-import UserOrders from './components/shop/profile/UserOrders';
-import UserSideNav from './components/shop/profile/UserSideNav';
-import UserHistory from './components/shop/profile/UserHistory';
-import UserDelete from './components/shop/profile/UserDelete';
 import About from './components/shop/About';
 import Contact from './components/shop/Contact';
-// admin
+import Bicycles from './components/shop/orders/Bicycles';   
+import ClientParts from './components/shop/orders/Parts';
+import PartDetails from './components/shop/PartDetails';
+import Accessories from './components/shop/orders/Accessories';
+import AccessoryDetails from './components/shop/AccessoryDetails';
+// Admin Webpage
 import Dashboard from './components/admin/Dashboard';
 import LoginAdmin from './components/admin/auth/LoginAdmin';
 import Sales from './components/admin/Sales';
-import DashboardRoute from './components/admin/routes/DashboardRoute';
 import AddProduct from './components/admin/AddProduct';
 import RegisterAdmin from './components/admin/auth/RegisterAdmin';
-import LogoutModal from './components/modals/LogoutModal';
-import ProfileRoute from './routes/ProfileRoute';
+import Orders from './components/admin/Orders';
+import Bikes from './components/admin/Bikes';
+import Parts from './components/admin/Parts';
+import Schedule from './components/admin/Schedule';
+import AccessoriesAdmin from './components/admin/Accessories';
+
 
 const App = () => {
 
@@ -47,6 +52,8 @@ const App = () => {
   // modals
   const [logoutMssg, setLogoutMssg] = useState(false);
   const [registerMssg,setRegisterMssg] = useState(false);
+  const [addProductMssg,setAddProductMssg] = useState(false);
+  const [addToCart,setAddToCart] = useState(false);
 
 
   // profile page navigation function
@@ -57,7 +64,6 @@ const App = () => {
 
   // set the logged in status of the user
   const [authStatus, setAuthStatus] = useState(false);
-  
 
   // create a route in the backend to authenticate the users, then pass a json
   useEffect(() => {
@@ -138,7 +144,22 @@ const App = () => {
           logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} />
 
           <DashboardRoute exact path='/addproduct' date={date} component={AddProduct} role={role} admin={admin} 
-          logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} />
+          logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} addProductMssg={addProductMssg} setAddProductMssg={setAddProductMssg} />
+
+          <DashboardRoute exact path='/dashboard/orders' date={date} component={Orders} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute exact path='/dashboard/bicycles' date={date} component={Bikes} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute exact path='/dashboard/parts' date={date} component={Parts} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute exact path='/dashboard/accessories' date={date} component={AccessoriesAdmin} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} />
+          
+          <DashboardRoute exact path='/dashboard/schedule' date={date} component={Schedule} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} />
           {/* dashboard routes */}
 
           <Route exact path="/notfound">
@@ -146,31 +167,42 @@ const App = () => {
           </Route>
       
           <> { /* shop routes */}
-            {/* <Navbar user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} /> */}
             <Switch>
               <ProtectedRoute exact path='/' component={Shop} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+                user={user} setAuthStatus={setAuthStatus}
               />
-              <ProtectedRoute exact path='/order' component={Order} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}   
+              <OrderRoute exact path='/bikes' component={Bicycles} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} 
               />
-              <ProtectedRoute exact path='/item/details' component={ItemDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              <OrderRoute exact path='/parts' component={ClientParts} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} 
               />
-              <ProtectedRoute exact path='/cart' component={Cart} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+              <OrderRoute exact path='/accessories' component={Accessories} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} 
+              />
+              <ProtectedRoute exact path='/part/details/:item' component={PartDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} addToCart={addToCart} setAddToCart={setAddToCart}
+              />
+              <ProtectedRoute exact path='/bicycle/details/:item' component={BikeDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} addToCart={addToCart} setAddToCart={setAddToCart}
+              />
+              <ProtectedRoute exact path='/accessory/details/:item' component={AccessoryDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} addToCart={addToCart} setAddToCart={setAddToCart}
+              />
+              <ProtectedRoute exact path='/cart/:id' component={Cart} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} 
               />
               <ProtectedRoute exact path='/customize' component={Customize} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+                user={user} setAuthStatus={setAuthStatus} 
               />
               <ProfileRoute exact path='/profile/:userName' profileActive={profileActive} navigateProfile={navigateProfile} 
                 user={user} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} setAuthStatus={setAuthStatus}
               />
               <ProtectedRoute exact path='/about' component={About} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg}
+                user={user} setAuthStatus={setAuthStatus}
               />
               <ProtectedRoute exact path='/contact-us' component={Contact} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus}
               />
               <Redirect to='/notfound' />
             </Switch>

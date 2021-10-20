@@ -32,7 +32,8 @@ const Login = ({ setUser,setAuthStatus, setRole }) => {
            } else {
                 window.localStorage.setItem("user",res.data.user)
                 window.localStorage.setItem("isUserAuth", true);
-                window.localStorage.setItem("role", 'user');
+                window.localStorage.setItem("role", 'customer');
+                window.localStorage.setItem("id",res.data.userID);
                 setAuthStatus(true)
                 setRole(res.data.role);
                 setUser(res.data.user);
@@ -71,7 +72,6 @@ const Login = ({ setUser,setAuthStatus, setRole }) => {
                     <hr className="mt-3 border border-gray-200"></hr>
                     <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/register">Create new account</Link>
                 </div>
-                <Link className="text-sm text-blue-600" to='/admin/login'>Login as Admin</Link>
             </form>
             
         </div>

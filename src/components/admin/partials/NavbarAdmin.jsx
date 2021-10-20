@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NavbarAdmin = ({ admin }) => {
     return (
-        <nav className="flex justify-between items-center p-4 shadow-xl">
+        <nav className="flex justify-between items-center p-4 shadow-xl bg-gray-100">
             <div className="flex gap-20 items-center">
                 <svg className="w-10 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />

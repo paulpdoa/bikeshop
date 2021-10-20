@@ -15,7 +15,7 @@ const UserProfile = () => {
     const [user,setUser] = useState([]);
 
     useEffect(() =>  {
-        Axios.get(`/api/users/${userName}`)
+        Axios.get(`/api/customers/${userName}`)
             .then((res) => {
                 setUser([{
                     id: res.data.id,
@@ -29,7 +29,9 @@ const UserProfile = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('clicked');
+        
+        Axios.put(`/api/users/${userName}`,{firstname,lastname,username,email,password})
+        .then(res => console.log(res))
     }
 
     return (

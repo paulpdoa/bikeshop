@@ -1,10 +1,20 @@
 import { Link, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import {BsCaretDownFill} from 'react-icons/bs';
+import { FaUserCircle } from 'react-icons/fa';
+import { FiLogOut } from 'react-icons/fi';
 import Axios from 'axios';
 
 const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
+    const id = window.localStorage.getItem("id");
     const [hide,setHide] = useState(false);
+    const customer = window.localStorage.getItem("user");
+    const [total,setTotal] = useState(0);
+    
     const history = useHistory();
+
+    // for logout and profile showing button
+    const [showLogout,setShowLogout] = useState(false);
 
     window.addEventListener('scroll', () => {
        if(window.scrollY === 0) {
@@ -13,6 +23,27 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
           setHide(true);
        }
     })
+
+
+
+    // computes total price
+    useEffect(() => {
+        Axios.get(`/customer/cart/${id}`)
+        .then((res) => {
+            const totalLength = res.data.length;
+            setTotal(totalLength);
+        })
+    },[id])
+    
+    // //change url from id to username of logged in user
+    // useEffect(() => {
+    //     Axios.get(`/customer/cart/${id}`)
+    //     .then((res) => {
+    //         res.data.forEach((customer) => {
+    //             setCustomer(customer.User.userName);
+    //         })
+    //     })
+    // },[id])
 
     // logout the user upon click
     const onLogout = () => {
@@ -23,6 +54,7 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
                 window.localStorage.removeItem("user");
                 window.localStorage.removeItem("isUserAuth");
                 window.localStorage.removeItem("role");
+                window.localStorage.removeItem("id");
                 history.push(res.data.redirect);
                 setAuthStatus(res.data.isAuth);
                 setLogoutMssg(false);
@@ -41,14 +73,25 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
                 <ul className="flex mr-20 items-center">
                     <li className="navBtns"><Link  to="/">Home</Link></li>
                     <li className="navBtns ml-5"><Link to="/about">About</Link></li>
-                    {user ? 
-                    (<><li className="navBtns ml-5 cursor-pointer"><Link to={`/profile/${user}`}>{user}</Link></li>
-                    <li onClick={onLogout} className="navBtns ml-5 cursor-pointer">Logout</li></>) 
-                        :
-                    <li className="navBtns ml-5"><Link to="/login">Login</Link></li> }                    
-                    <li className="navBtns ml-5 border-2 border-white p-1 rounded cursor-pointer">
-                        <svg className="w-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        <Link to="/cart">$0.00</Link>
+                      
+                    <li className="navBtns ml-5 border-2 border-white p-1 rounded-full cursor-pointer">
+                        <Link to={`/cart/${customer}`}>
+                            <svg className="w-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                            <span className="text-xs bg-red-500 rounded-full font-bold absolute text-center w-4 top-0 -ml-1">{total}</span>
+                        </Link>
+                    </li>
+                    <li onClick={() => setShowLogout(!showLogout)} className="relative ml-5 rounded-md p-1">
+                        <BsCaretDownFill className="navBtns cursor-pointer text-3xl border-2 bg-gray-800 p-1 rounded-md" />
+                        { showLogout && <div className="flex flex-col absolute border border-gray-800 rounded-xl p-3 mt-2 z-50 w-44 bg-gray-800 -ml-32">
+                            <div className="flex items-center gap-2 navBtns">
+                                <FaUserCircle />
+                                <Link className="text-lg" to={`/profile/${user}`}>{user}</Link>
+                            </div>
+                            <div className="flex items-center gap-2 navBtns">
+                                <FiLogOut />
+                                <span onClick={onLogout} className="text-lg cursor-pointer">Logout</span>
+                            </div>
+                        </div>}
                     </li>
                 </ul>
             </div> }
@@ -56,7 +99,7 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
                 <div className="text-white flex justify-evenly p-3">
                     <Link className="navBtns" to="/bikes">BIKES</Link>
                     <Link className="navBtns" to="/service">SERVICE</Link>
-                    <Link className="navBtns" to="/bikeparts">BIKE PARTS</Link>
+                    <Link className="navBtns" to="/parts">BIKE PARTS</Link>
                     <Link className="navBtns" to="/accessories">ACCESSORIES</Link>
                     <Link className="navBtns" to="/contact-us">CONTACT US</Link>
                 </div>

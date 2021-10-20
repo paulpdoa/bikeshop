@@ -1,7 +1,6 @@
 import React,{ useState } from 'react'
 import { Helmet } from 'react-helmet';
 import Axios from 'axios';
-import { useHistory } from 'react-router-dom';
 
 const Forgot = () => {
 

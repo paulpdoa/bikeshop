@@ -1,13 +1,57 @@
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
-import LogoutModal from '../modals/LogoutModal';
+import { useParams,useHistory } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import Axios from 'axios';
 
-const ItemDetails = ({ logoutMssg }) => {
+import LogoutModal from '../modals/LogoutModal';
+import CartModal from '../modals/CartModal';
+
+const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
+
+    const { item } = useParams();
+    const imageLocation = 'http://localhost:5000/products/'
+    const [bike,setBike] = useState('');
+    const [customerId,setCustomerId] = useState(0);
+    const [quantity,setQuantity] = useState(1);
+    const user = window.localStorage.getItem("user");
+
+    const history = useHistory();
+    
+    // get the customer id to be able to insert in the database
+    useEffect(() => {
+        const customer_Id = window.localStorage.getItem("id");
+        setCustomerId(customer_Id);
+    },[])
+
+    useEffect(() => {
+        Axios.get(`/api/bicycles/${item}`)
+        .then((res) => {
+            setBike(res.data);
+        })
+    },[item])
+
+    // add to cart function
+    const addToCart = (e) => {
+        e.preventDefault();
+        const buyerId = Number(customerId);
+        
+        Axios.post('/customer/cart', { productId: bike.id, buyerId, quantity: quantity })
+        .then((res) => {
+            setAddToCart(res.data.status);
+        })
+    }
+
+    // close add to cart modal
+    const closeModal = (state) => {
+        setAddToCart(state);
+        history.push(`/cart/${user}`)
+    }
+
     return (
         <div className="flex justify-center">
         <Helmet>
-            <title>Bicycle System | Item Detail</title>
+            <title>Bicycle System | {`${bike.brand} ${bike.item}`}</title>
         </Helmet>
         <div className="h-screen grid grid-cols-2 w-full max-w-7xl"> 
             <motion.div
@@ -16,12 +60,12 @@ const ItemDetails = ({ logoutMssg }) => {
             transition={{ duration:0.5,type:'spring',stiffness:50 }} 
             className="flex justify-center"> { /* item image here */ }
                 <div className="">
-                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src="/image/hub.jpg" alt="hub" />
+                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src={`${imageLocation}${bike.image}`} alt={bike.item} />
                     <div className="text-center mt-2"> {/*colors here */}
                         <span className="text-gray-700 font-normal select-none">Blue / Campagnolo</span>
                         <div className="ml-auto mr-auto flex justify-around w-16">
-                            <img className="object-cover w-18 rounded-xl border-2 border-blue-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src="/image/hub.jpg" alt="hub" />
-                            <img className="object-cover w-18 rounded-xl border-2 border-red-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src="/image/hub.jpg" alt="hub" />
+                            <img className="object-cover w-18 rounded-xl border-2 border-blue-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${bike.image}`} alt={bike.item} />
+                            <img className="object-cover w-18 rounded-xl border-2 border-red-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${bike.image}`} alt={bike.item} />
                         </div>
                     </div>
                 </div>
@@ -33,11 +77,11 @@ const ItemDetails = ({ logoutMssg }) => {
             transition={{ delay: 0.9 }} 
             className="px-10 py-20"> { /* information of item here */ }
                 <div className="select-none">{ /* information brand */ }
-                    <h3 className="font-medium text-gray-700 text-xl">Shimano</h3>
-                    <p className="font-semibold text-gray-700 text-3xl">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt?</p>
+                    <h3 className="font-medium text-gray-700 text-xl">{bike.brand}</h3>
+                    <p className="font-semibold text-gray-700 text-3xl">{bike.description}</p>
                 </div>
                 <div className="py-8">{ /* information price model etc.. */ }
-                    <span className="font-medium text-2xl text-gray-900 select-none">$ 2,119.00</span>
+                    <span className="font-medium text-2xl text-gray-900 select-none">₱{bike.price}</span>
                     <div className="flex justify-evenly py-3">
                         <div className="w-full">
                             <span className="font-semibold text-gray-700 select-none">Color:</span><br/>
@@ -62,11 +106,17 @@ const ItemDetails = ({ logoutMssg }) => {
                         <div className="flex py-4"> {/* quantity add to cart */}
                             <div>
                                 <span>Quantity</span><br/>
-                                <input className="p-1 w-1/2 border border-gray-800 rounded-sm" type="number" name="quantity" value="1" />
+                                <div className="flex gap-2">
+                                    <span onClick={() => setQuantity(quantity-1)} className="font-semibold text-xl cursor-pointer">-</span>
+                                    <span className="font-semibold text-xl">{quantity}</span>
+                                    <span onClick={() => setQuantity(quantity+1)} className="font-semibold text-xl cursor-pointer">+</span>
+                                </div>
                             </div>
-                            <div className="flex justify-center items-center p-2 mt-2">
-                                <Link to='/cart'><button className="bg-yellow-500 text-gray-200 p-2 rounded-md">Add to Cart</button></Link>
-                            </div>
+                            <form onSubmit={addToCart} className="flex justify-center items-center p-2 mt-2">
+                                {/* Add the id to the cart table */}
+
+                                <button className="bg-yellow-500 text-gray-200 p-2 rounded-md">Add to Cart</button>
+                            </form>
                         </div>
 
                         <div className="flex justify-between">  {/* wish list and social media */}
@@ -87,9 +137,10 @@ const ItemDetails = ({ logoutMssg }) => {
                 </motion.div>
                 </div>
                { logoutMssg && <LogoutModal /> }
+               { cartMssg && <CartModal closeModal={closeModal} />}
             </div>
         
     )
 }
 
-export default ItemDetails
+export default BikeDetails;

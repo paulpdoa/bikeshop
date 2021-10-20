@@ -13,11 +13,11 @@ const ProfileRoute = ({ exact, path, user,setAuthStatus,logoutMssg, setLogoutMss
         <Route 
         {...rest}
             render={(props) => {
-                if(window.localStorage.getItem('isUserAuth') === 'true' && window.localStorage.getItem("role") === 'user') {
+                if(window.localStorage.getItem('isUserAuth') === 'true' && window.localStorage.getItem("role") === 'customer') {
                     return (
                         <>
                             <Navbar user={user} setLogoutMssg={setLogoutMssg} setAuthStatus={setAuthStatus} />
-                            <div className="flex max-w-7xl w-full">
+                            <div className="flex justify-center max-w-7xl ml-auto mr-auto">
                                 <UserSideNav profileActive={profileActive} navigateProfile={navigateProfile} />
                                 <div className="flex justify-center items-center w-full">
                                     { profileActive === 'Details' && <UserProfile /> }

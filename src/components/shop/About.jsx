@@ -1,13 +1,45 @@
-import React from 'react'
+import React,{ useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import LogoutModal from '../modals/LogoutModal';
+import { motion,useAnimation } from 'framer-motion';
+import {useInView}  from 'react-intersection-observer';
+
+const topVariant = {
+    hidden: {
+        y:-100,
+        opacity:0
+    },
+    visible: {
+        duration:2,
+        y:0,
+        opacity:1
+    }
+}
 
 const About = ({ logoutMssg }) => {
+
+    const {ref,inView} = useInView({
+        threshold:0.3
+    })
+    const animation = useAnimation();
+    useEffect(() => {
+        if(inView) {
+            animation.start('visible')
+        } else {
+            animation.start('hidden')
+        }
+    },[animation, inView])
+
+
     return (
         <div className="flex justify-center">
         <Helmet><title>Bicycle System | About</title></Helmet>
             <div className="max-w-7xl w-full">
-                <div className="py-16 px-16">
+                <motion.div ref={ref} className="py-16 px-16"
+                variants={topVariant}
+                initial="hidden"
+                animate={animation}
+                >
                     <h1 className="abt-titles">About Tulin Bicycle Shop</h1>
                     <div className="grid grid-cols-3 mt-5">
                         <div className="col-span-1 w-3/4">
@@ -17,7 +49,7 @@ const About = ({ logoutMssg }) => {
                             <p className="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad consequatur, deleniti nesciunt repudiandae dolore ducimus itaque possimus sit. Eius iste ullam beatae ratione eum incidunt voluptate vel reiciendis, architecto est, modi illo, recusandae possimus animi. Reiciendis, incidunt eum? Iure, similique magni. Consequatur saepe maiores recusandae corporis cupiditate modi vel, doloribus sint laborum quam ab sed soluta fugit illum culpa repellat a, nisi in voluptatum rem! Accusamus, impedit? Tempore deserunt a itaque in quibusdam vel sapiente rem alias inventore facilis. Repudiandae, dolores dolorem molestias nesciunt quidem odio porro voluptatibus? Eius ea esse numquam vero dolor est cum incidunt tenetur facere nihil.</p>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
                 <div className="px-16 py-16">
                     <h1 className="abt-titles">Our Mission</h1>

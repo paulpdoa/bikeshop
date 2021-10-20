@@ -1,8 +1,18 @@
 import { Helmet } from 'react-helmet';
-import { motion } from 'framer-motion'
 import LogoutModal from '../modals/LogoutModal';
+import { useEffect,useState } from 'react';
+import Axios from 'axios';
 
 const Dashboard = ({ date, logoutMssg }) => {
+
+    const [userCount,setUserCount] = useState('');
+
+    useEffect(() => {
+        Axios.get('/api/customers')
+            .then((res) => {
+                setUserCount(res.data.length);
+            })
+    },[])
 
     return (
         <div className="flex justify-center">
@@ -59,7 +69,7 @@ const Dashboard = ({ date, logoutMssg }) => {
                             </svg>
                         </div>
                         <div>
-                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="users">12,273</label>
+                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="users">{userCount}</label>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* universal container */
+.main-container {
+  @apply flex justify-center;
+}
+.fit-container {
+  @apply px-16 py-16 w-full max-w-7xl;
+}
+.titles {
+  @apply font-bold text-3xl;
+}
+/* universal container */
+
 body::-webkit-scrollbar {
   width: 1em;
 }
@@ -59,7 +71,27 @@ body::-webkit-scrollbar-thumb {
 .abt-titles {
   @apply font-bold text-3xl;
 }
-
 .sidenav-li {
-  @apply mt-5 text-xl flex items-center gap-5;
+  @apply mt-5 text-xl flex items-center gap-5 transition transform duration-300 hover:-translate-y-2;
+}
+
+/* orders page for admin */
+.order-title {
+  @apply flex items-center justify-between;
+}
+.main-card {
+  @apply flex justify-around gap-5 mt-10;
+}
+.order-cards {
+  @apply bg-white rounded-md w-full shadow-xl px-10 py-5 max-h-96 overflow-y-scroll;
+}
+.order-card-title {
+  @apply font-bold text-2xl;
+}
+/* bicycles page */
+.bicycle-table-title {
+  @apply font-semibold text-lg;
+}
+.bicycle-table-content {
+  @apply grid grid-cols-6 justify-items-center;
 }

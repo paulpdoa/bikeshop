@@ -19,7 +19,7 @@ const Shop = ({ logoutMssg }) => {
                 <div className="max-w-7xl w-full ">
                     <div className="relative px-16 h-full flex justify-start items-center w-full">
                         <h1 className="absolute uppercase filter select-none invert bottom-1/2 font-bold text-6xl animate-pulse">Discover<br/> Different</h1>
-                        <Link className="absolute uppercase text-white p-2 border-2 rounded-sm font-bold border-white ml-1 mt-12 animate-pulse" to="/order">Find out more</Link>
+                        <Link className="absolute uppercase text-white p-2 border-2 rounded-sm font-bold border-white ml-1 mt-12 animate-pulse" to="/bikes">Find out more</Link>
                     </div>
                 </div>
             </motion.header>
@@ -96,9 +96,9 @@ const Shop = ({ logoutMssg }) => {
                         <div>
                             <h2 className="font-bold select-none">Products</h2>
                             <ul className="py-8">
-                                <li className="mt-2">Product 1</li>
-                                <li className="mt-2">Product 2</li>
-                                <li className="mt-2">Product 3</li>
+                                <li className="mt-2">Bicycles</li>
+                                <li className="mt-2">Bicycle Parts</li>
+                                <li className="mt-2">Accessories</li>
                                 <li className="mt-2">Product 4</li>
                             </ul>
                         </div>
