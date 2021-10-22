@@ -45,10 +45,10 @@ const Accessories = ({ date, logoutMssg }) => {
                    >No accessories yet...</div> : accessories.map((accessory) => (
                     <div className="bicycle-table-content mt-5" key={accessory.id}>
                         <div className="col-span-2 grid grid-cols-2 gap-2 ml-5 w-full">
-                            <img className="w-full border h-32 border-gray-800" src={`${imageLocation}${accessory.image}`} alt={accessory.item} />
+                            <img className="w-full border h-32 border-gray-800" src={`${imageLocation}${accessory.product_image}`} alt={accessory.item_name} />
                             <div>
-                                <h2 className="font-semibold text-md">{accessory.brand}</h2>
-                                <h2 className="font-semibold text-md">{accessory.item}</h2>
+                                <h2 className="font-semibold text-md">{accessory.brand_name}</h2>
+                                <h2 className="font-semibold text-md">{accessory.item_name}</h2>
                                 <p>{accessory.description}</p>
                             </div>
                         </div>
@@ -64,7 +64,7 @@ const Accessories = ({ date, logoutMssg }) => {
                             </svg>
                         </div>
                         <div className="flex items-center col-span-1">
-                            <span className="font-bold text-gray-800">Php. {accessory.price}</span>
+                            <span className="font-bold text-gray-800">₱{accessory.product_price}</span>
                         </div>
                         <div className="col-span-2 w-full grid grid-cols-2 justify-items-center items-center">
                             <label className="font-bold text-gray-800" htmlFor="">{accessory.quantity}</label>

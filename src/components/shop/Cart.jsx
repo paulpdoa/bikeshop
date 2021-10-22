@@ -7,7 +7,7 @@ import { useEffect,useState } from 'react';
 const Cart = ({ logoutMssg }) => {
 
     const [carts,setCarts] = useState('');
-    const [cartLength,setCartLength] = useState('');
+    const [cartLength,setCartLength] = useState(0);
     const [total,setTotal] = useState(0);
 
     const id = window.localStorage.getItem("id");
@@ -18,14 +18,14 @@ const Cart = ({ logoutMssg }) => {
           setCarts(res.data)
           setCartLength(res.data.length)
             const totalPrice = res.data.reduce((currentTotal,data) => {
-                    return Number(data.Product.price * data.quantity) + currentTotal;
+                    return Number(data.Inventory.product_price * data.quantity) + currentTotal;
             },0)
             setTotal(totalPrice);
         })
     },[id])
     // removing items
     const removeItem = (item) => {
-       const filteredItem =  carts.filter((cart) => item.id !== cart.Product.id)
+       const filteredItem =  carts.filter((cart) => item.id !== cart.Inventory.id)
        return filteredItem;
     }
 
@@ -70,32 +70,34 @@ const Cart = ({ logoutMssg }) => {
                 <tbody key={cart.id}>
                     <tr>
                         <td className="flex mt-2 select-none">
-                            <img className="w-60 h-32 rounded-xl" src={`http://localhost:5000/products/${cart.Product.image}`} alt={cart.Product.item} />
+                            <img className="w-60 h-32 rounded-xl" src={`http://localhost:5000/products/${cart.Inventory.product_image}`} alt={cart.Inventory.item_name} />
                             <div className="px-8">
-                                <p className="text-xl font-semibold text-gray-700">{cart.Product.description}</p>
+                                <p className="text-xl font-semibold text-gray-700">{cart.Inventory.description}</p>
                                 <p className="text-gray-800">Blue, Campagnolo</p>
                                 <p className="text-gray-700 text-sm mt-2">Stock Status: Ships from Warehouse</p>
                                 <p className="text-gray-700 text-sm mt-2">Available In: Quality Bike Parts - CENTRAL</p>
                                 <div className="flex text-gray-700 text-sm mt-2">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path></svg>
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
+                                    </svg>
                                     <p>No Air Shipping</p>
                                 </div>
                             </div>
                         </td>
-                        <td className="select-none">₱{cart.Product.price}</td>
+                        <td className="select-none">₱{cart.Inventory.product_price}</td>
                         <td>
                             <input className="w-1/2 text-center outline-none border border-gray-400 rounded-sm ml-14" readOnly type="number" name="quantity" value={cart.quantity} />
                             <div className="mt-2 flex justify-around text-gray-700 text-sm">
                                 <span>Update</span>
-                                <span onClick={() => removeItem(cart.Product)}>Remove</span>
+                                <span onClick={() => removeItem(cart.Inventory)}>Remove</span>
                             </div>
                         </td>
-                        <td className="select-none">₱{cart.Product.price * cart.quantity}</td>
+                        <td className="select-none">₱{cart.Inventory.product_price * cart.quantity}</td>
                     </tr>
                 </tbody>
                )) }
             </motion.table>
-           
             </div>
             { logoutMssg && <LogoutModal /> }
         </div>

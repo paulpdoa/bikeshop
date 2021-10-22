@@ -44,13 +44,13 @@ const Bicycles = ({ logoutMssg }) => {
                         <div className="flex gap-5 flex-wrap">
                             { bikes && bikes.map((bike) => (
                             <div className="flex py-5" key={bike.id}> { /* items goes here */ }
-                                <Link to={`/bicycle/details/${bike.item}`}>
+                                <Link to={`/bicycle/details/${bike.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
-                                        <img className="w-60 h-36 object-cover" src={`${imageLocation}${bike.image}`} alt={bike.item} />
+                                        <img className="w-60 h-36 object-cover" src={`${imageLocation}${bike.product_image}`} alt={bike.item_name} />
                                         <div className="grid grid-rows-3 justify-items-center m-2">
-                                            <span className="font-semibold text-gray-800">{bike.brand}</span>
-                                            <span className="font-normal text-sm text-gray-600">{bike.item}</span>
-                                            <span className="font-semibold text-gray-900 text-xl">Php. {bike.price}</span>
+                                            <span className="font-semibold text-gray-800">{bike.brand_name}</span>
+                                            <span className="font-normal text-sm text-gray-600">{bike.item_name}</span>
+                                            <span className="font-semibold text-gray-900 text-xl">₱{bike.product_price}</span>
                                         </div>
                                     </div>
                                 </Link>

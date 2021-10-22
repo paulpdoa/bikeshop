@@ -44,13 +44,13 @@ const Accessories = ({ logoutMssg }) => {
                         <div className="flex gap-5 flex-wrap"> { /* Accessory Content Here */ }
                         { accessories && accessories.map((accessory) => (
                             <div className="flex py-5" key={accessory.id}> { /* items goes here */ }
-                                <Link to={`/accessory/details/${accessory.item}`}>
+                                <Link to={`/accessory/details/${accessory.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
-                                        <img className="w-60 h-36 object-cover" src={`${imageLocation}${accessory.image}`} alt={accessory.item} />
+                                        <img className="w-60 h-36 object-cover" src={`${imageLocation}${accessory.product_image}`} alt={accessory.item_name} />
                                         <div className="grid grid-rows-3 justify-items-center m-2">
-                                            <span className="font-semibold text-gray-800">{accessory.brand}</span>
-                                            <span className="font-normal text-sm text-gray-600">{accessory.item}</span>
-                                            <span className="font-semibold text-gray-900 text-xl">Php. {accessory.price}</span>
+                                            <span className="font-semibold text-gray-800">{accessory.brand_name}</span>
+                                            <span className="font-normal text-sm text-gray-600">{accessory.item_name}</span>
+                                            <span className="font-semibold text-gray-900 text-xl">₱{accessory.product_price}</span>
                                         </div>
                                     </div>
                                 </Link>

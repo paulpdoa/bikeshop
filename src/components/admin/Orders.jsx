@@ -1,6 +1,9 @@
 import { Helmet } from 'react-helmet';
 import LogoutModal from '../modals/LogoutModal';
-const Orders = ({date,logoutMssg}) => {
+import OrderDetailModal from '../modals/OrderDetailModal';
+
+const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
+
     return (
         <div className="main-container">
         <Helmet><title>Bicycle System | Orders</title></Helmet>
@@ -22,7 +25,7 @@ const Orders = ({date,logoutMssg}) => {
                                     <h3 className="font-semibold">Item Description...</h3>
                                     <span className="text-sm">Qty. 1</span>
                                 </div>
-                                <button className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
+                                <button onClick={() => setOrderDetail(true)} className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
                             </div>
                         </div>
                         <div className="flex mt-10">
@@ -133,6 +136,7 @@ const Orders = ({date,logoutMssg}) => {
             </div>
             {/* logout modal */}
             { logoutMssg && <LogoutModal /> }
+            { orderDetail && <OrderDetailModal setOrderDetail={ setOrderDetail } /> }
         </div>
     )
 }

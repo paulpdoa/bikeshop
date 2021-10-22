@@ -1,18 +1,21 @@
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 import { AiOutlineLeft } from 'react-icons/ai';
 import { FiPlus } from 'react-icons/fi';
-import LogoutModal from '../modals/LogoutModal';
+
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
+
 import AddProductModal from '../modals/AddProductModal';
+import LogoutModal from '../modals/LogoutModal';
 
 const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
     const [image,setImage] = useState({});
     const [brand,setBrand] = useState('');
     const [productType,setProductType] = useState('');
     const [item,setItem] = useState('');
+    const [productColor,setProductColor] = useState('');
     const [quantity,setQuantity] = useState(0);
     const [price,setPrice] = useState('');
     const [description,setDescription] = useState('');
@@ -20,6 +23,16 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
     const [showImage,setShowImage] = useState(false); 
     const [imageHolder,setImageHolder] = useState('');
     const history = useHistory();
+
+    // Fetch product colors available
+    const [colors,setColors] = useState('');
+
+    useEffect(() => {
+        Axios.get('/api/product-colors')
+        .then((res) => {
+            setColors(res.data);
+        })
+    }, [])  
 
     // closes modal
     const closeModal = (state) => {
@@ -33,14 +46,16 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
         formData.append('product',image);
         formData.append('product_type',productType);
         formData.append('brand',brand);
+        formData.append('color',Number(productColor));
         formData.append('item',item);
         formData.append('price',price)
         formData.append('quantity',quantity);
-        formData.append('description',description);
+        formData.append('description',description);  
 
     Axios.post('/api/admin/addproduct',formData)
         .then((res) => {
             setAddProductMssg(res.data.status);
+            console.log(res.data);
         })
     }
 
@@ -72,11 +87,11 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
                     <h1 className="text-3xl font-bold p-2 border-b-2 border-gray-300">Add Product</h1>
 
                     <div className="py-2 px-2 flex gap-10">
-                        <div className="max-h-60 border p-20 flex items-center justify-center relative bg-gray-50">
+                        <div className="max-h-60 border w-80 p-20 flex items-center justify-center relative bg-gray-50">
                             <input name="image" onChange={imageHandler} 
-                            className="opacity-0 w-64 h-60 absolute cursor-pointer" type="file" accept="image/*" required/>
+                            className="z-50 opacity-0 bg-red-200 w-64 h-60 absolute cursor-pointer" type="file" accept="image/*" required/>
                            { showImage ? 
-                            <img className="object-cover w-64" src={imageHolder} alt="product" /> 
+                            <img className="object-cover absolute w-full" src={imageHolder} alt="product" /> 
                             :
                             <label className="flex justify-center items-center flex-col" htmlFor="file">
                                 <FiPlus size="100px" />
@@ -86,8 +101,8 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
                         </div>
 
                         <div className="flex flex-col">
-                            <div className="">
-                                <select className="border border-gray-400 outline-none cursor-pointer" onChange={(e) => setProductType(e.target.value)}
+                            <div className="relative bg-red-200">
+                                <select className="border border-gray-400 outline-none cursor-pointer absolute" onChange={(e) => setProductType(e.target.value)}
                                     value={productType} required
                                 >
                                     <option value="" hidden>Select Type</option>
@@ -95,8 +110,17 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
                                     <option value="accessory">Accessory</option>
                                     <option value="parts">Parts</option>
                                 </select>
+                                <fieldset className="w-1/2 bg-white border p-1 absolute right-0">
+                                    <label htmlFor="color" className="font-semibold border-b-2 w-full">Select Color</label>
+                                    { colors && colors.map((color) => (
+                                        <div key={color.id} className="flex items-center justify-between gap-3">
+                                            <label htmlFor="red text-red-700">{color.product_color}</label>
+                                            <input type="radio" name="colors" className="cursor-pointer" value={color.id} onChange={e => setProductColor(e.target.value)} />
+                                        </div>
+                                        )) }
+                                </fieldset>
                             </div>
-                            <div className="flex flex-col">
+                            <div className="flex flex-col mt-32">
                                 <label htmlFor="brandname">Brand Name</label>
                                 <input className="border border-gray-400 w-60 outline-none" type="text" required 
                                     value={brand} onChange={(e) => setBrand(e.target.value)}

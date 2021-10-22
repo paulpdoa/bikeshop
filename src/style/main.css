@@ -30138,7 +30138,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .sidenav-li:hover {
-  --tw-translate-y: -0.5rem;
+  --tw-translate-y: -0.25rem;
 }
 
 .sidenav-li {

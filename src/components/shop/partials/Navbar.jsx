@@ -98,7 +98,7 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
             <div className={!hide ? "w-5/6 mr-auto ml-auto max-w-7xl" : "fixed bg-gray-900 z-50 w-full top-0"}>
                 <div className="text-white flex justify-evenly p-3">
                     <Link className="navBtns" to="/bikes">BIKES</Link>
-                    <Link className="navBtns" to="/service">SERVICE</Link>
+                    <Link className="navBtns" to="/reservation">RESERVATION</Link>
                     <Link className="navBtns" to="/parts">BIKE PARTS</Link>
                     <Link className="navBtns" to="/accessories">ACCESSORIES</Link>
                     <Link className="navBtns" to="/contact-us">CONTACT US</Link>

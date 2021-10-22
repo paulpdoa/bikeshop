@@ -1,11 +1,11 @@
 import { Route, Redirect } from 'react-router-dom';
-import UserProfile from '../components/shop/profile/UserProfile';
-import UserSideNav from '../components/shop/profile/UserSideNav';
-import UserOrders from '../components/shop/profile/UserOrders';
-import UserHistory from '../components/shop/profile/UserHistory';
-import UserDelete from '../components/shop/profile/UserDelete';
-import Navbar from '../components/shop/partials/Navbar';
-import LogoutModal from '../components/modals/LogoutModal';
+import UserProfile from '../profile/UserProfile';
+import UserSideNav from '../profile/UserSideNav';
+import UserOrders from '../profile/UserOrders';
+import UserHistory from '../profile/UserHistory';
+import UserDelete from '../profile/UserDelete';
+import Navbar from '../partials/Navbar';
+import LogoutModal from '../../modals/LogoutModal';
 
 
 const ProfileRoute = ({ exact, path, user,setAuthStatus,logoutMssg, setLogoutMssg, profileActive,navigateProfile, component:Component, ...rest }) => {

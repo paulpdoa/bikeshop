@@ -38,10 +38,10 @@ const Parts = ({ date, logoutMssg }) => {
                   >No parts yet...</div> : parts.map((part) => (
                     <div className="bicycle-table-content mt-5" key={part.id}>
                         <div className="col-span-2 grid grid-cols-2 gap-2 ml-5 w-full">
-                            <img className="w-full border h-32 border-gray-800" src={`${imageLocation}${part.image}`} alt={part.item} />
+                            <img className="w-full border h-32 border-gray-800" src={`${imageLocation}${part.product_image}`} alt={part.item_name} />
                             <div>
-                                <h2 className="font-semibold text-md">{part.brand}</h2>
-                                <h2 className="font-semibold text-md">{part.item}</h2>
+                                <h2 className="font-semibold text-md">{part.brand_name}</h2>
+                                <h2 className="font-semibold text-md">{part.item_name}</h2>
                                 <p>{part.description}</p>
                             </div>
                         </div>
@@ -57,7 +57,7 @@ const Parts = ({ date, logoutMssg }) => {
                             </svg>
                         </div>
                         <div className="flex items-center col-span-1">
-                            <span className="font-bold text-gray-800">Php. {part.price}</span>
+                            <span className="font-bold text-gray-800">₱{part.product_price}</span>
                         </div>
                         <div className="col-span-2 w-full flex justify-evenly items-center">
                             <label className="font-bold text-gray-800 text-center" htmlFor="">{part.quantity}</label>

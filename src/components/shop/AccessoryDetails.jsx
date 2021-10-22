@@ -29,7 +29,6 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
         Axios.get(`/api/accessories/${item}`)
         .then((res) => {
             setAccessory(res.data);
-            console.log(res.data)
         })
     },[item])
 
@@ -38,7 +37,7 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
         e.preventDefault();
         const buyerId = Number(customerId);
         
-        Axios.post('/customer/cart', { productId: accessory.id, buyerId, quantity: quantity })
+        Axios.post('/customer/cart', { inventoryId: accessory.id, buyerId, quantity: quantity })
         .then((res) => {
             setAddToCart(res.data.status);
         })
@@ -53,7 +52,7 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
     return (
         <div className="flex justify-center">
         <Helmet>
-            <title>Bicycle System | {`${accessory.brand} ${accessory.item}`}</title>
+            <title>Bicycle System | {`${accessory.brand_name} ${accessory.item_name}`}</title>
         </Helmet>
         <div className="h-screen grid grid-cols-2 w-full max-w-7xl"> 
             <motion.div
@@ -62,12 +61,12 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
             transition={{ duration:0.5,type:'spring',stiffness:50 }} 
             className="flex justify-center"> { /* item image here */ }
                 <div className="">
-                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src={`${imageLocation}${accessory.image}`} alt={accessory.item} />
+                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src={`${imageLocation}${accessory.product_image}`} alt={accessory.item_name} />
                     <div className="text-center mt-2"> {/*colors here */}
-                        <span className="text-gray-700 font-normal select-none">Blue / Campagnolo</span>
+                        <span className="text-gray-700 font-normal select-none">{accessory.color}</span>
                         <div className="ml-auto mr-auto flex justify-around w-16">
-                            <img className="object-cover w-18 rounded-xl border-2 border-blue-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${accessory.image}`} alt={accessory.item} />
-                            <img className="object-cover w-18 rounded-xl border-2 border-red-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${accessory.image}`} alt={accessory.item} />
+                            <img className="object-cover w-18 rounded-xl border-2 border-blue-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${accessory.product_image}`} alt={accessory.item_name} />
+                            <img className="object-cover w-18 rounded-xl border-2 border-red-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${accessory.product_image}`} alt={accessory.item_name} />
                         </div>
                     </div>
                 </div>
@@ -79,11 +78,11 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
             transition={{ delay: 0.9 }} 
             className="px-10 py-20"> { /* information of item here */ }
                 <div className="select-none">{ /* information brand */ }
-                    <h3 className="font-medium text-gray-700 text-xl">{accessory.brand}</h3>
+                    <h3 className="font-medium text-gray-700 text-xl">{accessory.brand_name}</h3>
                     <p className="font-semibold text-gray-700 text-3xl">{accessory.description}</p>
                 </div>
                 <div className="py-8">{ /* information price model etc.. */ }
-                    <span className="font-medium text-2xl text-gray-900 select-none">₱{accessory.price}</span>
+                    <span className="font-medium text-2xl text-gray-900 select-none">₱{accessory.product_price}</span>
                     <div className="flex justify-evenly py-3">
                         <div className="w-full">
                             <span className="font-semibold text-gray-700 select-none">Color:</span><br/>

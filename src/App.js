@@ -4,9 +4,9 @@ import Axios from 'axios';
 
 // Customer Component Routes
 import DashboardRoute from './components/admin/routes/DashboardRoute';
-import ProfileRoute from './routes/ProfileRoute';
-import OrderRoute from './routes/OrderRoute';
-import ProtectedRoute from './routes/ProtectedRoute';
+import ProfileRoute from './components/shop/routes/ProfileRoute';
+import OrderRoute from './components/shop/routes/OrderRoute';
+import ProtectedRoute from './components/shop/routes/ProtectedRoute';
 // Client Webpage
 import Login from './components/shop/auth/Login';
 import Register from './components/shop/auth/Register';
@@ -36,6 +36,7 @@ import Bikes from './components/admin/Bikes';
 import Parts from './components/admin/Parts';
 import Schedule from './components/admin/Schedule';
 import AccessoriesAdmin from './components/admin/Accessories';
+import Settings from './components/admin/Settings';
 
 
 const App = () => {
@@ -54,6 +55,7 @@ const App = () => {
   const [registerMssg,setRegisterMssg] = useState(false);
   const [addProductMssg,setAddProductMssg] = useState(false);
   const [addToCart,setAddToCart] = useState(false);
+  const [orderDetail,setOrderDetail] = useState(false);
 
 
   // profile page navigation function
@@ -147,7 +149,7 @@ const App = () => {
           logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} addProductMssg={addProductMssg} setAddProductMssg={setAddProductMssg} />
 
           <DashboardRoute exact path='/dashboard/orders' date={date} component={Orders} admin={admin} logoutMssg={logoutMssg} 
-          setLogoutMssg={setLogoutMssg} />
+          setLogoutMssg={setLogoutMssg} orderDetail={orderDetail} setOrderDetail={setOrderDetail} />
 
           <DashboardRoute exact path='/dashboard/bicycles' date={date} component={Bikes} admin={admin} logoutMssg={logoutMssg} 
           setLogoutMssg={setLogoutMssg} />
@@ -159,6 +161,9 @@ const App = () => {
           setLogoutMssg={setLogoutMssg} />
           
           <DashboardRoute exact path='/dashboard/schedule' date={date} component={Schedule} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute exact path='/dashboard/settings' date={date} component={Settings} admin={admin} logoutMssg={logoutMssg} 
           setLogoutMssg={setLogoutMssg} />
           {/* dashboard routes */}
 

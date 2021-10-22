@@ -1,8 +1,8 @@
 import {Helmet} from 'react-helmet';
 import { Route } from 'react-router-dom';
-import OrderNav from '../components/shop/partials/OrderNav';
-import Navbar from '../components/shop/partials/Navbar';
-import Footer from '../components/shop/partials/Footer';
+import OrderNav from '../partials/OrderNav';
+import Navbar from '../partials/Navbar';
+import Footer from '../partials/Footer';
 
 const OrderRoute = ({ logoutMssg,user,exact,path,setAuthStatus,setLogoutMssg,component:Component, ...rest }) => {
 

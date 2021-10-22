@@ -1,6 +1,6 @@
 import { Route, Redirect } from "react-router-dom";
-import Footer from "../components/shop/partials/Footer";
-import Navbar  from "../components/shop/partials/Navbar";
+import Footer from "../partials/Footer";
+import Navbar  from "../partials/Navbar";
 
 const ProtectedRoute = ({logoutMssg,setlogoutMssg,user,setAuthStatus,setLogoutMssg,addToCart,setAddToCart,component:Component, ...rest }) => {
     return (
