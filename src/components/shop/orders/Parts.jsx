@@ -42,7 +42,11 @@ const Parts = ({ logoutMssg }) => {
                             </div>
                         </div>
                         <div className="flex gap-5 flex-wrap">
-                            { parts && parts.map((part) => (
+                            { parts.length <= 0 ? 
+                            <div className="w-full h-96 flex items-center justify-center">
+                                <h1 className="text-3xl font-bold text-gray-400">Nothing to display...</h1>
+                            </div> : 
+                            parts.map((part) => (
                             <div className="flex py-5" key={part.id}> { /* items goes here */ }
                                 <Link to={`/part/details/${part.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">

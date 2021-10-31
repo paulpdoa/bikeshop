@@ -12,7 +12,7 @@ const OrderRoute = ({ logoutMssg,user,exact,path,setAuthStatus,setLogoutMssg,com
                 return (
                     <>
                     <Navbar user={user} setLogoutMssg={setLogoutMssg} setAuthStatus={setAuthStatus}/>
-                        <div className="flex justify-center h-screen">
+                        <div className="flex justify-center h-auto">
                             <Helmet><title>Bicycle System | Order</title></Helmet>
                             <div className="max-w-7xl w-full"> 
                                 <div className="grid grid-cols-6 justify-items-center">

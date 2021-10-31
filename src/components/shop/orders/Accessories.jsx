@@ -4,11 +4,22 @@ import { Helmet } from 'react-helmet';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
 import LogoutModal from '../../modals/LogoutModal';
+import AccessoryPagination from '../paginations/AccessoryPagination';
 
 const Accessories = ({ logoutMssg }) => {
 
     const [accessories,setAccessories] = useState('');
     const imageLocation = 'http://localhost:5000/products/';
+
+    // paginations 
+    const [currentPage,setCurrentPage] = useState(1);
+    const [accessoryPerPage] = useState(9);
+
+    const indexOfLastAccessory = currentPage * accessoryPerPage;
+    const indexOfFirstAccessory = indexOfLastAccessory - accessoryPerPage;
+    const currentPages =  accessories.slice(indexOfFirstAccessory, indexOfLastAccessory);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     useEffect(() => {
         Axios.get('/api/accessories')
@@ -42,7 +53,10 @@ const Accessories = ({ logoutMssg }) => {
                             </div>
                         </div>
                         <div className="flex gap-5 flex-wrap"> { /* Accessory Content Here */ }
-                        { accessories && accessories.map((accessory) => (
+                        { accessories.length <= 0 ? 
+                            <div className="w-full h-96 flex items-center justify-center">
+                                <h1 className="text-3xl font-bold text-gray-400">Nothing to display...</h1>
+                            </div> : currentPages.map((accessory) => (
                             <div className="flex py-5" key={accessory.id}> { /* items goes here */ }
                                 <Link to={`/accessory/details/${accessory.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
@@ -58,6 +72,7 @@ const Accessories = ({ logoutMssg }) => {
                         )) }
                         </div>
                     </div>
+                    <AccessoryPagination accessoryPerPage={accessoryPerPage} totalAccessory={accessories.length} paginate={paginate} />
                     { logoutMssg && <LogoutModal /> }
                 </motion.div>
     )

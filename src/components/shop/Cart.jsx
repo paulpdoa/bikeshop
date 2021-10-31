@@ -25,14 +25,19 @@ const Cart = ({ logoutMssg }) => {
     },[id])
     // removing items
     const removeItem = (item) => {
-       const filteredItem =  carts.filter((cart) => item.id !== cart.Inventory.id)
-       return filteredItem;
+       const filteredItem = carts.filter((cart) => item !== cart.id);
+       const removedItem = carts.filter((cart) => item === cart.id);
+       Axios.delete(`/cart/${removedItem[0].id}`)
+       .then((res) => {
+           console.log(res.data.mssg);
+           setCarts(filteredItem);
+       })
     }
 
     return (
         <div className="flex justify-center">
         <Helmet>
-            <title>Bicycle System | Cart</title>
+            <title>Bicycle System | Shopping Cart</title>
         </Helmet>
         <div className="max-w-7xl h-screen py-12 px-24 w-full">
             <motion.div 
@@ -90,7 +95,7 @@ const Cart = ({ logoutMssg }) => {
                             <input className="w-1/2 text-center outline-none border border-gray-400 rounded-sm ml-14" readOnly type="number" name="quantity" value={cart.quantity} />
                             <div className="mt-2 flex justify-around text-gray-700 text-sm">
                                 <span>Update</span>
-                                <span onClick={() => removeItem(cart.Inventory)}>Remove</span>
+                                <span className="cursor-pointer transition duration-300 hover:text-red-500" onClick={() => removeItem(cart.id)}>Remove</span>
                             </div>
                         </td>
                         <td className="select-none">₱{cart.Inventory.product_price * cart.quantity}</td>

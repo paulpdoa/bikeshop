@@ -108,10 +108,11 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                             <div>
                                 <span>Quantity</span><br/>
                                 <div className="flex gap-2">
-                                    <span onClick={() => setQuantity(quantity-1)} className="font-semibold text-xl cursor-pointer">-</span>
+                                    <span onClick={() => setQuantity(quantity-1)} className={quantity <= 1 ? "font-semibold text-xl cursor-pointer pointer-events-none" : "font-semibold text-xl cursor-pointer"}>-</span>
                                     <span className="font-semibold text-xl">{quantity}</span>
-                                    <span onClick={() => setQuantity(quantity+1)} className="font-semibold text-xl cursor-pointer">+</span>
+                                    <span onClick={() => setQuantity(quantity+1)} className={quantity < accessory.quantity ? "font-semibold text-xl cursor-pointer" : 'font-semibold text-xl pointer-events-none'}>+</span>
                                 </div>
+                                { quantity >= accessory.quantity && <span className="text-sm text-red-500 absolute mt-1">You have reached tha maximum stock</span> }
                             </div>
                             <form onSubmit={addToCart} className="flex justify-center items-center p-2 mt-2">
                                 {/* Add the id to the cart table */}

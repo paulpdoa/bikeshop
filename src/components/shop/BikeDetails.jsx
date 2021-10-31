@@ -36,7 +36,7 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
         e.preventDefault();
         const buyerId = Number(customerId);
         
-        Axios.post('/customer/cart', { productId: bike.id, buyerId, quantity: quantity })
+        Axios.post('/customer/cart', { inventoryId: bike.id, buyerId, quantity: quantity })
         .then((res) => {
             setAddToCart(res.data.status);
         })
@@ -51,7 +51,7 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
     return (
         <div className="flex justify-center">
         <Helmet>
-            <title>Bicycle System | {`${bike.brand} ${bike.item}`}</title>
+            <title>Bicycle System | {`${bike.brand_name} ${bike.item_name}`}</title>
         </Helmet>
         <div className="h-screen grid grid-cols-2 w-full max-w-7xl"> 
             <motion.div
@@ -60,12 +60,12 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
             transition={{ duration:0.5,type:'spring',stiffness:50 }} 
             className="flex justify-center"> { /* item image here */ }
                 <div className="">
-                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src={`${imageLocation}${bike.image}`} alt={bike.item} />
+                    <img className="object-cover w-3/4 rounded-xl ml-auto mr-auto mt-24" src={`${imageLocation}${bike.product_image}`} alt={bike.item_name} />
                     <div className="text-center mt-2"> {/*colors here */}
                         <span className="text-gray-700 font-normal select-none">Blue / Campagnolo</span>
                         <div className="ml-auto mr-auto flex justify-around w-16">
-                            <img className="object-cover w-18 rounded-xl border-2 border-blue-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${bike.image}`} alt={bike.item} />
-                            <img className="object-cover w-18 rounded-xl border-2 border-red-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${bike.image}`} alt={bike.item} />
+                            <img className="object-cover w-18 rounded-xl border-2 border-blue-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${bike.product_image}`} alt={bike.item_name} />
+                            <img className="object-cover w-18 rounded-xl border-2 border-red-400 ml-auto mr-auto px-2 py-2 cursor-pointer" src={`${imageLocation}${bike.product_image}`} alt={bike.item_name} />
                         </div>
                     </div>
                 </div>
@@ -77,11 +77,11 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
             transition={{ delay: 0.9 }} 
             className="px-10 py-20"> { /* information of item here */ }
                 <div className="select-none">{ /* information brand */ }
-                    <h3 className="font-medium text-gray-700 text-xl">{bike.brand}</h3>
+                    <h3 className="font-medium text-gray-700 text-xl">{bike.brand_name}</h3>
                     <p className="font-semibold text-gray-700 text-3xl">{bike.description}</p>
                 </div>
                 <div className="py-8">{ /* information price model etc.. */ }
-                    <span className="font-medium text-2xl text-gray-900 select-none">₱{bike.price}</span>
+                    <span className="font-medium text-2xl text-gray-900 select-none">₱{bike.product_price}</span>
                     <div className="flex justify-evenly py-3">
                         <div className="w-full">
                             <span className="font-semibold text-gray-700 select-none">Color:</span><br/>
@@ -107,10 +107,11 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                             <div>
                                 <span>Quantity</span><br/>
                                 <div className="flex gap-2">
-                                    <span onClick={() => setQuantity(quantity-1)} className="font-semibold text-xl cursor-pointer">-</span>
+                                    <span onClick={() => setQuantity(quantity-1)} className={quantity <= 1 ? "font-semibold text-xl cursor-pointer pointer-events-none" : "font-semibold text-xl cursor-pointer"}>-</span>
                                     <span className="font-semibold text-xl">{quantity}</span>
-                                    <span onClick={() => setQuantity(quantity+1)} className="font-semibold text-xl cursor-pointer">+</span>
+                                    <span onClick={() => setQuantity(quantity+1)} className={quantity < bike.quantity ? "font-semibold text-xl cursor-pointer" : 'font-semibold text-xl pointer-events-none'}>+</span>
                                 </div>
+                                { quantity >= bike.quantity && <span className="text-sm text-red-500 absolute mt-1">You have reached tha maximum stock</span> }
                             </div>
                             <form onSubmit={addToCart} className="flex justify-center items-center p-2 mt-2">
                                 {/* Add the id to the cart table */}

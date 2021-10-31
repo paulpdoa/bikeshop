@@ -55,7 +55,6 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
     Axios.post('/api/admin/addproduct',formData)
         .then((res) => {
             setAddProductMssg(res.data.status);
-            console.log(res.data);
         })
     }
 
@@ -110,17 +109,18 @@ const AddProduct = ({ date,logoutMssg,addProductMssg,setAddProductMssg }) => {
                                     <option value="accessory">Accessory</option>
                                     <option value="parts">Parts</option>
                                 </select>
+                                { productType === 'parts' ? '' :
                                 <fieldset className="w-1/2 bg-white border p-1 absolute right-0">
                                     <label htmlFor="color" className="font-semibold border-b-2 w-full">Select Color</label>
                                     { colors && colors.map((color) => (
                                         <div key={color.id} className="flex items-center justify-between gap-3">
                                             <label htmlFor="red text-red-700">{color.product_color}</label>
-                                            <input type="radio" name="colors" className="cursor-pointer" value={color.id} onChange={e => setProductColor(e.target.value)} />
+                                            <input type="radio" name="colors" className="cursor-pointer" value={color.id} onChange={e => setProductColor(e.target.value)} required />
                                         </div>
                                         )) }
-                                </fieldset>
+                                </fieldset> }
                             </div>
-                            <div className="flex flex-col mt-32">
+                            <div className={ productType === 'parts' ? 'flex flex-col mt-10' : 'flex flex-col mt-32' }>
                                 <label htmlFor="brandname">Brand Name</label>
                                 <input className="border border-gray-400 w-60 outline-none" type="text" required 
                                     value={brand} onChange={(e) => setBrand(e.target.value)}

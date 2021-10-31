@@ -73,7 +73,7 @@ const Login = ({ setUser,setAuthStatus, setRole }) => {
                     <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/register">Create new account</Link>
                 </div>
             </form>
-            
+            <Link className="text-gray-200" to='/admin/login'>Login as admin</Link>
         </div>
     )
 }
