@@ -9,11 +9,14 @@ import CartModal from '../modals/CartModal';
 
 const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
 
-    const { item } = useParams();
-    const imageLocation = 'http://localhost:5000/products/'
     const [accessory,setAccessory] = useState('');
     const [customerId,setCustomerId] = useState(0);
     const [quantity,setQuantity] = useState(1);
+    const [status] = useState('pending');
+
+    const { item } = useParams();
+    const imageLocation = 'http://localhost:5000/products/'
+   
     const user = window.localStorage.getItem("user");
 
     const history = useHistory();
@@ -37,7 +40,7 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
         e.preventDefault();
         const buyerId = Number(customerId);
         
-        Axios.post('/customer/cart', { inventoryId: accessory.id, buyerId, quantity: quantity })
+        Axios.post('/customer/cart', { inventoryId: accessory.id, buyerId, quantity: quantity, status: status })
         .then((res) => {
             setAddToCart(res.data.status);
         })

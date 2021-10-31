@@ -39,7 +39,7 @@ const Cart = ({ logoutMssg }) => {
         <Helmet>
             <title>Bicycle System | Shopping Cart</title>
         </Helmet>
-        <div className="max-w-7xl h-screen py-12 px-24 w-full">
+        <div className="max-w-7xl py-12 px-24 w-full">
             <motion.div 
             initial={{ x:'-100vw' }}
             animate={{ x:0 }}
@@ -98,7 +98,7 @@ const Cart = ({ logoutMssg }) => {
                                 <span className="cursor-pointer transition duration-300 hover:text-red-500" onClick={() => removeItem(cart.id)}>Remove</span>
                             </div>
                         </td>
-                        <td className="select-none">₱{cart.Inventory.product_price * cart.quantity}</td>
+                        <td className="select-none">₱{ cart.Inventory.product_price * cart.quantity }</td>
                     </tr>
                 </tbody>
                )) }

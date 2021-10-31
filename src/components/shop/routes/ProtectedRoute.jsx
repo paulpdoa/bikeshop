@@ -12,7 +12,9 @@ const ProtectedRoute = ({logoutMssg,setlogoutMssg,user,setAuthStatus,setLogoutMs
                         <>
                             <Navbar user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} />
                             <Component logoutMssg={logoutMssg} setlogoutMssg={setlogoutMssg} addToCart={addToCart} setAddToCart={setAddToCart} />
-                            <Footer />    
+                            <div className="absolute bottom-0 w-full">
+                                <Footer />    
+                            </div>
                         </>
                     )
                 } else {
