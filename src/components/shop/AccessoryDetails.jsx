@@ -40,7 +40,7 @@ const AccessoryDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
         e.preventDefault();
         const buyerId = Number(customerId);
         
-        Axios.post('/customer/cart', { inventoryId: accessory.id, buyerId, quantity: quantity, status: status })
+        Axios.post('/customer/cart', { inventoryId: accessory.id, buyerId, transactionId: buyerId, quantity: quantity, status: status })
         .then((res) => {
             setAddToCart(res.data.status);
         })

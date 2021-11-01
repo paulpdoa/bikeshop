@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import Axios from 'axios';
+import LogoutModal from '../../modals/LogoutModal';
 
-const Checkout = () => {
+const Checkout = ({ logoutMssg }) => {
 
     // get the id of the user, the cart id of the ordered item of the customer and also insert the payment id to be chosen by the
     // customer
@@ -11,10 +12,18 @@ const Checkout = () => {
     const [paymentmethods,setPaymentmethods] = useState([]);
     const [subtotal,setSubtotal] = useState(0);
     const id = window.localStorage.getItem("id");
+    
+
+    
 
     // inputs of customer
     const [payment,setPayment] = useState('');
-
+    const referenceNumber = Math.floor(100000 + Math.random() * 90000000000000);
+    // get date and time to be inserted in db
+    const hour = new Date().getHours();
+    const amPm = hour >= 12 ? 'PM' : 'AM';
+    const dateTime = new Date().getFullYear() + '/' + (new Date().getMonth() + 1) + '/' + new Date().getDate() + ' ' + hour + ':' + new Date().getMinutes() + ` ${amPm}`;
+ 
     const imageLocation = 'http://localhost:5000/products/';
     const paymentImage = 'http://localhost:5000/payment image/';
 
@@ -39,7 +48,12 @@ const Checkout = () => {
     // order item function
     const orderItem = (e) => {
         e.preventDefault();
-        console.log(subtotal, Number(payment))
+        
+        Axios.post('/api/customer/orders',{ transactionId: Number(id), paymentId: Number(payment), orderedDate: dateTime, referenceNum: referenceNumber })
+        .then((res) => {
+            console.log(res.data);
+
+        })
     }
 
     return (
@@ -86,7 +100,11 @@ const Checkout = () => {
                                     <img className="h-10 object-cover filter invert-0" src={ `${paymentImage}${paymentmethod.payment_method_image}` } alt={ paymentmethod.payment_method } />
                                     <span>{ paymentmethod.payment_method }</span>
                                 </div>
-                                <input className="cursor-pointer" type="radio" value={paymentmethod.id} onChange={(e) => setPayment(e.target.value)} name="paymentmethod" />
+                                <input className="cursor-pointer" type="radio" value={paymentmethod.id} 
+                                onChange={(e) => setPayment(e.target.value)} 
+                                name="paymentmethod" 
+                                required
+                                />
                             </div>
                            )) }
                         </div>
@@ -94,6 +112,7 @@ const Checkout = () => {
                     </form>
                 </div>
             </div>
+            { logoutMssg && <LogoutModal /> }
         </div>
         
     )

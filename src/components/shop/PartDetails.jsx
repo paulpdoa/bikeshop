@@ -36,11 +36,12 @@ const PartDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
         e.preventDefault();
         const buyerId = Number(customerId);
         
-        Axios.post('/customer/cart', { inventoryId: part.id, buyerId, quantity: quantity, status: status })
+        Axios.post('/customer/cart', { inventoryId: part.id, buyerId, transactionId: buyerId, quantity: quantity, status: status })
         .then((res) => {
             setAddToCart(res.data.status);
         })
     }
+    // close add to cart modal
     const closeModal = (state) => {
         setAddToCart(state);
         history.push(`/cart/${user}`)
