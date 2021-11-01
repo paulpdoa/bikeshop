@@ -5,13 +5,13 @@ import Axios from 'axios';
 
 const OrderNav = () => {
 
-    const [brands,setBrands] = useState('');
+    // const [brands,setBrands] = useState('');
 
     // display all brands of every product items
     useEffect(() => {
         Axios.get('/api/admin/products')
         .then((res) => {
-            setBrands(res.data)
+          console.log(res);
         })
     },[])
 

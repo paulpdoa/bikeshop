@@ -3,12 +3,15 @@ import {motion} from 'framer-motion';
 import LogoutModal from '../modals/LogoutModal';
 import Axios from 'axios';
 import { useEffect,useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Cart = ({ logoutMssg }) => {
 
     const [carts,setCarts] = useState('');
     const [cartLength,setCartLength] = useState(0);
     const [total,setTotal] = useState(0);
+
+    const history = useHistory();
 
     const id = window.localStorage.getItem("id");
 
@@ -23,7 +26,8 @@ const Cart = ({ logoutMssg }) => {
             setTotal(totalPrice);
         })
     },[id])
-    // removing items
+
+    // removing items from cart
     const removeItem = (item) => {
        const filteredItem = carts.filter((cart) => item !== cart.id);
        const removedItem = carts.filter((cart) => item === cart.id);
@@ -32,6 +36,11 @@ const Cart = ({ logoutMssg }) => {
            console.log(res.data.mssg);
            setCarts(filteredItem);
        })
+    }
+
+    // checkout item
+    const checkOut = () => {
+        history.push('/checkout')
     }
 
     return (
@@ -48,7 +57,7 @@ const Cart = ({ logoutMssg }) => {
                 <h1 className="font-bold text-2xl select-none">Your Shopping Cart({cartLength + ' item/s'})</h1>
                 <div className="">
                     <h2 className="font-medium text-2xl select-none">SUBTOTAL ₱{total}</h2>
-                    <button className="p-2 bg-green-600 text-gray-200 rounded-md mt-5 float-right">Checkout</button>
+                    <button onClick={checkOut} className="p-2 bg-green-600 text-gray-200 rounded-md mt-5 float-right">Checkout</button>
                 </div>
             </motion.div>
             <motion.table
@@ -75,7 +84,7 @@ const Cart = ({ logoutMssg }) => {
                 <tbody key={cart.id}>
                     <tr>
                         <td className="flex mt-2 select-none">
-                            <img className="w-60 h-32 rounded-xl" src={`http://localhost:5000/products/${cart.Inventory.product_image}`} alt={cart.Inventory.item_name} />
+                            <img className="w-60 h-32 rounded-xl border object-cover border-gray-800" src={`http://localhost:5000/products/${cart.Inventory.product_image}`} alt={cart.Inventory.item_name} />
                             <div className="px-8">
                                 <p className="text-xl font-semibold text-gray-700">{cart.Inventory.description}</p>
                                 <p className="text-gray-800">Blue, Campagnolo</p>

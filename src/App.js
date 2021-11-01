@@ -37,6 +37,7 @@ import Parts from './components/admin/Parts';
 import Schedule from './components/admin/Schedule';
 import AccessoriesAdmin from './components/admin/Accessories';
 import Settings from './components/admin/Settings';
+import Checkout from './components/shop/orders/Checkout';
 
 
 const App = () => {
@@ -195,6 +196,9 @@ const App = () => {
                 user={user} setAuthStatus={setAuthStatus} addToCart={addToCart} setAddToCart={setAddToCart}
               />
               <ProtectedRoute exact path='/cart/:id' component={Cart} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus} 
+              />
+              <ProtectedRoute exact path='/checkout' component={Checkout} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus} 
               />
               <ProtectedRoute exact path='/customize' component={Customize} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 

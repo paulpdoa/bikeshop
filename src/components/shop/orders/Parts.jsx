@@ -4,11 +4,22 @@ import { Helmet } from 'react-helmet';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
 import LogoutModal from '../../modals/LogoutModal';
+import PartPagination from '../paginations/PartPagination';
 
 const Parts = ({ logoutMssg }) => {
 
     const [parts,setParts] = useState('');
     const imageLocation = 'http://localhost:5000/products/';
+
+    // paginations
+    const [currentPage,setCurrentPage] = useState(1);
+    const [partsPerPage] = useState(9);
+
+    const indexOfLastPart = currentPage * partsPerPage;
+    const indexOfFirstPart = indexOfLastPart - partsPerPage;
+    const currentPages = parts.slice(indexOfFirstPart, indexOfLastPart);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     useEffect(() => {
         Axios.get('/api/parts')
@@ -46,7 +57,7 @@ const Parts = ({ logoutMssg }) => {
                             <div className="w-full h-96 flex items-center justify-center">
                                 <h1 className="text-3xl font-bold text-gray-400">Nothing to display...</h1>
                             </div> : 
-                            parts.map((part) => (
+                            currentPages.map((part) => (
                             <div className="flex py-5" key={part.id}> { /* items goes here */ }
                                 <Link to={`/part/details/${part.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
@@ -62,6 +73,7 @@ const Parts = ({ logoutMssg }) => {
                         )) }
                         </div>
                     </div>
+                    <PartPagination totalParts={parts.length} partsPerPage={partsPerPage} paginate={paginate} />
                     { logoutMssg && <LogoutModal /> }
                 </motion.div>
     )
