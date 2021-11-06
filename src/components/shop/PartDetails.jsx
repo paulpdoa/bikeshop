@@ -115,6 +115,7 @@ const PartDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                             <form onSubmit={addToCart} className="flex justify-center items-center p-2 mt-2">
                                 <button className="bg-yellow-500 text-gray-200 p-2 rounded-md">Add to Cart</button>
                             </form>
+                            <p className="text-gray-600 self-center text-sm">{ part.quantity } stock/s left</p>
                         </div>
 
                         <div className="flex justify-between">  {/* wish list and social media */}

@@ -1,9 +1,10 @@
 import {Helmet} from 'react-helmet';
 import {motion} from 'framer-motion';
-import LogoutModal from '../modals/LogoutModal';
 import Axios from 'axios';
 import { useEffect,useState } from 'react';
 import { useHistory } from 'react-router-dom';
+
+import LogoutModal from '../modals/LogoutModal';
 
 const Cart = ({ logoutMssg }) => {
 
@@ -57,7 +58,10 @@ const Cart = ({ logoutMssg }) => {
                 <h1 className="font-bold text-2xl select-none">Your Shopping Cart({cartLength + ' item/s'})</h1>
                 <div className="">
                     <h2 className="font-medium text-2xl select-none">SUBTOTAL ₱{total}</h2>
-                    <button onClick={checkOut} className="p-2 bg-green-600 text-gray-200 rounded-md mt-5 float-right">Checkout</button>
+                    { cartLength < 1 ? '' 
+                    : 
+                    <button onClick={checkOut} className="p-2 bg-green-600 text-gray-200 rounded-md mt-5 float-right">Checkout</button> 
+                    }
                 </div>
             </motion.div>
             <motion.table

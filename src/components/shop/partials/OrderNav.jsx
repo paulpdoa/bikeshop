@@ -11,7 +11,7 @@ const OrderNav = () => {
     useEffect(() => {
         Axios.get('/api/admin/products')
         .then((res) => {
-          console.log(res);
+          console.log(res.data);
         })
     },[])
 

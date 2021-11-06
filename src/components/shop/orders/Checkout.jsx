@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import LogoutModal from '../../modals/LogoutModal';
+import PaymentModal from '../../modals/PaymentModal';
 
-const Checkout = ({ logoutMssg }) => {
+const Checkout = ({ logoutMssg,setPaymentMssg,paymentMssg }) => {
 
     // get the id of the user, the cart id of the ordered item of the customer and also insert the payment id to be chosen by the
     // customer
@@ -12,9 +14,7 @@ const Checkout = ({ logoutMssg }) => {
     const [paymentmethods,setPaymentmethods] = useState([]);
     const [subtotal,setSubtotal] = useState(0);
     const id = window.localStorage.getItem("id");
-    
-
-    
+    const user = window.localStorage.getItem("user");
 
     // inputs of customer
     const [payment,setPayment] = useState('');
@@ -26,6 +26,8 @@ const Checkout = ({ logoutMssg }) => {
  
     const imageLocation = 'http://localhost:5000/products/';
     const paymentImage = 'http://localhost:5000/payment image/';
+
+    const history = useHistory();
 
     useEffect(() => {
         Axios.get(`/customer/cart/${id}`)
@@ -52,7 +54,8 @@ const Checkout = ({ logoutMssg }) => {
         Axios.post('/api/customer/orders',{ transactionId: Number(id), paymentId: Number(payment), orderedDate: dateTime, referenceNum: referenceNumber })
         .then((res) => {
             console.log(res.data);
-
+            // history.push(`/profile/${user}`);
+            setPaymentMssg(true);
         })
     }
 
@@ -76,7 +79,7 @@ const Checkout = ({ logoutMssg }) => {
                                     <p>{ cartContent.Inventory.description }</p>
                                     <div className="flex justify-between absolute bottom-0 w-full items-center">
                                         <span className="text-gray-700 text-xs">Qty. { cartContent.quantity }</span>
-                                        <span className="text-yellow-500 font-semibold">₱{ cartContent.Inventory.product_price }</span>
+                                        <span className="text-yellow-500 font-semibold">₱{ cartContent.Inventory.product_price * cartContent.quantity }</span>
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +116,7 @@ const Checkout = ({ logoutMssg }) => {
                 </div>
             </div>
             { logoutMssg && <LogoutModal /> }
+            { paymentMssg && <PaymentModal setPaymentMssg={setPaymentMssg} /> } 
         </div>
         
     )

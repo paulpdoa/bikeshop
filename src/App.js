@@ -4,6 +4,7 @@ import Axios from 'axios';
 
 // Customer Component Routes
 import DashboardRoute from './components/admin/routes/DashboardRoute';
+import ShopRoute from './components/shop/routes/ShopRoute';
 import ProfileRoute from './components/shop/routes/ProfileRoute';
 import OrderRoute from './components/shop/routes/OrderRoute';
 import ProtectedRoute from './components/shop/routes/ProtectedRoute';
@@ -57,6 +58,7 @@ const App = () => {
   const [addProductMssg,setAddProductMssg] = useState(false);
   const [addToCart,setAddToCart] = useState(false);
   const [orderDetail,setOrderDetail] = useState(false);
+  const [paymentMssg, setPaymentMssg] = useState(false);
 
 
   // profile page navigation function
@@ -174,7 +176,7 @@ const App = () => {
       
           <> { /* shop routes */}
             <Switch>
-              <ProtectedRoute exact path='/' component={Shop} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+              <ShopRoute exact path='/' component={Shop} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus}
               />
               <OrderRoute exact path='/bikes' component={Bicycles} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
@@ -199,7 +201,7 @@ const App = () => {
                 user={user} setAuthStatus={setAuthStatus} 
               />
               <ProtectedRoute exact path='/checkout' component={Checkout} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus} 
+                user={user} setAuthStatus={setAuthStatus} setPaymentMssg={setPaymentMssg} paymentMssg={paymentMssg}
               />
               <ProtectedRoute exact path='/customize' component={Customize} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus} 
