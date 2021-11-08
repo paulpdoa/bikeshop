@@ -14,9 +14,9 @@ const ProtectedRoute = ({logoutMssg,setlogoutMssg,user,setAuthStatus,setLogoutMs
                             <Component logoutMssg={logoutMssg} setlogoutMssg={setlogoutMssg} addToCart={addToCart} setAddToCart={setAddToCart} 
                             setPaymentMssg={setPaymentMssg} paymentMssg={paymentMssg}    
                             />
-                            <div className="absolute bottom-0 w-full">
+                            {/* <div className="absolute bottom-0 w-full">
                                 <Footer />    
-                            </div>
+                            </div> */}
                         </>
                     )
                 } else {

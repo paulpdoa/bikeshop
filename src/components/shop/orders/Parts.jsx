@@ -55,13 +55,13 @@ const Parts = ({ logoutMssg }) => {
                         <div className="flex gap-5 flex-wrap">
                             { parts.length <= 0 ? 
                             <div className="w-full h-96 flex items-center justify-center">
-                                <h1 className="text-3xl font-bold text-gray-400">Nothing to display...</h1>
+                                <h1 className="text-3xl font-bold text-gray-400 animate-pulse">Nothing to display...</h1>
                             </div> : 
                             currentPages.map((part) => (
                             <div className="flex py-5" key={part.id}> { /* items goes here */ }
                                 <Link to={`/part/details/${part.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
-                                        <img className="w-60 h-36 object-cover" src={`${imageLocation}${part.product_image}`} alt={part.item_name} />
+                                        <img className="w-60 h-36 object-cover transform hover:scale-105 transition duration-300 transform hover:scale-105 transition duration-300" src={`${imageLocation}${part.product_image}`} alt={part.item_name} />
                                         <div className="grid grid-rows-3 justify-items-center m-2">
                                             <span className="font-semibold text-gray-800">{part.brand_name}</span>
                                             <span className="font-normal text-sm text-gray-600">{part.item_name}</span>

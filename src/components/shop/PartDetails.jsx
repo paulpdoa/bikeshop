@@ -77,7 +77,7 @@ const PartDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
             className="px-10 py-20"> { /* information of item here */ }
                 <div className="select-none">{ /* information brand */ }
                     <h3 className="font-medium text-gray-700 text-xl">{part.brand_name}</h3>
-                    <p className="font-semibold text-gray-700 text-3xl">{part.description}</p>
+                    <p className="font-semibold text-gray-700 text-3xl">{part.item_name}</p>
                 </div>
                 <div className="py-8">{ /* information price model etc.. */ }
                     <span className="font-medium text-2xl text-gray-900 select-none">₱{part.product_price}</span>

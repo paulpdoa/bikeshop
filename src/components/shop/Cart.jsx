@@ -80,7 +80,7 @@ const Cart = ({ logoutMssg }) => {
                { carts.length <= 0 ? 
                <tbody>
                 <tr className="flex justify-center items-center absolute mt-32 ml-64">
-                   <td className="text-4xl text-gray-400 font-bold">Add something in your cart now!</td>
+                   <td className="text-4xl text-gray-400 font-bold animate-pulse">Add something in your cart now!</td>
                 </tr>
                </tbody>
                 : 
