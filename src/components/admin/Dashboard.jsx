@@ -5,13 +5,22 @@ import Axios from 'axios';
 
 const Dashboard = ({ date, logoutMssg }) => {
 
-    const [userCount,setUserCount] = useState('');
+    const [userCount,setUserCount] = useState(0);
+    const [orderCount,setOrderCount] = useState(0);
 
     useEffect(() => {
         Axios.get('/api/customers')
             .then((res) => {
                 setUserCount(res.data.length);
             })
+    },[])
+
+    useEffect(() => {
+        Axios.get('/api/customer/orders')
+        .then((res) => {
+            setOrderCount(res.data.length);
+            console.log(res.data.length);
+        })
     },[])
 
     return (
@@ -33,7 +42,7 @@ const Dashboard = ({ date, logoutMssg }) => {
                             </svg>
                         </div>
                         <div>
-                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="orders">3,321</label>
+                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="orders">{ orderCount }</label>
                         </div>
                     </div>
                     {/* total sales */}

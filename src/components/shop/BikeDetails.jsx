@@ -305,10 +305,35 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                                 
                             </div>
                         </div>
-                        
                     </div>
-                    <div className="col-span-1 w-full bg-white shadow-xl rounded-md">
-                        sidebar here
+                    <div className="col-span-1 w-full bg-white shadow-xl rounded-md overflow-y-scroll h-5/6">
+                        <div className="flex flex-col mt-2">
+                            <img className="object-cover self-center shadow-xl w-3/4 rounded-xl border border-gray-200" src="/image/shifter.jpg" alt="shifter" />
+                            <div className="flex gap-2 ml-14 mt-2">
+                                <span className="font-semibold text-gray-800">Brand Name</span>
+                                <span className="font-semibold text-gray-800">Item Name</span>
+                            </div>
+                            <p className="ml-14 text-justify">Item Description....</p>
+                            <span className="ml-14 font-bold text-xl">₱8999</span>
+                        </div>
+                        <div className="flex flex-col mt-2">
+                            <img className="object-cover self-center shadow-xl w-3/4 rounded-xl border border-gray-200" src="/image/shifter.jpg" alt="shifter" />
+                            <div className="flex gap-2 ml-14 mt-2">
+                                <span className="font-semibold text-gray-800">Brand Name</span>
+                                <span className="font-semibold text-gray-800">Item Name</span>
+                            </div>
+                            <p className="ml-14 text-justify">Item Description....</p>
+                            <span className="ml-14 font-bold text-xl">₱8999</span>
+                        </div>
+                        <div className="flex flex-col mt-2">
+                            <img className="object-cover self-center shadow-xl w-3/4 rounded-xl border border-gray-200" src="/image/shifter.jpg" alt="shifter" />
+                            <div className="flex gap-2 ml-14 mt-2">
+                                <span className="font-semibold text-gray-800">Brand Name</span>
+                                <span className="font-semibold text-gray-800">Item Name</span>
+                            </div>
+                            <p className="ml-14 text-justify">Item Description....</p>
+                            <span className="ml-14 font-bold text-xl">₱8999</span>
+                        </div>
                     </div>
                 </div>
                 {/* end of reviews and details */}

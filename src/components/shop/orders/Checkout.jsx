@@ -47,6 +47,14 @@ const Checkout = ({ logoutMssg,setPaymentMssg,paymentMssg }) => {
         })
     },[])
 
+    // get order reference here
+    useEffect(() => {
+        Axios.get('/api/customer/orders')
+        .then((res) => {
+            console.log(res.data);
+        })
+    })
+
     // order item function
     const orderItem = (e) => {
         e.preventDefault();
