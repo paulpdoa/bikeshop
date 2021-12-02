@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {motion,AnimatePresence} from 'framer-motion';
 import {Helmet} from 'react-helmet';
+import { Link } from 'react-router-dom';
 import LogoutModal from '../modals/LogoutModal';
 
 const Customize = ({ logoutMssg }) => {
@@ -20,7 +21,7 @@ const Customize = ({ logoutMssg }) => {
                 transition={{ delay:0.2 }}
                 className="col-span-1"> { /* build choices */ }
                     <h1 className="text-gray-200 font-bold text-2xl">Your Custom Santa Cruz Hightower CC</h1>
-                    <button className="p-1 bg-gray-700 rounded-sm text-yellow-600 mt-2">Back to bike Selection</button>
+                    <Link to='/bikes' className="p-1 bg-gray-700 rounded-sm text-yellow-600 mt-2">Back to bike Selection</Link>
                         <ul className="font-semibold text-gray-300 cursor-pointer text-lg py-5"> 
                             <li>Frame</li>
                             <li>Suspension</li>

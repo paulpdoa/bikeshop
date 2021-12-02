@@ -1,33 +1,20 @@
-import React from 'react'
+import Axios from 'axios';
+
+import { useEffect,useState } from 'react';
 
 const UserOrders = () => {
+
+    const [orders,setOrders] = useState([]);
+    const imageLocation = 'http://localhost:5000/products/';
+
+    const user_id = localStorage.getItem('id');
     
-    const sampleDatas = [
-        {
-            id: 1,
-            itemName: "Sample 1",
-            description: "Description",
-            information: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, aliquid?",
-            quantity: 1,
-            image: "/image/pedal.jpg"
-        },
-        {
-            id: 2,
-            itemName: "Sample 2",
-            description: "Description",
-            information: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, aliquid?",
-            quantity: 3,
-            image: "/image/shifter.jpg"
-        },
-        {
-            id: 3,
-            itemName: "Sample 3",
-            description: "Description",
-            information: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, aliquid?",
-            quantity: 10,
-            image: "/image/hub.jpg"
-        }
-    ]
+    useEffect(() => {
+        Axios.get(`/api/customer/orders/${user_id}`)
+            .then((res) => {
+                setOrders(res.data);
+            })
+    },[user_id])
 
     return (
         <div className="flex justify-center items-center h-full w-full">
@@ -36,16 +23,16 @@ const UserOrders = () => {
                     <div className="bg-gray-900 rounded-2xl p-6 max-h-96 overflow-y-scroll">
                         <h1 className="text-4xl font-semibold">My Orders</h1>
                         <h3 className="text-xl font-semibold mt-3">Items</h3>
-                        { sampleDatas.map((sampleData) => (
-                            <div className="border-t border-gray-400 mt-2" key={sampleData.id}>
+                        { orders.map((order) => (
+                            <div className="border-t border-gray-400 mt-2" key={order.id}>
                                 <div className="flex mt-2">
-                                    <img className="w-32 m-2 object-cover" src={sampleData.image} alt="product" />
-                                    <div>
-                                        <h2>{sampleData.itemName}</h2>
-                                        <p>{sampleData.description}</p>
-                                        <p>{sampleData.information}</p>
+                                    <img className="w-44 m-2 object-cover" src={`${imageLocation}/${order.product_image}`} alt={`${order.item_name}`} />
+                                    <div className="w-full flex flex-col">
+                                        <h2>{order.brand_name} {order.item_name}</h2>
+                                        <h2 className="font-semibold text-lg">Description</h2>
+                                        <p>{order.description}</p>
                                         <div className="flex justify-between"> 
-                                            <p>Qty: {sampleData.quantity}</p>
+                                            <p>Qty: {order.quantity}</p>
                                             <button className="bg-blue-400 p-2 rounded-md mt-2">More Info</button>
                                         </div>
                                     </div>

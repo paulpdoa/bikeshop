@@ -4,18 +4,18 @@ import Axios from 'axios';
 import { Link,useHistory,useParams } from 'react-router-dom';
 
 const ChangePassword = () => {
+    
     const [status,setStatus] = useState('');
     const [password,setPassword] = useState('');
     const [confirmPass,setConfirmPass] = useState('');
-    const { token } = useParams();
-    console.log(token);
+    const { id } = useParams();
 
     const history = useHistory();
     
     const onSubmit = (e) => {
         e.preventDefault();
 
-        Axios.put('/api/users', {token,password})
+        Axios.put('/api/customers', {id,password})
         .then((res) => {
             if(password !== confirmPass) {
                 setTimeout(() => {
@@ -44,7 +44,7 @@ const ChangePassword = () => {
             <div className="max-w-7xl p-5 w-1/2 bg-white flex justify-center items-center flex-col rounded-xl shadow-xl relative">
                 <h1 className="text-2xl text-left w-full p-2 font-semibold">Change your password</h1>
                 <form onSubmit={onSubmit} className="">
-                    <h3>Please enter your email or username to search for your account</h3>
+                    <h3>Please enter your new password</h3>
                     <input 
                     onChange={(e) => setPassword(e.target.value)}
                     value={password}

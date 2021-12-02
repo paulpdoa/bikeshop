@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import {BsCaretDownFill} from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
-import { FiLogOut } from 'react-icons/fi';
+import { FiLogOut,FiLogIn } from 'react-icons/fi';
 import Axios from 'axios';
 
 const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
@@ -23,7 +23,6 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
           setHide(true);
        }
     })
-
 
 
     // computes total price
@@ -74,23 +73,38 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
                     <li className="navBtns"><Link  to="/">Home</Link></li>
                     <li className="navBtns ml-5"><Link to="/about">About</Link></li>
                       
-                    <li className="navBtns ml-5 border-2 border-white p-1 rounded-full cursor-pointer">
-                        <Link to={`/cart/${customer}`}>
-                            <svg className="w-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                            <span className="text-xs bg-red-500 border-2 border-gray-50 rounded-full font-bold absolute text-center w-5 top-0 -ml-1">{total}</span>
-                        </Link>
-                    </li>
+                    { user !== null && 
+                        <li className="navBtns ml-5 border-2 border-white p-1 rounded-full cursor-pointer">
+                            <Link to={`/cart/${customer}`}>
+                                <svg className="w-6 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                <span className="text-xs bg-red-500 border-2 border-gray-50 rounded-full font-bold absolute text-center w-5 top-0 -ml-1">{total}</span>
+                            </Link>
+                        </li> 
+                    }
                     <li onClick={() => setShowLogout(!showLogout)} className="relative ml-5 rounded-md p-1">
                         <BsCaretDownFill className="navBtns cursor-pointer text-3xl border-2 bg-gray-800 p-1 rounded-md" />
                         { showLogout && <div className="flex flex-col absolute border border-gray-800 rounded-xl p-3 mt-2 z-50 w-44 bg-gray-800 -ml-32">
                             <div className="flex items-center gap-2 navBtns">
-                                <FaUserCircle />
-                                <Link className="text-lg" to={`/profile/${user}`}>{user}</Link>
+                                
+                               { user === null ? 
+                                <>
+                                    <FiLogIn />
+                                    <Link className="text-lg" to='/login'>Login</Link> 
+                                </>
+                                :
+                                <>
+                                    <FaUserCircle />
+                                    <Link className="text-lg" to={`/profile/${user}`}>{user}</Link>    
+                                </>
+                               }
                             </div>
-                            <div className="flex items-center gap-2 navBtns">
-                                <FiLogOut />
-                                <span onClick={onLogout} className="text-lg cursor-pointer">Logout</span>
-                            </div>
+                            {user !== null && 
+                            <>
+                                <div className="flex items-center gap-2 navBtns">
+                                    <FiLogOut />
+                                    <span onClick={onLogout} className="text-lg cursor-pointer">Logout</span>
+                                </div>
+                            </>}
                         </div>}
                     </li>
                 </ul>

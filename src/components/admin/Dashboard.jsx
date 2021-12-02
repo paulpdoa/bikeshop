@@ -1,13 +1,25 @@
 import { Helmet } from 'react-helmet';
-import LogoutModal from '../modals/LogoutModal';
 import { useEffect,useState } from 'react';
 import Axios from 'axios';
 
+import LogoutModal from '../modals/LogoutModal';
+
 const Dashboard = ({ date, logoutMssg }) => {
 
+    // Counts of every data
     const [userCount,setUserCount] = useState(0);
     const [orderCount,setOrderCount] = useState(0);
 
+    const [orders,setOrders] = useState([]);
+    useEffect(() => {
+        Axios.get('/api/customer/orders')
+        .then((res) => {
+            setOrders(res.data);
+            console.log(res.data)
+        })
+    },[])
+
+    // Counts of Data
     useEffect(() => {
         Axios.get('/api/customers')
             .then((res) => {
@@ -19,7 +31,6 @@ const Dashboard = ({ date, logoutMssg }) => {
         Axios.get('/api/customer/orders')
         .then((res) => {
             setOrderCount(res.data.length);
-            console.log(res.data.length);
         })
     },[])
 
@@ -129,19 +140,12 @@ const Dashboard = ({ date, logoutMssg }) => {
 
                     <div className="bg-white w-1/4 shadow-xl p-5 max-h-96 overflow-y-scroll">
                         <h1 className="font-bold text-2xl">Recent Orders</h1>
-                        <div className="font-semibold flex flex-col gap-7"> {/* Recent Order lists */}
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
-                            <label htmlFor="orders">Order 1</label>
+                        <div className="font-semibold flex flex-col gap-7 mt-5"> {/* Recent Order lists */}
+                            { orders && orders.map((order) => (
+                                <div key={order.order_id}>
+                                    <label htmlFor="orders">{ order.brand_name } {order.item_name}</label>
+                                </div>
+                            )) }
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,18 @@
 import { motion } from "framer-motion";
+import { useEffect,useState } from 'react';
+import Axios from 'axios';
 
-const OrderDetailModal = ({ setOrderDetail }) => {
+const OrderDetailModal = ({ setOrderDetail,orderId }) => {
+
+    const imageLocation = 'http://localhost:5000/products/'
+    const [order,setOrder] = useState([]);
+
+    useEffect(() => {
+        Axios.get(`/api/customer/info/${orderId}`)
+        .then((res) => {
+            setOrder(res.data[0]);
+        })
+    },[orderId])
 
     // deletes an item
     const onDelete = (e) => {
@@ -15,19 +27,19 @@ const OrderDetailModal = ({ setOrderDetail }) => {
         >
             <h1 className="text-2xl font-normal px-5 py-5">Order Details</h1>
             <div className="flex px-5 gap-2 relative">
-                <img className="w-32 object-cover" src="/image/shifter.jpg" alt="shifter" />
+                <img className="w-32 object-cover" src={`${imageLocation}${order.product_image}`} alt={order.item_name} />
                 <div className="flex flex-col">
-                    <h3>Brand Name</h3>
-                    <p>Item name</p>
-                    <p>Item description</p>
-                    <span className="text-xs -bottom-3 absolute">Qty. 1</span>
+                    <h3>{order.brand_name}</h3>
+                    <p>{order.item_name}</p>
+                    <p>{order.description}</p>
+                    <span className="text-xs -bottom-3 absolute">Qty. {order.quantity}</span>
                 </div>
-                <p className="absolute right-10">Order Date: October 21, 2021</p>
+                <p className="absolute right-10">Order Date: {order.ordered_date}</p>
             </div>
             <div className="flex px-5 py-5 flex-col">
                 <h1 className="font-semibold text-lg">Ordered By:</h1>
-                <p>Paul Andres</p>
-                <p>polopdoandres@gmail.com</p>
+                <p>{order.Customer}</p>
+                <p>{order.email}</p>
             </div>
             <div className="flex justify-end px-10 gap-5">
                 <button className="bg-red-600 p-1 rounded w-32 text-center">Delete</button>

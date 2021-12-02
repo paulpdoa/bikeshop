@@ -1,8 +1,28 @@
 import { Helmet } from 'react-helmet';
+import Axios from 'axios';
+import { useState,useEffect } from 'react';
+
 import LogoutModal from '../modals/LogoutModal';
 import OrderDetailModal from '../modals/OrderDetailModal';
 
 const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
+
+    const imageLocation = 'http://localhost:5000/products/';
+    const [orders, setOrders] = useState([]);
+
+    // Pass the information to the MORE INFO modal
+    const [orderId,setOrderId] = useState(0);
+    const getInfo = (id,bool) => {
+        setOrderDetail(bool);
+        setOrderId(id);
+    } 
+
+    useEffect(() => {
+        Axios.get('/api/customer/orders')
+        .then((res) => {
+            setOrders(res.data);
+        })
+    },[orders]);
 
     return (
         <div className="main-container">
@@ -16,42 +36,20 @@ const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
                 <div className="main-card">
                     <div className="order-cards">
                         <h1 className="order-card-title">New Orders</h1>
-                        <div className="flex mt-10">
-                            <div className="flex gap-2 w-full relative">
-                                <img className="w-32 object-cover border border-gray-900" src="/image/shifter.jpg" alt="shifter" />
-                                <div className="w-full">
-                                    <h2 className="font-semibold text-lg">Brand Name</h2>
-                                    <h3 className="font-semibold">Item Name</h3>
-                                    <h3 className="font-semibold">Item Description...</h3>
-                                    <span className="text-sm">Qty. 1</span>
+                        { orders && orders.map((order) => (
+                            <div className="flex mt-10" key={order.order_id}>
+                                <div className="flex gap-2 w-full relative">
+                                    <img className="w-32 h-full object-cover border border-gray-900" src={`${imageLocation}${order.product_image}`} alt={order.item_name}/>
+                                    <div className="w-1/2">
+                                        <h2 className="font-semibold text-lg">{ order.brand_name }</h2>
+                                        <h3 className="font-semibold">{order.item_name}</h3>
+                                        <h3 className="font-semibold">{order.description}</h3>
+                                        <span className="text-sm">Qty.{order.quantity}</span>
+                                    </div>
+                                    <button onClick={() => getInfo(order.order_id,true)} className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
                                 </div>
-                                <button onClick={() => setOrderDetail(true)} className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
-                            </div>
-                        </div>
-                        <div className="flex mt-10">
-                            <div className="flex gap-2 w-full relative">
-                                <img className="w-32 object-cover border border-gray-900" src="/image/shifter.jpg" alt="shifter" />
-                                <div className="w-full">
-                                    <h2 className="font-semibold text-lg">Brand Name</h2>
-                                    <h3 className="font-semibold">Item Name</h3>
-                                    <h3 className="font-semibold">Item Description...</h3>
-                                    <span className="text-sm">Qty. 1</span>
-                                </div>
-                                <button className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
-                            </div>
-                        </div>
-                        <div className="flex mt-10">
-                            <div className="flex gap-2 w-full relative">
-                                <img className="w-32 object-cover border border-gray-900" src="/image/shifter.jpg" alt="shifter" />
-                                <div className="w-full">
-                                    <h2 className="font-semibold text-lg">Brand Name</h2>
-                                    <h3 className="font-semibold">Item Name</h3>
-                                    <h3 className="font-semibold">Item Description...</h3>
-                                    <span className="text-sm">Qty. 1</span>
-                                </div>
-                                <button className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
-                            </div>
-                        </div>
+                            </div>   
+                        )) }  
                     </div>
 
                     <div className="order-cards">
@@ -136,7 +134,7 @@ const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
             </div>
             {/* logout modal */}
             { logoutMssg && <LogoutModal /> }
-            { orderDetail && <OrderDetailModal setOrderDetail={ setOrderDetail } /> }
+            { orderDetail && <OrderDetailModal setOrderDetail={ setOrderDetail } orderId={orderId} /> }
         </div>
     )
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 import LogoutModal from '../../modals/LogoutModal';
 import PaymentModal from '../../modals/PaymentModal';
@@ -14,7 +14,7 @@ const Checkout = ({ logoutMssg,setPaymentMssg,paymentMssg }) => {
     const [paymentmethods,setPaymentmethods] = useState([]);
     const [subtotal,setSubtotal] = useState(0);
     const id = window.localStorage.getItem("id");
-    const user = window.localStorage.getItem("user");
+    // const user = window.localStorage.getItem("user");
 
     // inputs of customer
     const [payment,setPayment] = useState('');
@@ -27,7 +27,7 @@ const Checkout = ({ logoutMssg,setPaymentMssg,paymentMssg }) => {
     const imageLocation = 'http://localhost:5000/products/';
     const paymentImage = 'http://localhost:5000/payment image/';
 
-    const history = useHistory();
+    // const history = useHistory();
 
     useEffect(() => {
         Axios.get(`/customer/cart/${id}`)

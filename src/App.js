@@ -26,6 +26,7 @@ import ClientParts from './components/shop/orders/Parts';
 import PartDetails from './components/shop/PartDetails';
 import Accessories from './components/shop/orders/Accessories';
 import AccessoryDetails from './components/shop/AccessoryDetails';
+import Reservation from './components/shop/Reservation';
 // Admin Webpage
 import Dashboard from './components/admin/Dashboard';
 import LoginAdmin from './components/admin/auth/LoginAdmin';
@@ -39,6 +40,7 @@ import Schedule from './components/admin/Schedule';
 import AccessoriesAdmin from './components/admin/Accessories';
 import Settings from './components/admin/Settings';
 import Checkout from './components/shop/orders/Checkout';
+
 
 
 const App = () => {
@@ -215,6 +217,8 @@ const App = () => {
               <ProtectedRoute exact path='/contact-us' component={Contact} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus}
               />
+              <ProtectedRoute exact path='/reservation' component={Reservation} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+                user={user} setAuthStatus={setAuthStatus}  />
               <Redirect to='/notfound' />
             </Switch>
           </>

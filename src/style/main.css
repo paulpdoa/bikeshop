@@ -30119,9 +30119,9 @@ body::-webkit-scrollbar-thumb {
 /* about page */
 
 .abt-titles {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-  font-weight: 700;
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 600;
 }
 
 .sidenav-li {

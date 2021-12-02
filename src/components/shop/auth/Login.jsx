@@ -70,10 +70,11 @@ const Login = ({ setUser,setAuthStatus, setRole }) => {
                     <button className="bg-black text-center text-white w-full p-1 rounded hover:bg-white transition ease-in duration-100 hover:text-black hover:shadow-lg hover:ease-out">Login</button> 
                     <Link to="/forgot" className="mt-1 flex justify-center text-xs text-blue-600">Forgot password?</Link>
                     <hr className="mt-3 border border-gray-200"></hr>
-                    <Link className="flex justify-center mt-3 p-1 rounded text-white bg-green-400" to="/register">Create new account</Link>
+                    <Link className="flex justify-center p-1 rounded text-white bg-green-400" to="/register">Create new account</Link>
                 </div>
+                <Link to='/' className="text-blue-500">View items in the store</Link> 
             </form>
-            <Link className="text-gray-200" to='/admin/login'>Login as admin</Link>
+            <a className="text-gray-200 absolute" href='/admin/login'>Login as admin</a>
         </div>
     )
 }

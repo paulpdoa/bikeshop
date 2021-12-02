@@ -6,18 +6,12 @@ const ShopRoute = ({logoutMssg,setlogoutMssg,user,setAuthStatus,setLogoutMssg,ad
         <Route 
         {...rest}
             render={(props) => {
-                if(window.localStorage.getItem('isUserAuth') === 'true' && window.localStorage.getItem("role") === 'customer') {
-                    return (
+                return (
                         <>
                             <Navbar user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} />
                             <Component logoutMssg={logoutMssg} setlogoutMssg={setlogoutMssg} addToCart={addToCart} setAddToCart={setAddToCart} />
                         </>
                     )
-                } else {
-                    return (
-                        <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
-                    )  
-                }
             }}
         />
     )
