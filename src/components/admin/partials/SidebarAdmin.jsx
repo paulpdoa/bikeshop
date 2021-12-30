@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
 import { Link } from 'react-router-dom';
 import { FaBiking, FaTools } from 'react-icons/fa';
-import { FiSettings, FiCalendar } from 'react-icons/fi';
+import { FiSettings, FiCalendar,FiMessageSquare } from 'react-icons/fi';
 import { GiFullMotorcycleHelmet } from 'react-icons/gi';
 import { useHistory } from 'react-router';
 import Axios from 'axios';
@@ -86,6 +86,10 @@ const SidebarAdmin = ({ setLogoutMssg }) => {
                 <li className="sidenav-li hover:bg-gray-200 hover:bg-opacity-5">
                     <FiCalendar />
                     <Link to='/dashboard/schedule'>Schedule</Link>
+                </li>
+                <li className="sidenav-li hover:bg-gray-200 hover:bg-opacity-5">
+                    <FiMessageSquare />
+                    <Link to='/dashboard/messages'>Messages</Link>
                 </li>
                 <li className="sidenav-li hover:bg-gray-200 hover:bg-opacity-5">
                     <FiSettings />

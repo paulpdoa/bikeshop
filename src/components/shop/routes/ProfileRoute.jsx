@@ -13,7 +13,7 @@ const ProfileRoute = ({ exact, path, user,setAuthStatus,logoutMssg, setLogoutMss
         <Route 
         {...rest}
             render={(props) => {
-                if(window.localStorage.getItem('isUserAuth') === 'true' && window.localStorage.getItem("role") === 'customer') {
+                if(window.localStorage.getItem('isUserAuth') === 'true' || window.localStorage.getItem("role") === 'customer') {
                     return (
                         <>
                             <Navbar user={user} setLogoutMssg={setLogoutMssg} setAuthStatus={setAuthStatus} />

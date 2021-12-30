@@ -6,7 +6,7 @@ import validator from 'validator';
 import RegisterModal from '../../modals/RegisterModal';
 
 const Register = ({registerMssg,setRegisterMssg}) => {
-
+    
     const [firstname,setFirstname] = useState('');
     const [lastname,setLastname] = useState('');
     const [username,setUsername] = useState('');
@@ -63,13 +63,14 @@ const Register = ({registerMssg,setRegisterMssg}) => {
                         setUsernameErr('');
                         setErrorEmail('');
                     },2000)
-                    console.log(res);
                 } else {
                     setRegisterMssg(true);
                     setTimeout(() => {
-                        history.push(res.data.redirect);
+                        history.push(`${res.data.redirect}/${res.data.user.uniqueId}`);
                         setRegisterMssg(false);
                     },2000)
+                    localStorage.setItem("customerInfo",JSON.stringify(res.data.user));
+                    localStorage.setItem("user",username);
                 }
             });
         }

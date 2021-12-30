@@ -11,27 +11,34 @@ const Dashboard = ({ date, logoutMssg }) => {
     const [orderCount,setOrderCount] = useState(0);
 
     const [orders,setOrders] = useState([]);
+
     useEffect(() => {
-        Axios.get('/api/customer/orders')
+        const abortCont = new AbortController();
+        Axios.get('/api/customer/orders',{ signal: abortCont.signal })
         .then((res) => {
             setOrders(res.data);
-            console.log(res.data)
-        })
+        });
+
+        return () => abortCont.abort
     },[])
 
     // Counts of Data
     useEffect(() => {
-        Axios.get('/api/customers')
+        const abortCont = new AbortController();
+        Axios.get('/api/customers',{ signal: abortCont.signal })
             .then((res) => {
                 setUserCount(res.data.length);
             })
+            return () => abortCont.abort
     },[])
 
     useEffect(() => {
-        Axios.get('/api/customer/orders')
+        const abortCont = new AbortController();
+        Axios.get('/api/customer/orders',{ signal: abortCont.signal })
         .then((res) => {
             setOrderCount(res.data.length);
         })
+        return () => abortCont.abort
     },[])
 
     return (

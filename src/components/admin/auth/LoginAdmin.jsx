@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { RiKeyFill } from 'react-icons/ri';
 import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -14,6 +14,13 @@ const LoginAdmin = ({ setRole,setAuthStatus,setAdmin }) => {
     const [passStatus,setPassStatus] = useState('');
 
     const history = useHistory();
+
+    // Redirects the admin to dashboard when he is logged in
+    useEffect(() => {
+        if(localStorage.getItem("isAdminAuth") && localStorage.getItem("admin")) {
+            history.push('/dashboard');
+        }
+    },[])
 
     const handleSubmit = (e) => {
         e.preventDefault();

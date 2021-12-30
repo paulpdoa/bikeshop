@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect,useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Axios from 'axios';
 
 const OrderDetailModal = ({ setOrderDetail,orderId }) => {
@@ -7,16 +8,19 @@ const OrderDetailModal = ({ setOrderDetail,orderId }) => {
     const imageLocation = 'http://localhost:5000/products/'
     const [order,setOrder] = useState([]);
 
+    const history = useHistory();   
+
     useEffect(() => {
         Axios.get(`/api/customer/info/${orderId}`)
         .then((res) => {
             setOrder(res.data[0]);
+            console.log(res.data[0])
         })
     },[orderId])
 
     // deletes an item
-    const onDelete = (e) => {
-        e.preventDefault();
+    const onDelete = (id) => {
+      console.log(id);
     }
 
     return (
@@ -42,7 +46,7 @@ const OrderDetailModal = ({ setOrderDetail,orderId }) => {
                 <p>{order.email}</p>
             </div>
             <div className="flex justify-end px-10 gap-5">
-                <button className="bg-red-600 p-1 rounded w-32 text-center">Delete</button>
+                <span onClick={() => onDelete(order.order_id)} className="bg-red-600 p-1 rounded w-32 text-center cursor-pointer">Delete</span>
                 <span onClick={() => setOrderDetail(false)} className="bg-blue-600 p-1 rounded w-32 text-center cursor-pointer">Close</span>
             </div>
         </motion.form>

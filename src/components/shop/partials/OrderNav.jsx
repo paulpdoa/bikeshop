@@ -8,12 +8,12 @@ const OrderNav = () => {
     // const [brands,setBrands] = useState('');
 
     // display all brands of every product items
-    useEffect(() => {
-        Axios.get('/api/admin/products')
-        .then((res) => {
-          console.log(res.data);
-        })
-    },[])
+    // useEffect(() => {
+    //     Axios.get('/api/admin/products')
+    //     .then((res) => {
+    //       console.log(res.data);
+    //     })
+    // },[])
 
     return (
         <motion.div 

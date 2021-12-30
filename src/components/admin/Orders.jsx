@@ -18,10 +18,14 @@ const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
     } 
 
     useEffect(() => {
-        Axios.get('/api/customer/orders')
+        const abortCont = new AbortController();
+        
+        Axios.get('/api/customer/orders',{ signal: abortCont.signal })
         .then((res) => {
             setOrders(res.data);
         })
+
+        return () => abortCont.abort;
     },[orders]);
 
     return (
@@ -36,7 +40,12 @@ const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
                 <div className="main-card">
                     <div className="order-cards">
                         <h1 className="order-card-title">New Orders</h1>
-                        { orders && orders.map((order) => (
+                        { orders.length < 1 ?  
+                            <div className="h-full w-full flex items-center justify-center">
+                                <h1 className="text-gray-400 animate-pulse text-3xl font-bold">No orders yet...</h1>
+                            </div>
+                            :
+                            orders && orders.map((order) => (
                             <div className="flex mt-10" key={order.order_id}>
                                 <div className="flex gap-2 w-full relative">
                                     <img className="w-32 h-full object-cover border border-gray-900" src={`${imageLocation}${order.product_image}`} alt={order.item_name}/>
@@ -49,7 +58,8 @@ const Orders = ({date,logoutMssg,orderDetail,setOrderDetail}) => {
                                     <button onClick={() => getInfo(order.order_id,true)} className="absolute right-0 bottom-0 bg-gray-900 text-gray-100 p-2 rounded-md">More Info</button>
                                 </div>
                             </div>   
-                        )) }  
+                        ))
+                         }  
                     </div>
 
                     <div className="order-cards">

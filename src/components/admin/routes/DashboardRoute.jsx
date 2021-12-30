@@ -2,7 +2,7 @@ import NavbarAdmin from "../partials/NavbarAdmin";
 import SidebarAdmin from "../partials/SidebarAdmin";
 import { Route, Redirect } from 'react-router-dom';
 
-const DashboardRoute = ({exact, path, role, isAuth, admin, setLogoutMssg, logoutMssg,setAddProductMssg,addProductMssg,orderDetail, setOrderDetail, date, component:Component, ...rest}) => {
+const DashboardRoute = ({exact, path, role, isAuth, admin, socket, chatRoomID, setLogoutMssg, logoutMssg,setAddProductMssg,addProductMssg,orderDetail, setOrderDetail, date, component:Component, ...rest}) => {
    return <Route 
             exact={exact} 
                 path={path} {...rest} 
@@ -15,7 +15,8 @@ const DashboardRoute = ({exact, path, role, isAuth, admin, setLogoutMssg, logout
                                         <NavbarAdmin {...routeProps} admin={admin} />
                                         <Component {...routeProps} date={date} logoutMssg={logoutMssg} 
                                         addProductMssg={addProductMssg} setAddProductMssg={setAddProductMssg}
-                                        setOrderDetail={setOrderDetail} orderDetail={orderDetail} 
+                                        setOrderDetail={setOrderDetail} orderDetail={orderDetail} socket={socket}
+                                        chatRoomID={chatRoomID}
                                         />
                                     </div>
                                 </div>

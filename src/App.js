@@ -1,6 +1,7 @@
 import { Switch,Route, Redirect } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
+import io from 'socket.io-client';
 
 // Customer Component Routes
 import DashboardRoute from './components/admin/routes/DashboardRoute';
@@ -27,6 +28,7 @@ import PartDetails from './components/shop/PartDetails';
 import Accessories from './components/shop/orders/Accessories';
 import AccessoryDetails from './components/shop/AccessoryDetails';
 import Reservation from './components/shop/Reservation';
+import Checkout from './components/shop/orders/Checkout';
 // Admin Webpage
 import Dashboard from './components/admin/Dashboard';
 import LoginAdmin from './components/admin/auth/LoginAdmin';
@@ -39,9 +41,11 @@ import Parts from './components/admin/Parts';
 import Schedule from './components/admin/Schedule';
 import AccessoriesAdmin from './components/admin/Accessories';
 import Settings from './components/admin/Settings';
-import Checkout from './components/shop/orders/Checkout';
+import Messages from './components/admin/Messages';
+import EmailConfirm from './components/shop/auth/EmailConfirm';
 
-
+// Connect socket.io
+const socket = io.connect("http://localhost:5000/");
 
 const App = () => {
 
@@ -49,6 +53,15 @@ const App = () => {
   let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   let today = new Date();
   let date = (months[today.getMonth()]) + ' ' + today.getDate() + ', ' + today.getFullYear();
+
+  // Id of the customer
+  const [userID] = useState(window.localStorage.getItem("id"));
+
+  // Chat room ID
+  const chatRoomID = window.localStorage.getItem("id")+"-"+ window.localStorage.getItem("user");
+  
+  // Chat Box for customers
+  const [closeChat,setCloseChat] = useState(false);
 
   const [user,setUser] = useState('');
   const [admin,setAdmin] = useState('');
@@ -61,6 +74,7 @@ const App = () => {
   const [addToCart,setAddToCart] = useState(false);
   const [orderDetail,setOrderDetail] = useState(false);
   const [paymentMssg, setPaymentMssg] = useState(false);
+  const [verifyModal,setVerifyModal] = useState(false);
 
 
   // profile page navigation function
@@ -93,20 +107,17 @@ const App = () => {
 
     // create a route in the backend to authenticate the admin, then pass a json
     useEffect(() => {
-    const abortController = new AbortController();
-    Axios.get('/api/admin/auth', { signal: abortController.signal })
-    .then((res) => {
-      if(res.data.isAuth && res.data.role === 'admin') {
-        setAuthStatus(res.data.isAuth);
-        setRole(res.data.role);
-      }
-      if(!res.data.isAuth) {
-        setAuthStatus(res.data.isAuth);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+      const abortController = new AbortController();
+      Axios.get('/api/admin/auth', { signal: abortController.signal })
+      .then((res) => {
+        if(res.data.isAuth && res.data.role === 'admin') {
+          setAuthStatus(res.data.isAuth);
+          setRole(res.data.role);
+        }
+        if(!res.data.isAuth) {
+          setAuthStatus(res.data.isAuth);
+        }
+      })
     return () => abortController.abort();
   },[]);
   
@@ -124,10 +135,15 @@ const App = () => {
   return (
       <Switch>
           <Route exact path='/login'>
-            <Login setUser={setUser} setAuthStatus={setAuthStatus} authStatus={authStatus} setRole={setRole} />
+            <Login verifyModal={verifyModal} setVerifyModal={setVerifyModal} setUser={setUser} setAuthStatus={setAuthStatus} authStatus={authStatus} 
+            setRole={setRole} 
+            />
           </Route>
           <Route exact path='/register'>
             <Register authStatus={authStatus} setRegisterMssg={setRegisterMssg} registerMssg={registerMssg} />
+          </Route>
+          <Route exact path='/verification/:id'>
+            <EmailConfirm setVerifyModal={setVerifyModal} />
           </Route>
           <Route exact path='/forgot'>
             <Forgot />
@@ -142,6 +158,7 @@ const App = () => {
           <Route exact path='/admin/register'>
             <RegisterAdmin registerMssg={registerMssg} setRegisterMssg={setRegisterMssg} />
           </Route>
+
 
           {/* dashboard routes */}
           <DashboardRoute exact path='/dashboard' component={Dashboard} date={date} role={role} isAuth={authStatus} admin={admin} 
@@ -170,6 +187,9 @@ const App = () => {
 
           <DashboardRoute exact path='/dashboard/settings' date={date} component={Settings} admin={admin} logoutMssg={logoutMssg} 
           setLogoutMssg={setLogoutMssg} />
+
+          <DashboardRoute socket={socket} exact path='/dashboard/messages' date={date} component={Messages} admin={admin} logoutMssg={logoutMssg} 
+          setLogoutMssg={setLogoutMssg} chatRoomID={chatRoomID} /> 
           {/* dashboard routes */}
 
           <Route exact path="/notfound">
@@ -179,7 +199,8 @@ const App = () => {
           <> { /* shop routes */}
             <Switch>
               <ShopRoute exact path='/' component={Shop} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
-                user={user} setAuthStatus={setAuthStatus}
+                user={user} setAuthStatus={setAuthStatus} closeChat={closeChat} setCloseChat={setCloseChat}
+                userID={userID} socket={socket} chatRoomID={chatRoomID}
               />
               <OrderRoute exact path='/bikes' component={Bicycles} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus} 
@@ -190,10 +211,10 @@ const App = () => {
               <OrderRoute exact path='/accessories' component={Accessories} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus} 
               />
-              <ProtectedRoute exact path='/part/details/:item' component={PartDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+              <ProtectedRoute exact path='/parts/details/:item' component={PartDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus} addToCart={addToCart} setAddToCart={setAddToCart}
               />
-              <ProtectedRoute exact path='/bicycle/details/:item' component={BikeDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+              <ProtectedRoute exact path='/bike/details/:item' component={BikeDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus} addToCart={addToCart} setAddToCart={setAddToCart}
               />
               <ProtectedRoute exact path='/accessory/details/:item' component={AccessoryDetails} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
@@ -214,7 +235,7 @@ const App = () => {
               <ShopRoute exact path='/about' component={About} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus}
               />
-              <ProtectedRoute exact path='/contact-us' component={Contact} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
+              <ShopRoute exact path='/contact-us' component={Contact} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 
                 user={user} setAuthStatus={setAuthStatus}
               />
               <ProtectedRoute exact path='/reservation' component={Reservation} logoutMssg={logoutMssg} setLogoutMssg={setLogoutMssg} 

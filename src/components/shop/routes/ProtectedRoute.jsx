@@ -7,7 +7,7 @@ const ProtectedRoute = ({ logoutMssg,setlogoutMssg,user,setAuthStatus,setLogoutM
         <Route 
         {...rest}
             render={(props) => {
-               if(window.localStorage.getItem("role") === 'customer' && window.localStorage.getItem('isUserAuth') === 'true') {
+               if(window.localStorage.getItem("role") === 'customer' || window.localStorage.getItem('isUserAuth') === 'true') {
                 return (
                     <>
                         <Navbar user={user} setAuthStatus={setAuthStatus} setLogoutMssg={setLogoutMssg} />

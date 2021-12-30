@@ -2,7 +2,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useState,useEffect } from 'react';
 import {BsCaretDownFill} from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
-import { FiLogOut,FiLogIn } from 'react-icons/fi';
+import { FiLogOut,FiLogIn,FiSearch } from 'react-icons/fi';
 import Axios from 'axios';
 
 const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
@@ -10,6 +10,10 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
     const [hide,setHide] = useState(false);
     const customer = window.localStorage.getItem("user");
     const [total,setTotal] = useState(0);
+
+    // variable for searched item
+    const [products,setProducts] = useState([]);
+    const [filteredItem,setFilteredItem] = useState([]);
     
     const history = useHistory();
 
@@ -27,22 +31,17 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
 
     // computes total price
     useEffect(() => {
-        Axios.get(`/customer/cart/${id}`)
+        const abortCont = new AbortController(); 
+
+        Axios.get(`/customer/cart/${id}`,{ signal: abortCont.signal })
         .then((res) => {
             const totalLength = res.data.length;
             setTotal(totalLength);
         })
+        .catch((err) => console.log(err))
+        
+        return () => abortCont.abort 
     },[id])
-    
-    // //change url from id to username of logged in user
-    // useEffect(() => {
-    //     Axios.get(`/customer/cart/${id}`)
-    //     .then((res) => {
-    //         res.data.forEach((customer) => {
-    //             setCustomer(customer.User.userName);
-    //         })
-    //     })
-    // },[id])
 
     // logout the user upon click
     const onLogout = () => {
@@ -50,16 +49,39 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
         .then((res) => {
             setLogoutMssg(true);
             setTimeout(() => {
-                window.localStorage.removeItem("user");
-                window.localStorage.removeItem("isUserAuth");
-                window.localStorage.removeItem("role");
-                window.localStorage.removeItem("id");
+                localStorage.removeItem("user");
+                localStorage.removeItem("isUserAuth");
+                localStorage.removeItem("role");
+                localStorage.removeItem("id");
+                localStorage.removeItem("userToken");
                 history.push(res.data.redirect);
                 setAuthStatus(res.data.isAuth);
                 setLogoutMssg(false);
             },2000)
         });
     }
+    // Get all products to be displayed for searching
+    useEffect(() => {
+        Axios.get('/api/admin/products')
+        .then((value) => {
+            setProducts(value.data);
+        })
+    },[])
+
+    // Search an item function here
+    const handleSearch = (e) => {
+        e.preventDefault();
+        const searchedItem = e.target.value;
+        const filteredData = products.filter((val) => {
+            return val.item_name.toLowerCase().includes(searchedItem.toLowerCase());
+        })
+        if(searchedItem === '') {
+            setFilteredItem([]);
+        } else {
+            setFilteredItem(filteredData);
+        }
+    }
+
 
     return (
         <nav className="bg-gray-900 flex justify-center flex-col"> 
@@ -67,11 +89,27 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
             <div className="ml-auto mr-auto w-5/6 flex justify-between text-white px-2 py-4 border-b-2 border-white items-center max-w-7xl">
                 <div className="flex ml-10 h-16 w-1/2">
                     <Link className="no-underline  self-center" to="/"><img className="filter invert w-24 h-24" src="/image/tulin.png" alt="tulinlogo" /></Link>
-                    <input className="text-black ml-5 w-full rounded-sm p-1 h-10 outline-none self-center lg:block hidden" type="search" placeholder="Search parts/brand" />
+                    <div className="w-full self-center relative z-50">
+                        <div className="flex items-center self-center w-full">
+                            <input onChange={handleSearch} className="text-black ml-5 w-full rounded-sm p-1 h-10 outline-none self-center lg:block hidden" type="search" placeholder="Search parts/brand" />
+                            <button className="self-center bg-gray-700 h-10 w-10 bg-opacity-20 rounded-r-lg flex items-center justify-center hover:bg-gray-200 hover:text-gray-900 transition duration-200"><FiSearch /></button>
+                        </div>
+                        { filteredItem.length !== 0 && 
+                        <div className="absolute bg-white text-gray-900 z-50 px-5 py-5 overflow-y-scroll overflow-hidden h-auto w-full ml-5 border-2 rounded border-gray-900">
+                            { filteredItem.slice(0,15).map((product) => (
+                                <div className="p-2 cursor-pointer hover:bg-gray-200" key={product.id}>
+                                    <a className="w-full" target="_blank" rel="noreferrer" href={`/${product.product_type}/details/${product.item_name}`}>{product.product_type.toUpperCase()} - {product.item_name}</a>
+                                </div>
+                            )) }
+                        </div> 
+                        }
+                    </div>
+                    
                 </div>
                 <ul className="flex mr-20 items-center">
                     <li className="navBtns"><Link  to="/">Home</Link></li>
                     <li className="navBtns ml-5"><Link to="/about">About</Link></li>
+                    <li className="navBtns ml-5"><Link to="/contact-us">Contact Us</Link></li>
                       
                     { user !== null && 
                         <li className="navBtns ml-5 border-2 border-white p-1 rounded-full cursor-pointer">
@@ -113,9 +151,9 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
                 <div className="text-white flex justify-evenly p-3">
                     <Link className="navBtns" to="/bikes">BIKES</Link>
                     <Link className="navBtns" to="/reservation">RESERVATION</Link>
+                    <Link className="navBtns" to='/customize'>CUSTOMIZE</Link>
                     <Link className="navBtns" to="/parts">BIKE PARTS</Link>
                     <Link className="navBtns" to="/accessories">ACCESSORIES</Link>
-                    <Link className="navBtns" to="/contact-us">CONTACT US</Link>
                 </div>
             </div>
         </nav>

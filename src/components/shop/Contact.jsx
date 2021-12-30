@@ -29,24 +29,24 @@ const Contact = ({ logoutMssg }) => {
                     <div className="w-full flex items-center justify-center">
                         <div className="grid grid-cols-3 justify-items-center w-full mt-10">
                             <div className="flex flex-col justify-center items-center col-span-1 w-full px-5">
-                                <svg class="w-10 h-10" fill="black" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <svg className="w-10 h-10" fill="black" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 </svg>
                                 <span className="text-xl text-center">OUR STORE</span>
                                 <span className="text-center w-1/2">05 Lt. Aster Street, Sta. Cecilia 1 Subdivision, Tanza, Cavite 4108 Cavite</span>
                             </div>
                             <div className="flex flex-col items-center justify-center col-span-1 w-full px-5 border-r-2 border-l-2 border-gray-600">
-                                <svg class="w-10 h-10" fill="black" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                <svg className="w-10 h-10" fill="black" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                 </svg>
                                 <span className="text-start">Tel. No. 482-3491-31</span>
                                 <span>Mobile No. 09325421176</span>
                                 <span className="flex items-center"><AiFillFacebook /> Tulin Bicycle Shop</span>
                             </div>
                             <div className="flex flex-col items-center justify-center col-span-1 w-full px-5">
-                                <svg class="w-10 h-10" fill="black" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                <svg className="w-10 h-10" fill="black" stroke="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                                <span className="text-xl text-center">OPENING HOURS</span>
                                <span>Mon - Fri 11:00 - 19:00</span>

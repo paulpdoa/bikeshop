@@ -59,9 +59,9 @@ const Parts = ({ logoutMssg }) => {
                             </div> : 
                             currentPages.map((part) => (
                             <div className="flex py-5" key={part.id}> { /* items goes here */ }
-                                <Link to={`/part/details/${part.item_name}`}>
+                                <Link to={`/parts/details/${part.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
-                                        <img className="w-60 h-36 object-cover transform hover:scale-105 transition duration-300 transform hover:scale-105 transition duration-300" src={`${imageLocation}${part.product_image}`} alt={part.item_name} />
+                                        <img className="w-60 h-36 object-cover transform hover:scale-105 transition duration-300" src={`${imageLocation}${part.product_image}`} alt={part.item_name} />
                                         <div className="grid grid-rows-3 justify-items-center m-2">
                                             <span className="font-semibold text-gray-800">{part.brand_name}</span>
                                             <span className="font-normal text-sm text-gray-600">{part.item_name}</span>

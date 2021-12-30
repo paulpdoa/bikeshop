@@ -1,30 +1,44 @@
 import { Link, useHistory,withRouter } from 'react-router-dom';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Axios from 'axios';
 import { Helmet } from 'react-helmet';
 
-const Login = ({ setUser,setAuthStatus, setRole }) => {
+import VerifyModal from '../../modals/VerifyModal';
+
+const Login = ({ setUser,setAuthStatus,setRole,setVerifyModal,verifyModal }) => {
 
     const [username, setUsername] = useState('');
     const [password,setPassword] = useState('');
     const [showPass,setShowPass] = useState(false);
     const [status,setStatus] = useState('');
     const [passStatus,setPassStatus] = useState('');
+
+    const [verify,setVerify] = useState('');
+
     const history = useHistory();
+
+    useEffect(() => {
+        if(localStorage.getItem("userToken")) {
+            history.push('/');
+        }
+    },[history])
     
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        Axios.post('/api/login',{
-        userName:username,
-        password
-        }).then((res) => {
+        Axios.post('/api/login',{userName:username,password})
+        .then((res) => {
            if(res.data.pass) {
               setTimeout(() => {
                 setPassStatus('');
               },1000)
               setPassStatus(res.data.pass);
-           } else if(res.data.mssg) {
+           } else if(res.data.verify) {
+                setVerify(res.data.verify);
+                setVerifyModal(true);
+                localStorage.setItem("user",username);
+           }
+           else if(res.data.mssg) {
                setTimeout(() => {
                 setStatus('');
                },1000)
@@ -37,6 +51,7 @@ const Login = ({ setUser,setAuthStatus, setRole }) => {
                 setAuthStatus(true)
                 setRole(res.data.role);
                 setUser(res.data.user);
+                localStorage.setItem("userToken",res.data.token);
                 history.push(res.data.redirect);
             }
         })
@@ -75,6 +90,8 @@ const Login = ({ setUser,setAuthStatus, setRole }) => {
                 <Link to='/' className="text-blue-500">View items in the store</Link> 
             </form>
             <a className="text-gray-200 absolute" href='/admin/login'>Login as admin</a>
+            {/* Show this modal when the user is not yet verified */}
+            { verifyModal && <VerifyModal verify={verify} setVerifyModal={setVerifyModal} username={username} passStatus={passStatus} /> }
         </div>
     )
 }

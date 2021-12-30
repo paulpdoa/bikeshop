@@ -58,7 +58,7 @@ const Bicycles = ({ logoutMssg }) => {
                                 <h1 className="text-3xl font-bold text-gray-400 animate-pulse">Nothing to display...</h1>
                             </div> : currentPages.map((bike) => (
                             <div className="flex py-5" key={bike.id}> { /* items goes here */ }
-                                <Link to={`/bicycle/details/${bike.item_name}`}>
+                                <Link to={`/bike/details/${bike.item_name}`}>
                                     <div className="border border-gray-300 shadow-xl overflow-hidden rounded">
                                         <img className="w-60 h-36 object-cover transform hover:scale-105 transition duration-300" src={`${imageLocation}${bike.product_image}`} alt={bike.item_name} />
                                         <div className="grid grid-rows-3 justify-items-center m-2">

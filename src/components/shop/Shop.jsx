@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import {motion} from 'framer-motion';
 import {Helmet} from 'react-helmet';
-import Footer from './partials/Footer';
-import LogoutModal from '../modals/LogoutModal';
 
-const Shop = ({ logoutMssg }) => {
+import Footer from './partials/Footer';
+
+import ChatRoomModal from '../modals/ChatRoomModal';
+import LogoutModal from '../modals/LogoutModal';
+import ChatHead from '../modals/ChatHead';
+
+const Shop = ({ logoutMssg,closeChat,setCloseChat,userID,socket,chatRoomID }) => {
 
     return (
         <div className="bg-gray-100 relative"> {/* banner */}
@@ -122,7 +126,13 @@ const Shop = ({ logoutMssg }) => {
                         </div>
                     </div>
                 </div>
-              {logoutMssg && <LogoutModal />}
+              { logoutMssg && <LogoutModal /> }
+              
+              { closeChat ? 
+              <ChatRoomModal socket={socket} setCloseChat={setCloseChat} chatRoomID={chatRoomID} /> 
+                        : 
+              <ChatHead socket={socket} userID={userID} setCloseChat={setCloseChat} chatRoomID={chatRoomID} /> } 
+              
             </div>
             <Footer />
         </div>
