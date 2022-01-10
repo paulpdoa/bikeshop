@@ -51,6 +51,7 @@ const Checkout = ({ logoutMssg,setPaymentMssg,paymentMssg }) => {
     useEffect(() => {
         Axios.get('/api/customer/orders')
         .then((res) => {
+            // will be used soon
             console.log(res.data);
         })
     })

@@ -5,24 +5,48 @@ import { VscChromeMinimize } from 'react-icons/vsc';
 import { GrAttachment } from 'react-icons/gr';
 import ScrollToBottom from 'react-scroll-to-bottom';
 
+import Axios from 'axios';
+
 const ChatRoomModal = ({ socket,setCloseChat,chatRoomID }) => {
     
-    const [user] = useState(window.localStorage.getItem("user"));
+    const [user] = useState(localStorage.getItem("user"));
     const [message,setMessage] = useState('');
     const [messages, setMessages] = useState([]);
+
+    const [convos,setConvos] = useState([]);
+
+    // There should be only one admin in this system.
+    const [adminName,setAdminName] = useState('');
+    useEffect(() => {
+        Axios.get('/api/admins')
+        .then((res) => {
+            setAdminName(res.data[0].userName);
+        })
+    },[])
+
+    // Get all messages from database
+    Axios.get('/api/message')
+    .then((res) => {
+        setConvos(res.data);
+    })
 
     const minutes = new Date(Date.now()).getMinutes();
 
     const sendMessage = async () => {
          if(message !== "") {
             const messageData = {
-                room: chatRoomID,
-                user: user,
+                chatRoom_id: chatRoomID,
+                sender: user,
+                receiver: adminName,
                 message: message,
-                time: new Date(Date.now()).getHours() + ":" + (minutes < 10 ? '0' : '') + minutes
+                date: new Date(Date.now()).getHours() + ":" + (minutes < 10 ? '0' : '') + minutes,
+                role: 'user'
             };
              await socket.emit("send_message",messageData);
              
+             Axios.post('/api/message',messageData)
+             .then((res) => {})
+
              setMessages([...messages,messageData]);
              setMessage("");
          }  
@@ -32,7 +56,7 @@ const ChatRoomModal = ({ socket,setCloseChat,chatRoomID }) => {
     useEffect(() => {
         socket.on("receive_message", (data) => {
             setMessages([...messages,data]);
-            
+            console.log(data);
         })
     },[socket,messages])
 
@@ -61,12 +85,12 @@ const ChatRoomModal = ({ socket,setCloseChat,chatRoomID }) => {
                         :
                         messages.map((messageContent) => (
                         <>
-                            <div className={ messageContent.admin ? "flex justify-start" : "flex justify-end" }>
-                                <div key={messageContent.id} className={messageContent.user ? "w-1/2 rounded-md p-2 m-2 bg-blue-500 break-words" : "w-1/2 rounded-md p-2 m-2 bg-gray-500 break-words"}>
+                            <div key={ minutes } className={ messageContent.sender === adminName ? "flex justify-start" : "flex justify-end" }>
+                                <div className={messageContent.sender !== adminName ? "w-1/2 rounded-md p-2 m-2 bg-blue-500 break-words" : "w-1/2 rounded-md p-2 m-2 bg-gray-500 break-words"}>
                                     <p className="text-gray-100">{messageContent.message}</p>
                                 </div>
                             </div>
-                            <span className={ messageContent.user ? "text-gray-700 text-xs float-right mr-3 font-semibold" : "text-gray-700 text-xs ml-2 float-left font-semibold"}>{ messageContent.user ? messageContent.user : messageContent.admin} {messageContent.time}</span><br/>  
+                            <span className={ messageContent.sender !== adminName ? "text-gray-700 text-xs float-right mr-3 font-semibold" : "text-gray-700 text-xs ml-2 float-left font-semibold"}>{ messageContent.sender ? messageContent.sender : messageContent.receiver} {messageContent.date}</span><br/>  
                         </>
                     ))}                       
                 </div>

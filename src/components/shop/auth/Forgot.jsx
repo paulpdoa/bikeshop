@@ -1,11 +1,20 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import { Helmet } from 'react-helmet';
 import Axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Forgot = () => {
 
     const [account,setAccount] = useState('');
     const [status,setStatus] = useState(''); 
+
+    const history = useHistory();
+
+    useEffect(() => {
+        if(localStorage.getItem("userToken")) {
+            history.push('/');
+        }
+    },[history])
 
     const onSubmit = (e) => {
         e.preventDefault();

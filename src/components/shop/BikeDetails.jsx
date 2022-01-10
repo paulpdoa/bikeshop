@@ -137,9 +137,21 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                     </div>
                 </motion.div>
                 {/* Reviews and Product Details Here */}
-                <div className="w-full grid grid-cols-3 gap-5 mb-10">
+                
+                {/* end of reviews and details */}
+            </div>
+            { logoutMssg && <LogoutModal /> }
+            { cartMssg && <CartModal closeModal={closeModal} />}
+        </div>
+        
+    )
+}
+
+export default BikeDetails;
+
+{/* <div className="w-full grid grid-cols-3 gap-5 mb-10">
                     <div className="w-full col-span-2">
-                        <div className="bg-white shadow-xl rounded-md p-2 h-36"> { /* Product Details */ }
+                        <div className="bg-white shadow-xl rounded-md p-2 h-36">
                             <h2 className="font-bold text-xl">Product Details</h2>
                             <div className="flex gap-10 text-gray-800">
                                 <div className="mt-2 flex flex-col">
@@ -153,8 +165,7 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                                 </div> 
                             </div>
                         </div>
-                        <div className="bg-white rounded-md shadow-xl p-2 mt-5"> { /* Reviews Here */ }
-                        <h2 className="font-bold text-xl">Ratings & Reviews</h2>
+                        <div className="bg-white rounded-md shadow-xl p-2 mt-5">
                             <div className="grid grid-cols-2 justify-items-center w-3/4">
                                 <div className="flex gap-10 self-center col-span-1">
                                     <div className="flex items-center flex-col">
@@ -219,7 +230,7 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                                 </div>
                                 
                             </div>
-                            <div className="mt-5"> {/* Product Review Here */}
+                            <div className="mt-5"> 
                                 <h2 className="font-bold text-xl">Product Review</h2>
                                 <div className="w-full flex justify-between mt-2 border-t-2 border-gray-200">
                                     <div className="flex mt-2">
@@ -335,14 +346,4 @@ const BikeDetails = ({ logoutMssg,addToCart: cartMssg,setAddToCart }) => {
                             <span className="ml-14 font-bold text-xl">₱8999</span>
                         </div>
                     </div>
-                </div>
-                {/* end of reviews and details */}
-            </div>
-            { logoutMssg && <LogoutModal /> }
-            { cartMssg && <CartModal closeModal={closeModal} />}
-        </div>
-        
-    )
-}
-
-export default BikeDetails;
+                </div> */}

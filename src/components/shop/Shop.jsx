@@ -37,9 +37,9 @@ const Shop = ({ logoutMssg,closeChat,setCloseChat,userID,socket,chatRoomID }) =>
                     className="w-3/4 rounded-xl shadow-xl h-full overflow-hidden border border-gray-300">
                         <img className="h-1/2 w-full object-cover transform hover:scale-105 transition duration-300" src="/image/cycle.jpg" alt="cycle" />
                         <div className="py-4 px-4">
-                            <h2 className="font-bold uppercase text-xl px-2 text-gray-800 select-none">our latest eyewear</h2>
+                            <h2 className="font-bold uppercase text-xl px-2 text-gray-800 select-none">our latest bicycles</h2>
                             <p className="uppercase font-semibold px-2 text-gray-800 select-none">Best seller from top brands</p>
-                            <Link className="font-bold border-2 border-gray-800 px-2 py-2 rounded-md absolute mt-3 ml-2 transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/order">SHOP NOW</Link>
+                            <Link className="font-bold border-2 border-gray-800 px-2 py-2 rounded-md absolute mt-3 ml-2 transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/bikes">SHOP NOW</Link>
                         </div>
                     </motion.div>
                     <motion.div 
@@ -51,7 +51,7 @@ const Shop = ({ logoutMssg,closeChat,setCloseChat,userID,socket,chatRoomID }) =>
                         <div className="py-4 px-4">
                             <h2 className="font-bold uppercase text-xl px-2 text-gray-800 select-none">Bike parts</h2>
                             <p className="uppercase font-semibold px-2 text-gray-800 select-none">Our latest collection</p>
-                            <Link className="font-bold border-2 border-gray-800 px-2 py-2 rounded-md absolute mt-3 ml-2 transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/order">SHOP NOW</Link>
+                            <Link className="font-bold border-2 border-gray-800 px-2 py-2 rounded-md absolute mt-3 ml-2 transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/parts">SHOP NOW</Link>
                         </div>
                     </motion.div>
                     <motion.div 
@@ -61,9 +61,9 @@ const Shop = ({ logoutMssg,closeChat,setCloseChat,userID,socket,chatRoomID }) =>
                     className="w-3/4 rounded-xl shadow-xl h-full overflow-hidden border border-gray-300">
                         <img className="h-1/2 w-full object-cover overflow-auto transform hover:scale-105 transition duration-300" src="/image/pedal.jpg" alt="pedal" />
                         <div className="py-4 px-4">
-                            <h2 className="font-bold uppercase text-xl px-2 text-gray-800 select-none">Wheels and tires</h2>
+                            <h2 className="font-bold uppercase text-xl px-2 text-gray-800 select-none">Accessories</h2>
                             <p className="uppercase font-semibold px-2 text-gray-800 select-none">our latest collection</p>
-                            <Link className="font-bold border-2 border-gray-800 px-2 py-2 rounded-md absolute mt-3 ml-2 transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/order">SHOP NOW</Link>
+                            <Link className="font-bold border-2 border-gray-800 px-2 py-2 rounded-md absolute mt-3 ml-2 transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/accessories">SHOP NOW</Link>
                         </div>
                     </motion.div>
                 </div>
@@ -78,7 +78,7 @@ const Shop = ({ logoutMssg,closeChat,setCloseChat,userID,socket,chatRoomID }) =>
                         <h1 className="font-semibold text-gray-200 text-5xl px-6 py-16 select-none">BUILD YOUR<br/> OWN BIKE</h1>
                         <Link className="border-2 border-gray-100 text-gray-100 rounded-md p-2 ml-6 transition delay-100 duration-200 transform ease-in-out hover:bg-gray-200 hover:text-gray-800" to="/customize">CUSTOMIZE NOW</Link>
                     </div>
-                    <Link className="border-2 border-gray-700 p-2 rounded-md absolute bottom-0 w-36 text-center transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/order">SHOP NOW</Link>
+                    <Link className="border-2 border-gray-700 p-2 rounded-md absolute bottom-0 w-36 text-center transition delay-100 duration-200 transform ease-in-out hover:scale-105" to="/bikes">SHOP NOW</Link>
                 </div>
             </div>
 

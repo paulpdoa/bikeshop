@@ -10,7 +10,7 @@ const OrderRoute = ({ logoutMssg,user,exact,path,setAuthStatus,setLogoutMssg,com
         <Route {...rest}
             render={(props) => {
                 return (
-                    <>
+                    <div className="min-h-screen">
                     <Navbar user={user} setLogoutMssg={setLogoutMssg} setAuthStatus={setAuthStatus}/>
                         <div className="flex justify-center h-auto">
                             <Helmet><title>Bicycle System | Order</title></Helmet>
@@ -22,7 +22,7 @@ const OrderRoute = ({ logoutMssg,user,exact,path,setAuthStatus,setLogoutMssg,com
                             </div>
                         </div>
                     <Footer />
-                    </>
+                    </div>
                 )
             }}
         />

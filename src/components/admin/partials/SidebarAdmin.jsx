@@ -19,6 +19,7 @@ const SidebarAdmin = ({ setLogoutMssg }) => {
                     window.localStorage.removeItem("admin");
                     window.localStorage.removeItem("role");
                     window.localStorage.removeItem("isAdminAuth");
+                    sessionStorage.removeItem('adminToken');
                     history.push(res.data.redirect);
                     setLogoutMssg(false);
                 },3000)

@@ -15,13 +15,6 @@ const LoginAdmin = ({ setRole,setAuthStatus,setAdmin }) => {
 
     const history = useHistory();
 
-    // Redirects the admin to dashboard when he is logged in
-    useEffect(() => {
-        if(localStorage.getItem("isAdminAuth") && localStorage.getItem("admin")) {
-            history.push('/dashboard');
-        }
-    },[])
-
     const handleSubmit = (e) => {
         e.preventDefault();
         Axios.post('/api/admin/login', { userName: username, password })
@@ -36,6 +29,7 @@ const LoginAdmin = ({ setRole,setAuthStatus,setAdmin }) => {
                 window.localStorage.setItem("admin",res.data.admin);
                 window.localStorage.setItem("role", 'admin');
                 window.localStorage.setItem("isAdminAuth", true);
+                sessionStorage.setItem('adminToken',res.data.adminToken);
                 setAuthStatus(true);
                 history.push(res.data.redirect);
             }

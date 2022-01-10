@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { AiFillFacebook } from 'react-icons/ai';
+import emailjs from 'emailjs-com';
 
 import LogoutModal from '../modals/LogoutModal';
 import Footer from '../shop/partials/Footer';
@@ -13,16 +14,26 @@ const Contact = ({ logoutMssg }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert('Email has been sent!');
-        setEmail('');
-        setName('');
-        setMessage('');
+        const messageData = {
+            name,
+            email,
+            message
+        }
+        emailjs.sendForm('service_u1q4zdo','template_hlbtksq',e.target,'user_03ZclDWDSly4UKfcbFfF2')
+        .then((res) => {
+            alert(res.text);
+            setName('');
+            setEmail('');
+            setMessage('');
+
+        })
+        .catch((err) => console.log(err));
     }
 
     return (
         <div className="relative">
         <Helmet><title>Bicycle System | Contact Us</title></Helmet>
-        <iframe className="filter invert w-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3864.686503362786!2d120.85162561466201!3d14.387541389938468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33962c86ebd844c7%3A0x67cb4930ead5600b!2sTulin%20Bicycle%20and%20Repair%20Shop!5e0!3m2!1sen!2sph!4v1636467526062!5m2!1sen!2sph" height="450" style={{  border:"0"  }} allowFullScreen="" loading="lazy" title="Tulin Bike Shop Map"></iframe>     
+        <iframe className="w-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3864.686503362786!2d120.85162561466201!3d14.387541389938468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33962c86ebd844c7%3A0x67cb4930ead5600b!2sTulin%20Bicycle%20and%20Repair%20Shop!5e0!3m2!1sen!2sph!4v1636467526062!5m2!1sen!2sph" height="450" style={{  border:"0"  }} allowFullScreen="" loading="lazy" title="Tulin Bike Shop Map"></iframe>     
             <div className="flex justify-center">
                 <div className="max-w-7xl w-full">
                     <h1 className="text-5xl text-center mt-10">CONTACT US</h1>
@@ -60,11 +71,11 @@ const Contact = ({ logoutMssg }) => {
             <form onSubmit={handleSubmit} className="bg-gray-900 flex justify-center w-full mt-20">
                 <div className="grid grid-cols-2 gap-10 w-1/2 justify-items-center px-16 py-16 max-w-4xl">
                     <div className="col-span-1">
-                        <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="p-2 outline-none" cols="40" rows="5" required placeholder="Message"></textarea>
+                        <textarea name="message" value={message} onChange={(e) => setMessage(e.target.value)} className="p-2 outline-none" cols="40" rows="5" required placeholder="Message"></textarea>
                     </div>
                     <div className="w-full flex flex-col gap-2">
-                        <input className="p-2 w-full" value={name} onChange={(e) => setName(e.target.value)} type="text" required placeholder="Name"  />
-                        <input className="p-2 w-full" value={email} onChange={(e) => setEmail(e.target.value)} type="text" required placeholder="Email"  />
+                        <input className="p-2 w-full" name="name" value={name} onChange={(e) => setName(e.target.value)} type="text" required placeholder="Name"  />
+                        <input className="p-2 w-full" name="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" required placeholder="Email"  />
                         <button className="border border-gray-300 p-2 text-gray-300 rounded w-1/2">Submit</button>
                     </div>
                 </div>

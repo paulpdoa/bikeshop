@@ -7,7 +7,7 @@ const DashboardRoute = ({exact, path, role, isAuth, admin, socket, chatRoomID, s
             exact={exact} 
                 path={path} {...rest} 
                     render={(routeProps) => {
-                        if(window.localStorage.getItem("role") === 'admin' && window.localStorage.getItem("isAdminAuth") === 'true') {
+                        if(!sessionStorage.getItem('adminToken')) {
                             return (
                                 <div className="flex h-screen">
                                     <SidebarAdmin {...routeProps} setLogoutMssg={setLogoutMssg}/>

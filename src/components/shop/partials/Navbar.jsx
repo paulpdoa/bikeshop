@@ -91,7 +91,7 @@ const Navbar = ({user,setAuthStatus,setLogoutMssg}) => {
                     <Link className="no-underline  self-center" to="/"><img className="filter invert w-24 h-24" src="/image/tulin.png" alt="tulinlogo" /></Link>
                     <div className="w-full self-center relative z-50">
                         <div className="flex items-center self-center w-full">
-                            <input onChange={handleSearch} className="text-black ml-5 w-full rounded-sm p-1 h-10 outline-none self-center lg:block hidden" type="search" placeholder="Search parts/brand" />
+                            <input onChange={handleSearch} className="text-black ml-5 w-full rounded-sm p-1 h-10 outline-none self-center lg:block hidden" type="search" placeholder="Search an item" />
                             <button className="self-center bg-gray-700 h-10 w-10 bg-opacity-20 rounded-r-lg flex items-center justify-center hover:bg-gray-200 hover:text-gray-900 transition duration-200"><FiSearch /></button>
                         </div>
                         { filteredItem.length !== 0 && 

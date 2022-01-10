@@ -37,8 +37,7 @@ const Login = ({ setUser,setAuthStatus,setRole,setVerifyModal,verifyModal }) => 
                 setVerify(res.data.verify);
                 setVerifyModal(true);
                 localStorage.setItem("user",username);
-           }
-           else if(res.data.mssg) {
+           } else if(res.data.mssg) {
                setTimeout(() => {
                 setStatus('');
                },1000)
@@ -48,10 +47,10 @@ const Login = ({ setUser,setAuthStatus,setRole,setVerifyModal,verifyModal }) => 
                 window.localStorage.setItem("isUserAuth", true);
                 window.localStorage.setItem("role", 'customer');
                 window.localStorage.setItem("id",res.data.userID);
+                localStorage.setItem("userToken",res.data.token);
                 setAuthStatus(true)
                 setRole(res.data.role);
                 setUser(res.data.user);
-                localStorage.setItem("userToken",res.data.token);
                 history.push(res.data.redirect);
             }
         })

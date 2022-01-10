@@ -41,7 +41,7 @@ const EmailConfirm = ({ setVerifyModal }) => {
         const submittedCode = `${boxOne}${boxTwo}${boxThree}${boxFour}${boxFive}`;
         
         if(submittedCode === code) {
-            Axios.put(`/api/customers/update/${username}`, { id })
+            Axios.put(`/api/customers/verify/${username}`, { id })
             .then((res) => {
                 setVerifyStatus(res.data.verify);
                 localStorage.removeItem("customerInfo");
@@ -50,11 +50,8 @@ const EmailConfirm = ({ setVerifyModal }) => {
                     history.push(res.data.redirect);
                 },3000 );
             })
-        } else {
-            setInterval(() => {
-                setVerifyStatus('Wrong code! Please check the code in your email');
-            },2000)
-            setVerifyStatus('');
+        } else if(submittedCode !== code) {
+            setVerifyStatus('Wrong code! Please check the code in your email');
         }
     }
     
@@ -79,7 +76,11 @@ const EmailConfirm = ({ setVerifyModal }) => {
                                 <button onClick={submitCode} className="bg-sales p-2 rounded-md text-gray-100 font-semibold w-1/2">Submit</button>
                             </div>
                         </div>
-                        <p className={verifyStatus === 'Wrong code! Please check the code in your email' ? "text-center p-2 text-red-500 font-bold" : "text-center p-2 text-blue-700 font-bold"}>{ verifyStatus === 'Wrong code! Please check the code in your email' ? verifyStatus : verifyStatus } <AiOutlineLoading3Quarters /></p>
+                        <p className={verifyStatus === 'Wrong code! Please check the code in your email' ? "text-center p-2 text-red-500 font-bold" : "text-center p-2 text-blue-700 font-bold"}>
+                            { verifyStatus === 'Wrong code! Please check the code in your email' ? 
+                                verifyStatus :
+                            <span className="flex justify-center gap-5">{verifyStatus} <span className="animate-spin"><AiOutlineLoading3Quarters /></span></span> }
+                        </p>
                     </div>
                 </div>
             </div>

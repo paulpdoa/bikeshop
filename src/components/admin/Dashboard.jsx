@@ -72,7 +72,7 @@ const Dashboard = ({ date, logoutMssg }) => {
                             </svg>
                         </div>
                         <div>
-                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="sales">5,141</label>
+                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="sales">0</label>
                         </div>
                     </div>
                     {/* total expenses */}
@@ -84,7 +84,7 @@ const Dashboard = ({ date, logoutMssg }) => {
                             </svg>
                         </div>
                         <div>
-                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="expenses">2,273</label>
+                            <label className="text-3xl font-bold text-gray-100 ml-2" htmlFor="expenses">0</label>
                         </div>
                     </div>
                     {/* total users */}
@@ -148,7 +148,11 @@ const Dashboard = ({ date, logoutMssg }) => {
                     <div className="bg-white w-1/4 shadow-xl p-5 max-h-96 overflow-y-scroll">
                         <h1 className="font-bold text-2xl">Recent Orders</h1>
                         <div className="font-semibold flex flex-col gap-7 mt-5"> {/* Recent Order lists */}
-                            { orders && orders.map((order) => (
+                            { orders.length < 1 ? 
+                            <div>
+                                <h1 className="text-xl font-bold text-gray-400 animate-pulse text-center">No recent orders yet...</h1>
+                            </div> : 
+                            orders && orders.map((order) => (
                                 <div key={order.order_id}>
                                     <label htmlFor="orders">{ order.brand_name } {order.item_name}</label>
                                 </div>

@@ -76,6 +76,14 @@ const App = () => {
   const [paymentMssg, setPaymentMssg] = useState(false);
   const [verifyModal,setVerifyModal] = useState(false);
 
+  // To be passed into Profile Route for updating the info of user
+  // const [userProfile,setUserProfile] = useState([]);
+  // useEffect(() => {
+  //   Axios.get(`/api/customers/${localStorage.getItem("user")}`)
+  //   .then((res) => {
+  //     setUserProfile(res.data);
+  //   })
+  // },[])
 
   // profile page navigation function
   const [profileActive,setProfileActive] = useState('Details');

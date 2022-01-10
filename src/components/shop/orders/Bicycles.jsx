@@ -47,10 +47,10 @@ const Bicycles = ({ logoutMssg }) => {
                                     <option value="brake">Brake</option>
                                 </select>
                             </div>
-                            <div className="p-2 cursor-pointer">
+                            {/* <div className="p-2 cursor-pointer">
                                 <span>View: </span>
                                 <span className="text-gray-700">30 | 60</span>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="flex gap-5 flex-wrap">
                             { bikes.length <= 0 ? 

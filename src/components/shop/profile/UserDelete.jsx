@@ -16,6 +16,7 @@ const UserDelete = () => {
             window.localStorage.removeItem("isUserAuth");
             window.localStorage.removeItem("role");
             window.localStorage.removeItem("id");
+            localStorage.removeItem("userToken");
             history.push(res.data.redirect);
         })
     }
